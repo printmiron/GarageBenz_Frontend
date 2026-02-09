@@ -11,6 +11,8 @@ import { OrdenesDeTrabajoComponent } from './pages/dash-trabajador/ordenes-de-tr
 import { StockComponent } from './pages/stock/stock.component';
 import { FacturacionComponent } from './pages/dash-administrador/facturacion/facturacion.component';
 import { GestionUsuarioListComponent } from './pages/dash-administrador/gestion-usuario-list/gestion-usuario-list.component';
+import { roleGuard } from './guards/role-guard';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
