@@ -1,1 +1,107 @@
-<p>landing-page works!</p>
+<div class="landing-page">
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <i class="bi bi-gear-wide-connected"></i> GarageBenz
+            </div>
+            <nav>
+                <a routerLink="/login" class="btn-login">
+                    <i class="bi bi-person-circle"></i> Iniciar Sesión
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content container">
+                <span class="hero-subtitle">GARAGEBENZ</span>
+                <h1>Tu futuro Mercedes-Benz te está esperando.</h1>
+                <p>Descubre la selección premium de vehículos seminuevos certificados. Cada uno con la garantía y
+                    calidad que solo Mercedes-Benz puede ofrecer.</p>
+                <div class="hero-actions">
+                    <a routerLink="/login" class="btn-primary">Reservar Cita</a>
+                    <a routerLink="/login" class="btn-secondary">Ver Servicios</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>¿Por qué elegir GarageBenz?</h2>
+                    <div class="separator"></div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-patch-check-fill feature-icon"></i>
+                        </div>
+                        <h3>Experiencia Certificada</h3>
+                        <p>Nuestros técnicos están formados directamente por Mercedes-Benz para asegurar que su
+                            vehículo rinda al máximo.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-gear-fill feature-icon"></i>
+                        </div>
+                        <h3>Recambios Originales</h3>
+                        <p>Utilizamos solo recambios originales del fabricante para mantener la integridad y el valor de
+                            su coche.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-clock-history feature-icon"></i>
+                        </div>
+                        <h3>Eficiencia y Cuidado</h3>
+                        <p>Diagnósticos de última generación y protocolos de servicio eficientes para respetar su
+                            tiempo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-banner">
+            <div class="container">
+                <h2>¿Listo para la experiencia de conducción definitiva?</h2>
+                <a routerLink="/login" class="btn-white">Adentrate</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-top">
+            <div class="footer-col branding">
+                <div class="footer-logo">GarageBenz</div>
+                <p>La excelencia en vehículos seminuevos certificados. Calidad Mercedes-Benz a tu alcance.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a routerLink="/login">Inicio</a></li>
+                    <li><a routerLink="/login">Modelos</a></li>
+                    <li><a routerLink="/login">Citas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Soporte</h4>
+                <ul>
+                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#">Servicio Técnico</a></li>
+                    <li><a href="#">Garantía</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <span>&copy; 2026 GarageBenz</span>
+                    <a href="#">Privacidad</a>
+                    <a href="#">Términos</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
