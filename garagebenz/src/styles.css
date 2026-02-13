@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    /* Colores de la marca */
+    --color-albaster: #F8F8F8;
+    --color-black: #000000;
+    --color-white: #FFFFFF;
+    --color-lochmara: #0078D6;
+
+    /* Tipografía */
+    --font-corporate-a: 'Corporate A', 'Arial Narrow', sans-serif;
+    --font-corporate-s: 'Corporate S', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--color-albaster);
+    color: var(--color-black);
+    font-family: var(--font-corporate-s);
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-corporate-a);
+}
