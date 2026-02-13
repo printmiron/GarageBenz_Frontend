@@ -1,0 +1,167 @@
+.registration-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #8b8b8b;
+    /* Fondo base sólido */
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-corporate-s);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+}
+
+.registration-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.05);
+    /* Transparencia sutil */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 3rem;
+    width: 90%;
+    max-width: 550px;
+    /* Aumentado ligeramente para mayor holgura */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    /* Fundamental para el padding */
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.brand-title {
+    color: var(--color-white);
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+    margin: 0;
+    font-weight: 300;
+}
+
+.brand-title span {
+    font-weight: 700;
+}
+
+.brand-subtitle {
+    color: var(--color-white);
+    font-size: 0.7rem;
+    letter-spacing: 0.3rem;
+    opacity: 0.6;
+    margin-top: 0.5rem;
+}
+
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
+    /* Permite que el flex-item se achique correctamente */
+}
+
+label {
+    color: var(--color-white);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    opacity: 0.8;
+}
+
+input {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 1rem;
+    color: var(--color-white);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+    width: 100%;
+    /* El input ocupa todo el espacio del grupo */
+    box-sizing: border-box;
+    /* Incluye padding en el width: 100% */
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-lochmara);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.register-button {
+    margin-top: 1rem;
+    background: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    padding: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.register-button:hover:not(:disabled) {
+    background: var(--color-lochmara);
+    color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+.register-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.login-link {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.login-link a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+/* Responsive fixes */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .registration-card {
+        padding: 2rem;
+    }
+}

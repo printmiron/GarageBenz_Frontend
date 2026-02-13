@@ -1,0 +1,61 @@
+<div class="registration-container">
+    <div class="overlay"></div>
+    <div class="registration-card">
+        <a routerLink="/landingPage" class="back-link">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+        <div class="logo-container">
+            <h1 class="brand-title">GARAGE<span>BENZ</span></h1>
+            <p class="brand-subtitle">EXCELENCIA EN CADA DETALLE</p>
+        </div>
+
+        <form (ngSubmit)="onRegister()" #registroForm="ngForm" class="registration-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" [(ngModel)]="registroData.nombre" required
+                        placeholder="Tu nombre">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="apellido1">Primer Apellido</label>
+                    <input type="text" id="apellido1" name="apellido1" [(ngModel)]="registroData.apellido1" required
+                        placeholder="Primer apellido">
+                </div>
+                <div class="form-group">
+                    <label for="apellido2">Segundo Apellido</label>
+                    <input type="text" id="apellido2" name="apellido2" [(ngModel)]="registroData.apellido2" required
+                        placeholder="Segundo apellido">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="usuario">Nombre de Usuario</label>
+                <input type="text" id="usuario" name="usuario" [(ngModel)]="registroData.usuario" required
+                    placeholder="Ej: jdoe123">
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo Electrónico</label>
+                <input type="email" id="correo" name="correo" [(ngModel)]="registroData.correo" required
+                    placeholder="tu@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="contraseña">Contraseña</label>
+                <input type="password" id="contraseña" name="contraseña" [(ngModel)]="registroData.password" required
+                    placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="register-button" [disabled]="!registroForm.valid">
+                CREAR CUENTA
+            </button>
+
+            <div class="login-link">
+                ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+            </div>
+        </form>
+    </div>
+</div>
