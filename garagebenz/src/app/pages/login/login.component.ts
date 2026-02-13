@@ -1,20 +1,31 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private fb = inject(FormBuilder);
 
-  async onLogin(datos: any) {
+  loginForm = this.fb.group({
+    user: ['', [Validators.required]],
+    pass: ['', [Validators.required]],
+  });
+
+  async onLogin() {
+    if (this.loginForm.invalid) return;
+
     try {
-      const res = await this.authService.login(datos);
+      const res = await this.authService.login(this.loginForm.value);
       // Redirigimos usando el rol que acabamos de guardar
       this.router.navigate([`/dashboard-${res.rol.toLowerCase()}`]);
     } catch (err) {

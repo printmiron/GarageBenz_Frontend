@@ -1,0 +1,176 @@
+.login-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://media.diariolasamericas.com/p/d23f946c5146f795b6fc7c88503885ea/adjuntos/216/imagenes/001/764/0001764944/855x0/smart/2019-mercedes-benz-c300-front2jpg.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: var(--font-corporate-s);
+}
+
+.login-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.login-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.login-header .logo {
+    font-family: var(--font-corporate-a);
+    font-size: 1.5rem;
+    color: var(--color-white);
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.login-header h1 {
+    font-family: var(--font-corporate-a);
+    color: var(--color-white);
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.login-header p {
+    color: #888;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: #ccc;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 1rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    color: var(--color-white);
+    font-size: 1rem;
+    transition: all 0.3s;
+    outline: none;
+}
+
+.input-wrapper input:focus {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--color-lochmara);
+    box-shadow: 0 0 0 1px var(--color-lochmara);
+}
+
+.btn-login-submit {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    background: var(--color-lochmara);
+    color: var(--color-white);
+    border: none;
+    border-radius: 2px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.btn-login-submit:hover:not(:disabled) {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px var(--color-lochmara);
+}
+
+.btn-login-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #333;
+}
+
+.login-footer {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+.back-link {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.back-link:hover {
+    color: var(--color-white);
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 2rem;
+        border: none;
+        background: transparent;
+        backdrop-filter: none;
+    }
+}
