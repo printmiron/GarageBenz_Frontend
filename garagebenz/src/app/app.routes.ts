@@ -19,6 +19,7 @@ export const routes: Routes = [
 
     { path: 'landingPage', component: LandingPageComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'registro', loadComponent: () => import('./pages/registro/registro').then(m => m.RegistroComponent) },
 
 
     {
