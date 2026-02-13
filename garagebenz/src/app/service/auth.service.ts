@@ -27,10 +27,20 @@ export class AuthService {
     return response;
   }
 
+  async register(userData: any): Promise<any> {
+    return await firstValueFrom(
+      this.http.post<any>(`${this.baseUrl}/registro`, userData)
+    );
+  }
+
   // Helpers rápidos para los Guards
   getToken() { return localStorage.getItem('accessToken'); }
   getRole() { return localStorage.getItem('userRole'); }
   getUserId() { return localStorage.getItem('userId'); }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('accessToken');
+  }
 
   logout() {
     localStorage.clear();
