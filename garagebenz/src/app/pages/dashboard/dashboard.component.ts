@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,5 +8,15 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
+  private authService = inject(AuthService);
+  role: string | null = '';
 
+  ngOnInit() {
+
+    this.role = this.authService.getRole();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }

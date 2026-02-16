@@ -5,6 +5,12 @@
     </div>
 
     <nav class="sidebar-nav">
+      <a [routerLink]="['./']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <i class="bi bi-speedometer2"></i> Panel Principal
+      </a>
+      
+      <hr class="nav-divider">
+
       @if (role === 'cliente') {
         <a routerLink="vehiculos" routerLinkActive="active"><i class="bi bi-car-front"></i> Mis Vehículos</a>
         <a routerLink="citas" routerLinkActive="active"><i class="bi bi-calendar-check"></i> Mis Citas</a>
@@ -36,7 +42,7 @@
 
   <main class="main-content">
     <header class="content-header">
-      <span>Bienvenido, <strong>{{ role  }}</strong></span>
+      <span>Bienvenido, <strong>{{ role }}</strong></span>
     </header>
     
     <section class="page-container">

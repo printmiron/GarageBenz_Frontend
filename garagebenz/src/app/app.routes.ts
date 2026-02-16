@@ -13,6 +13,7 @@ import { FacturacionComponent } from './pages/dash-administrador/facturacion/fac
 import { GestionUsuarioListComponent } from './pages/dash-administrador/gestion-usuario-list/gestion-usuario-list.component';
 import { roleGuard } from './guards/role-guard';
 import { authGuard } from './guards/auth-guard';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
@@ -25,6 +26,7 @@ export const routes: Routes = [
     {
         path: 'dashboard-cliente', component: HomeComponent, canActivate: [roleGuard, authGuard], data: { role: 'cliente' }, children: [
 
+            { path: '', component: DashboardComponent },
             { path: 'citas', component: CitasClienteComponent },
             { path: 'reparaciones', component: ReparacionesClienteComponent },
             { path: 'vehiculos', component: VehiculoListComponent },
@@ -35,6 +37,7 @@ export const routes: Routes = [
     {
         path: 'dashboard-trabajador', component: HomeComponent, canActivate: [roleGuard, authGuard], data: { role: 'trabajador' }, children: [
 
+            { path: '', component: DashboardComponent },
             { path: 'agenda', component: AgendaDiariaComponent },
             { path: 'ordenes', component: OrdenesDeTrabajoComponent },
             { path: 'stock', component: StockComponent },
@@ -45,6 +48,7 @@ export const routes: Routes = [
     {
         path: 'dashboard-administrador', component: HomeComponent, canActivate: [roleGuard, authGuard], data: { role: 'administrador' }, children: [
 
+            { path: '', component: DashboardComponent },
             { path: 'facturacion', component: FacturacionComponent },
             { path: 'usuarios', component: GestionUsuarioListComponent },
             { path: 'stock', component: StockComponent },
