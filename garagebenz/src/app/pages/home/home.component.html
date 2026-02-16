@@ -1,1 +1,46 @@
-<p>home works!</p>
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>GARAGE<span>BENZ</span></h2>
+    </div>
+
+    <nav class="sidebar-nav">
+      @if (role === 'cliente') {
+        <a routerLink="vehiculos" routerLinkActive="active"><i class="bi bi-car-front"></i> Mis Vehículos</a>
+        <a routerLink="citas" routerLinkActive="active"><i class="bi bi-calendar-check"></i> Mis Citas</a>
+        <a routerLink="reparaciones" routerLinkActive="active"><i class="bi bi-tools"></i> Reparaciones</a>
+      }
+
+      @if (role === 'trabajador') {
+        <a routerLink="agenda" routerLinkActive="active"><i class="bi bi-journal-text"></i> Agenda Diaria</a>
+        <a routerLink="ordenes" routerLinkActive="active"><i class="bi bi-wrench"></i> Órdenes de Trabajo</a>
+        <a routerLink="stock" routerLinkActive="active"><i class="bi bi-box-seam"></i> Consultar Stock</a>
+      }
+
+      @if (role === 'administrador') {
+        <a routerLink="usuarios" routerLinkActive="active"><i class="bi bi-people"></i> Gestión Usuarios</a>
+        <a routerLink="facturacion" routerLinkActive="active"><i class="bi bi-receipt"></i> Facturación</a>
+        <a routerLink="stock" routerLinkActive="active"><i class="bi bi-boxes"></i> Gestión de Stock</a>
+      }
+
+      <hr class="nav-divider">
+      <a routerLink="perfil" routerLinkActive="active"><i class="bi bi-person-circle"></i> Mi Perfil</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="logout()" class="btn-logout">
+        <i class="bi bi-box-arrow-right"></i> CERRAR SESIÓN
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="content-header">
+      <span>Bienvenido, <strong>{{ role  }}</strong></span>
+    </header>
+    
+    <section class="page-container">
+      <router-outlet />
+    </section>
+  </main>
+</div>

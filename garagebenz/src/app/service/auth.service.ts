@@ -8,7 +8,7 @@ import { AuthResponse } from '../interface/auth-response';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3000/api';
+  private readonly baseUrl = 'http://localhost:3000/api/auth';
 
   async login(credentials: any): Promise<AuthResponse> {
     const response = await firstValueFrom(
@@ -16,7 +16,7 @@ export class AuthService {
     );
 
     //guardamos el token (vital para el Interceptor)
-    localStorage.setItem('accessToken', response.token);
+    localStorage.setItem('token', response.token);
 
     //guardamos el rol en minúsculas para que coincida con tus rutas
     localStorage.setItem('userRole', response.rol.toLowerCase());
@@ -29,17 +29,19 @@ export class AuthService {
 
   async register(userData: any): Promise<any> {
     return await firstValueFrom(
-      this.http.post<any>(`${this.baseUrl}/registro`, userData)
+      this.http.post<any>(`${this.baseUrl}/register`, userData, {
+        responseType: 'text' as 'json'
+      })
     );
   }
 
   // Helpers rápidos para los Guards
-  getToken() { return localStorage.getItem('accessToken'); }
+  getToken() { return localStorage.getItem('token'); }
   getRole() { return localStorage.getItem('userRole'); }
   getUserId() { return localStorage.getItem('userId'); }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('accessToken');
+    return !!localStorage.getItem('token');
   }
 
   logout() {

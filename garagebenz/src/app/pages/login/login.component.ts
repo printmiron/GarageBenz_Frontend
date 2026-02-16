@@ -17,8 +17,8 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
 
   loginForm = this.fb.group({
-    user: ['', [Validators.required]],
-    pass: ['', [Validators.required]],
+    usuario: ['', [Validators.required]],
+    contrasena: ['', [Validators.required]],
   });
 
   async onLogin() {

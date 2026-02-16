@@ -164,4 +164,115 @@ input::placeholder {
     .registration-card {
         padding: 2rem;
     }
+
+    /* --- TUS ESTILOS ORIGINALES --- */
+.registration-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #8b8b8b;
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-corporate-s);
+}
+
+.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+}
+
+.registration-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 3rem;
+    width: 90%;
+    max-width: 550px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+/* ... (Aquí iría el resto de tu CSS: logo-container, brand-title, form-group, input, etc.) ... */
+
+/* --- AÑADIDOS PARA EL "ALERT GUAPO" Y ERRORES --- */
+
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+.back-link:hover { opacity: 1; }
+
+.error-msg {
+    color: #ff4d4d;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+/* Toast Premium Estilo Benz */
+.benz-toast {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 9999;
+    min-width: 320px;
+    background: rgba(0, 0, 0, 0.9);
+    border-left: 4px solid #fff;
+    color: white;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.benz-toast.success { border-left-color: #00d1b2; }
+.benz-toast.error { border-left-color: #ff3860; }
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    letter-spacing: 1px;
+}
+
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.3);
+    width: 100%;
+    animation: progressLine 3s linear forwards;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(120%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes progressLine {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+@media (max-width: 600px) {
+    .form-row { flex-direction: column; }
+    .registration-card { padding: 2rem; }
+}
 }
