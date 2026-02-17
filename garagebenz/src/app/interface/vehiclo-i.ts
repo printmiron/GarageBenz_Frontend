@@ -3,6 +3,6 @@ export interface VehicloI {
     matricula: string;    // UNIQUE
     vin: string;          // UNIQUE
     modelo: string;       //
-    año: number;          // YEAR en SQL
+    anio: number;          // YEAR en SQL
     id_cliente: string;   // FK -> Cliente
 }

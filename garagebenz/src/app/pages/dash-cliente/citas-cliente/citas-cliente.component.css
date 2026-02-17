@@ -1,0 +1,31 @@
+.text-indigo { color: #6366f1; }
+.fw-black { font-weight: 900; }
+.bg-gradient-benz {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.hover-card:hover {
+  transform: translateX(10px);
+  background-color: rgba(255,255,255,0.05) !important;
+  border-color: #6366f1 !important;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.status-dot.pendiente { background-color: #0ea5e9; box-shadow: 0 0 10px #0ea5e9; }
+.status-dot.confirmada { background-color: #10b981; box-shadow: 0 0 10px #10b981; }
+.status-dot.finalizada { background-color: #64748b; }
+
+.icon-circle {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}

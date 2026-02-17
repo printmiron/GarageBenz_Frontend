@@ -4,7 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CitasClienteComponent } from './pages/dash-cliente/citas-cliente/citas-cliente.component';
 import { ReparacionesClienteComponent } from './pages/dash-cliente/reparaciones-cliente/reparaciones-cliente.component';
-import { VehiculoListComponent } from './pages/dash-cliente/vehiculo-list/vehiculo-list.component';
+import { ListVehiculoComponent } from './pages/dash-cliente/vehiculo-list/vehiculo-list.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AgendaDiariaComponent } from './pages/dash-trabajador/agenda-diaria/agenda-diaria.component';
 import { OrdenesDeTrabajoComponent } from './pages/dash-trabajador/ordenes-de-trabajo/ordenes-de-trabajo.component';
@@ -14,6 +14,9 @@ import { GestionUsuarioListComponent } from './pages/dash-administrador/gestion-
 import { roleGuard } from './guards/role-guard';
 import { authGuard } from './guards/auth-guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { NuevoVehiculoComponent } from './pages/nuevo-vehiculo/nuevo-vehiculo.component';
+import { VehiculoViewComponent } from './pages/dash-cliente/vehiculo-view/vehiculo-view.component';
+import { NuevoCitaComponent } from './pages/nuevo-cita/nuevo-cita.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
@@ -28,8 +31,11 @@ export const routes: Routes = [
 
             { path: '', component: DashboardComponent },
             { path: 'citas', component: CitasClienteComponent },
+            { path: 'citas/nuevo', component: NuevoCitaComponent },
             { path: 'reparaciones', component: ReparacionesClienteComponent },
-            { path: 'vehiculos', component: VehiculoListComponent },
+            { path: 'vehiculos', component: ListVehiculoComponent },
+            { path: 'vehiculos/nuevo', component: NuevoVehiculoComponent },
+            { path: 'vehiculos/view/:id', component: VehiculoViewComponent },
             { path: 'perfil', component: ProfileComponent },
             { path: '', redirectTo: 'dashboard-cliente', pathMatch: 'full' }
         ]
@@ -58,6 +64,6 @@ export const routes: Routes = [
     },
 
 
-    { path: "**", redirectTo: "landingPage" }
+    
 
 ];

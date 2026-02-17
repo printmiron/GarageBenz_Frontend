@@ -1,0 +1,49 @@
+.benz-card {
+  background: linear-gradient(145deg, #1e1e1e 0%, #0a0a0a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  transition: all 0.4s ease;
+}
+
+.benz-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Matrícula Estilo Real */
+.plate-container {
+  background: #f0f0f0;
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  text-align: center;
+}
+
+.plate-text {
+  color: #111;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+}
+
+.status-indicator { color: #555; font-size: 1.5rem; }
+.status-indicator.active { color: #00ff88; text-shadow: 0 0 10px #00ff8866; }
+
+.btn-benz-action {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 12px;
+  border-radius: 0;
+  transition: 0.3s;
+}
+
+.btn-benz-action:hover {
+  background-color: #fff;
+  color: #000;
+}

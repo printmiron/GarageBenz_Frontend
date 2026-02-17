@@ -1,1 +1,70 @@
-<p>profile works!</p>
+<div class="profile-container p-4">
+  @if (user()) {
+    <div class="card bg-dark text-white border-secondary border-opacity-25 shadow-lg animate__animated animate__fadeIn">
+      
+      <div class="card-header border-0 p-5 text-center bg-gradient-benz position-relative">
+        <div class="avatar-circle mx-auto mb-3 shadow-lg border border-2 border-secondary">
+          {{ initials() }}
+        </div>
+        <h2 class="fw-bold mb-0 letter-spacing-1">{{ user()?.nombre }} {{ user()?.apellido1 }}</h2>
+        <span class="badge rounded-pill mt-3 px-4 py-2 text-uppercase fw-bold shadow-sm" [ngClass]="roleBadgeClass()">
+          <i class="bi bi-person-badge-fill me-2"></i> {{ user()?.rol }}
+        </span>
+      </div>
+      
+      <div class="card-body p-4 p-lg-5">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="info-field">
+              <label class="text-secondary small fw-bold text-uppercase mb-2 d-block">Identidad Digital</label>
+              <div class="profile-info-box shadow-sm">
+                <i class="bi bi-person-circle me-2 text-primary"></i> {{ user()?.usuario }}
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="info-field">
+              <label class="text-secondary small fw-bold text-uppercase mb-2 d-block">Contacto</label>
+              <div class="profile-info-box shadow-sm">
+                <i class="bi bi-envelope-at me-2 text-primary"></i> {{ user()?.correo }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="info-field">
+              <label class="text-secondary small fw-bold text-uppercase mb-2 d-block">Apellidos</label>
+              <div class="profile-info-box shadow-sm">
+                {{ user()?.apellido1 }} {{ user()?.apellido2 || '' }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="info-field">
+              <label class="text-secondary small fw-bold text-uppercase mb-2 d-block">ID de Sistema</label>
+              <div class="profile-info-box small font-monospace text-secondary shadow-sm">
+                {{ user()?.id }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 pt-4 border-top border-secondary border-opacity-10 d-flex flex-wrap gap-3">
+          <button class="btn btn-primary rounded-pill px-4 py-2 transition-all">
+            <i class="bi bi-pencil-square me-2"></i> Actualizar Datos
+          </button>
+          <button class="btn btn-outline-light rounded-pill px-4 py-2">
+            <i class="bi bi-key me-2"></i> Seguridad
+          </button>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="d-flex flex-column align-items-center justify-content-center p-5 text-white">
+      <div class="spinner-grow text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+      <h5 class="text-secondary fw-light">Sincronizando con GarageBenz...</h5>
+    </div>
+  }
+</div>

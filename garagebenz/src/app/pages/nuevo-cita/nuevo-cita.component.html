@@ -1,0 +1,78 @@
+<div class="booking-container py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        
+        <div class="card benz-card shadow-2xl">
+          <div class="card-header border-0 bg-transparent pt-4 px-4">
+            <h2 class="text-white fw-black italic text-uppercase mb-0">Agendar Servicio</h2>
+            <div class="accent-line"></div>
+          </div>
+
+          <div class="card-body p-4">
+            <form [formGroup]="citaForm" (ngSubmit)="onSubmit()">
+              
+              <div class="mb-4">
+                <label class="label-benz">Selecciona tu Vehículo</label>
+                <select formControlName="id_vehiculo" class="form-select benz-input">
+                  <option value="" disabled selected>Elige un vehículo de tu garaje...</option>
+                  @for (v of misVehiculos(); track v.idVehiculo) {
+                    <option [value]="v.idVehiculo">{{ v.modelo }} ({{ v.matricula }})</option>
+                  }
+                </select>
+                @if (citaForm.get('id_vehiculo')?.invalid && citaForm.get('id_vehiculo')?.touched) {
+                  <small class="text-danger">Debes seleccionar un vehículo.</small>
+                }
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-6">
+                  <label class="label-benz">Fecha</label>
+                  <input type="date" formControlName="fecha_cita" class="form-control benz-input">
+                </div>
+                <div class="col-6">
+                  <label class="label-benz">Hora</label>
+                  <select formControlName="hora_cita" class="form-select benz-input">
+                    <option value="" disabled selected>--:--</option>
+                    <option value="08:00">08:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-5">
+                <label class="label-benz">Descripción del Problema</label>
+                <textarea formControlName="descripcion" rows="4" 
+                  class="form-control benz-input" 
+                  placeholder="Describe detalladamente qué necesita tu vehículo..."></textarea>
+                @if (citaForm.get('descripcion')?.invalid && citaForm.get('descripcion')?.touched) {
+                  <small class="text-danger">La descripción debe tener al menos 10 caracteres.</small>
+                }
+              </div>
+
+              <div class="d-flex flex-column gap-3">
+                <button type="submit" [disabled]="citaForm.invalid || isSubmitting()" 
+                  class="btn btn-benz-primary py-3 fw-bold uppercase tracking-widest">
+                  @if (isSubmitting()) {
+                    <span class="spinner-border spinner-border-sm me-2"></span> PROCESANDO...
+                  } @else {
+                    SOLICITAR CITA
+                  }
+                </button>
+                
+                <a [routerLink]="['/dashboard-cliente/citas']" 
+                   class="btn btn-link text-secondary text-decoration-none text-center fw-bold small">
+                  CANCELAR Y VOLVER
+                </a>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

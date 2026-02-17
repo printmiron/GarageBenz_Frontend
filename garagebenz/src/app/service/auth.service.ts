@@ -10,23 +10,37 @@ export class AuthService {
   private http = inject(HttpClient);
   private readonly baseUrl = 'http://localhost:3000/api/auth';
 
-  async login(credentials: any): Promise<AuthResponse> {
-    const response = await firstValueFrom(
-      this.http.post<AuthResponse>(`${this.baseUrl}/login`, credentials)
-    );
+  // src/app/service/auth.service.ts
+async login(credentials: any): Promise<AuthResponse> {
+  const response = await firstValueFrom(
+    this.http.post<AuthResponse>(`${this.baseUrl}/login`, credentials)
+  );
 
-    //guardamos el token (vital para el Interceptor)
-    localStorage.setItem('token', response.token);
+  // LOG DE CONTROL: Mira en la consola cuando des clic al botón de entrar
+  console.log('Respuesta completa del servidor:', response);
 
-    //guardamos el rol en minúsculas para que coincida con tus rutas
-    localStorage.setItem('userRole', response.rol.toLowerCase());
+  localStorage.setItem('token', response.token);
+  localStorage.setItem('userRole', response.rol.toLowerCase());
+  localStorage.setItem('userId', response.id);
 
-    //guardamos el ID para filtrar datos
-    localStorage.setItem('userId', response.id);
-
-    return response;
+  // FORZAMOS EL GUARDADO: 
+  // Si tu Java envía el objeto dentro de "user", lo guardamos así:
+  if (response.user) {
+    localStorage.setItem('userData', JSON.stringify(response.user));
+    console.log('Objeto userData guardado con éxito');
+  } else {
+    // Si no viene como "user", intentamos guardar la respuesta completa
+    localStorage.setItem('userData', JSON.stringify(response));
+    console.warn('El servidor no envió la clave "user", guardando respuesta completa');
   }
 
+  return response;
+}
+
+  getUserData() {
+    const data = localStorage.getItem('userData');
+    return data ? JSON.parse(data) : null;
+  }
   async register(userData: any): Promise<any> {
     return await firstValueFrom(
       this.http.post<any>(`${this.baseUrl}/register`, userData, {
