@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom, Observable, tap } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { AuthResponse } from '../interface/auth-response';
 
 @Injectable({

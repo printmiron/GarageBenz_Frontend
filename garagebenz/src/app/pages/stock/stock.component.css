@@ -1,0 +1,12 @@
+.card {
+  transition: transform 0.2s, shadow 0.2s;
+}
+.card:hover:not(.opacity-50) {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+.category-section h4 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}

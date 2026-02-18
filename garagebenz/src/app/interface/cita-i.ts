@@ -1,9 +1,18 @@
+import { ClienteI } from "./cliente-i"; // Asegúrate de importar esto
+
 export interface CitaI {
-    id_cita: string;      // UUID (PK)
-    fecha_cita: string;   // DATE
-    hora_cita: string;    // TIME
-    descripcion?: string; //
-    estado: 'Pendiente' | 'Confirmada' | 'Completada' | 'Cancelada'; // ENUM
-    id_cliente: string;   // FK -> Cliente
-    id_vehiculo: string;  // FK -> Vehiculos
+    idCita: string;
+    fecha_cita: string;
+    hora_cita: string;
+    descripcion?: string;
+    estado: 'Pendiente' | 'Confirmada' | 'En_proceso' | 'Completada' | 'Cancelada';
+    cliente: ClienteI;
+    id_cliente: string; 
+    id_vehiculo: string;
+    vehiculo?: {
+        id_vehiculo: string;
+        matricula: string;
+        modelo: string;
+        anio: number;
+    };
 }

@@ -1,1 +1,41 @@
-<p>stock works!</p>
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary"><i class="bi bi-tags"></i> Almacén de Repuestos</h2>
+
+  @for (cat of categorias; track cat) {
+    <div class="category-section mb-5">
+      <h4 class="border-bottom pb-2 text-secondary">{{ cat }}</h4>
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        @for (item of stockPorCategoria()[cat]; track item.idStock) {
+          <div class="col">
+            <div class="card h-100 shadow-sm border-0" [class.opacity-50]="item.cantidad <= 0">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title text-dark">{{ item.pieza.Nombre }}</h5>
+                  <span class="badge" [class]="item.cantidad > 5 ? 'bg-success' : 'bg-danger'">
+                    Stock: {{ item.cantidad }}
+                  </span>
+                </div>
+                <p class="card-text text-muted small">{{ item.pieza.Descripcion }}</p>
+                
+                <div class="mt-auto pt-3 border-top">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text">Cant.</span>
+                    <input type="number" #cantInput class="form-control" value="1" min="1" [max]="item.cantidad">
+                    <button class="btn btn-primary" 
+                            (click)="agregarPieza(item.pieza.id_pieza, +cantInput.value)"
+                            [disabled]="item.cantidad <= 0">
+                      <i class="bi bi-plus"></i> Añadir
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  } @empty {
+    <div class="alert alert-info">No hay piezas registradas en el stock.</div>
+  }
+</div>
