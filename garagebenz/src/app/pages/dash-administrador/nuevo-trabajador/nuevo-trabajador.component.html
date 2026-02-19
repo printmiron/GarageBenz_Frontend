@@ -1,0 +1,76 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-white p-3">
+                    <h4 class="mb-0">
+                        <i class="bi bi-person-plus me-2"></i>Registrar Nuevo Trabajador
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form [formGroup]="workerForm" (ngSubmit)="guardar()">
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Nombre</label>
+                                <input type="text" formControlName="nombre" class="form-control"
+                                    [class.is-invalid]="workerForm.get('nombre')?.touched && workerForm.get('nombre')?.invalid">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Primer Apellido</label>
+                                <input type="text" formControlName="apellido1" class="form-control"
+                                    [class.is-invalid]="workerForm.get('apellido1')?.touched && workerForm.get('apellido1')?.invalid">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Segundo Apellido</label>
+                                <input type="text" formControlName="apellido2" class="form-control"
+                                    [class.is-invalid]="workerForm.get('apellido2')?.touched && workerForm.get('apellido2')?.invalid">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Correo Electrónico</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" formControlName="correo" class="form-control"
+                                        [class.is-invalid]="workerForm.get('correo')?.touched && workerForm.get('correo')?.invalid">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Nombre de Usuario</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" formControlName="usuario" class="form-control"
+                                        [class.is-invalid]="workerForm.get('usuario')?.touched && workerForm.get('usuario')?.invalid">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" formControlName="contrasena" class="form-control"
+                                    [class.is-invalid]="workerForm.get('contrasena')?.touched && workerForm.get('contrasena')?.invalid">
+                            </div>
+                            <small class="text-muted">Mínimo 6 caracteres.</small>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button [routerLink]="['/dashboard-administrador/usuarios']" type="button" class="btn btn-outline-secondary">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-success px-4" [disabled]="workerForm.invalid">
+                                <i class="bi bi-save me-1"></i> Guardar Trabajador
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

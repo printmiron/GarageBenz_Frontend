@@ -4,10 +4,11 @@ import { CurrencyPipe } from '@angular/common';
 import { StockService } from '../../service/stock.service';
 import { PiezaService } from '../../service/pieza.service'; // <--- IMPORTADO
 import { SotckI } from '../../interface/sotck-i';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import { FacturaService } from 'src/app/service/factura.service';
 
 @Component({
   selector: 'app-stock',
@@ -18,9 +19,11 @@ import jsPDF from 'jspdf';
 })
 export class StockComponent implements OnInit {
   private stockService = inject(StockService);
-  private piezaService = inject(PiezaService); // <--- INYECTADO
+  private piezaService = inject(PiezaService);
+  private facturaService = inject(FacturaService);
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   // Estados
   idRecuperadoDeUrl = signal<string>('');
@@ -28,12 +31,12 @@ export class StockComponent implements OnInit {
   esAdmin = signal<boolean>(false);
 
   // Formulario para Admin (Asegúrate de que los nombres coincidan con el DTO de Java)
-  nuevaPieza = signal({ 
-    nombre: '', 
-    descripcion: '', 
-    precio: 0, 
-    categoria: 'General', 
-    cantidadInicial: 0 
+  nuevaPieza = signal({
+    nombre: '',
+    descripcion: '',
+    precio: 0,
+    categoria: 'General',
+    cantidadInicial: 0
   });
 
   async ngOnInit() {
@@ -47,7 +50,7 @@ export class StockComponent implements OnInit {
     const rolObjeto = usuario?.id_rol || usuario?.rol;
 
     const rolFinal = (rolObjeto || rolLocalStorage || '').toUpperCase();
-    
+
     // Cambiado a ADMINISTRADOR para que coincida con tu SQL
     this.esAdmin.set(rolFinal === 'ADMINISTRADOR');
 
@@ -82,16 +85,43 @@ export class StockComponent implements OnInit {
     return this.piezasAgregadas().reduce((acc, p) => acc + ((p.item.pieza.precio || 0) * p.cantidad), 0);
   });
 
-  // --- LÓGICA TRABAJADOR ---
+  // BOTÓN "UTILIZAR / AÑADIR"
   async agregarPieza(item: SotckI, cantidad: number) {
-    if (!this.idFinal) return alert('Debes seleccionar una Orden de Trabajo primero.');
+    if (!this.idFinal) return alert('No hay una Orden de Trabajo activa.');
+    if (cantidad > item.cantidad) return alert('No hay stock suficiente en almacén.');
 
     try {
+      // 1. Registramos el uso en la tabla intermedia del Back
       await this.stockService.asignarPiezaAOrden(this.idFinal, item.pieza.idPieza, cantidad);
+
+      // 2. Añadimos a la lista visual de la derecha
       this.piezasAgregadas.update(prev => [...prev, { item, cantidad }]);
-      await this.cargarDatos(); // Refrescar stock tras consumir
+
+      // 3. Opcional: bajar el stock visualmente (el descuento real se hará al facturar)
+      item.cantidad -= cantidad;
     } catch (e) {
-      alert('Error al asignar pieza');
+      alert('Error al asignar pieza a la orden');
+    }
+  }
+
+  // BOTÓN "FINALIZAR Y FACTURAR"
+  async finalizarYFacturar() {
+    if (!confirm('¿Deseas cerrar la orden y generar la factura definitiva?')) return;
+
+    try {
+      // 1. Llamada al servicio (descuenta stock y crea factura en DB)
+      const factura = await this.facturaService.generarFacturaDesdeOrden(this.idFinal);
+
+      alert(`Orden finalizada. Factura Nº: ${factura.numeroFactura}`);
+
+      // 2. Pasamos la factura al PDF si queremos mostrar datos reales
+      this.generarInformePDF(factura);
+
+      // 3. Redirigimos
+      this.router.navigate(['dashboard-trabajador/ordenes']);
+    } catch (e) {
+      console.error(e);
+      alert('Error en el proceso de facturación y stock.');
     }
   }
 
@@ -100,14 +130,14 @@ export class StockComponent implements OnInit {
     try {
       // USAMOS EL NUEVO SERVICIO DE PIEZA
       await this.piezaService.crearPiezaConStock(this.nuevaPieza());
-      
+
       alert('Pieza y Stock creados con éxito');
-      
+
       // Limpiamos el formulario
       this.nuevaPieza.set({ nombre: '', descripcion: '', precio: 0, categoria: 'General', cantidadInicial: 0 });
-      
+
       // Refrescamos el stock general para ver la nueva pieza
-      await this.cargarDatos(); 
+      await this.cargarDatos();
     } catch (e) {
       console.error('Error en crearNuevaPieza:', e);
       alert('Error al conectar con el servidor de piezas');
@@ -127,11 +157,19 @@ export class StockComponent implements OnInit {
     }
   }
 
-  generarInformePDF() {
+
+
+  generarInformePDF(facturaData?: any) {
     const doc = new jsPDF();
     doc.setFontSize(20);
     doc.text('GARAGE BENZ - INFORME TÉCNICO', 14, 22);
-    // ... resto de tu lógica de PDF
+
+    if (facturaData) {
+      doc.setFontSize(12);
+      doc.text(`Factura Nº: ${facturaData.numeroFactura}`, 14, 32);
+      doc.text(`Total: ${facturaData.importeTotal} EUR`, 14, 40);
+    }
+
     doc.save(`Informe_Benz_OT_${this.idFinal}.pdf`);
   }
 }

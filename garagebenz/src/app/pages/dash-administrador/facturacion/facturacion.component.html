@@ -1,1 +1,152 @@
-<p>facturacion works!</p>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-0">Control Financiero</h2>
+            <p class="text-muted small">Mes actual: {{ stats()?.mes }}/{{ stats()?.anio }}</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-danger shadow-sm d-flex align-items-center" (click)="descargarReporteMensual()"
+                [disabled]="loading() || !stats()">
+                <i class="bi bi-file-earmark-pdf-fill me-2"></i>
+                Descargar Reporte Mensual
+            </button>
+
+            <button class="btn btn-primary shadow-sm" (click)="cargarDatos()" [disabled]="loading()">
+                <i class="bi bi-arrow-clockwise me-2"></i>Sincronizar
+            </button>
+        </div>
+    </div>
+
+    @if (loading()) {
+    <div class="text-center py-5">
+        <div class="spinner-grow text-primary" role="status"></div>
+        <p class="text-muted mt-3">Analizando rentabilidad y generando métricas...</p>
+    </div>
+    } @else if (stats()) {
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm card-accent-blue">
+                <div class="card-body">
+                    <h6 class="text-muted small text-uppercase fw-bold">Ingresos Totales (Bruto)</h6>
+                    <h3 class="fw-bold mb-1">{{ stats()?.totalIngresos | currency:'EUR' }}</h3>
+                    <div class="d-flex justify-content-between x-small">
+                        <span>Mano Obra: {{ stats()?.totalManoObra | currency:'EUR' }}</span>
+                        <span>Piezas: {{ stats()?.totalPiezasVenta | currency:'EUR' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm bg-dark text-white">
+                <div class="card-body">
+                    <h6 class="text-white-50 small text-uppercase fw-bold">Beneficio Neto (Limpio)</h6>
+                    <h3 class="fw-bold text-success mb-1">{{ stats()?.beneficioNeto | currency:'EUR' }}</h3>
+                    <p class="mb-0 x-small" [ngClass]="margenColor()">
+                        Margen de ganancia: <strong>{{ stats()?.margenBeneficio }}%</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-danger border-4">
+                <div class="card-body">
+                    <h6 class="text-muted small text-uppercase fw-bold">Inversión en Repuestos</h6>
+                    <h3 class="fw-bold text-danger mb-1">{{ stats()?.totalGastoStock | currency:'EUR' }}</h3>
+                    <p class="text-muted x-small mb-0">Coste real de adquisición</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted small text-uppercase fw-bold">Ticket Promedio</h6>
+                    <h3 class="fw-bold text-primary mb-1">{{ stats()?.promedioTicket | currency:'EUR' }}</h3>
+                    <p class="text-muted x-small mb-0">Gasto medio por orden</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-5 text-center">
+        <div class="col-4 col-md-2">
+            <div class="p-3 bg-white rounded-3 shadow-sm border">
+                <i class="bi bi-file-earmark-text text-primary fs-3"></i>
+                <h5 class="fw-bold mt-2 mb-0">{{ stats()?.cantidadFacturas }}</h5>
+                <span class="text-muted x-small">Facturas</span>
+            </div>
+        </div>
+        <div class="col-4 col-md-2">
+            <div class="p-3 bg-white rounded-3 shadow-sm border">
+                <i class="bi bi-people text-primary fs-3"></i>
+                <h5 class="fw-bold mt-2 mb-0">{{ stats()?.clientesAtendidos }}</h5>
+                <span class="text-muted x-small">Clientes</span>
+            </div>
+        </div>
+        <div class="col-4 col-md-2">
+            <div class="p-3 bg-white rounded-3 shadow-sm border">
+                <i class="bi bi-box-seam text-primary fs-3"></i>
+                <h5 class="fw-bold mt-2 mb-0">{{ stats()?.piezasVendidas }}</h5>
+                <span class="text-muted x-small">Piezas Usadas</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-secondary">Historial de Facturación Reciente</h5>
+            <span class="badge bg-primary-subtle text-primary rounded-pill">{{ facturas().length }} registros</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr class="x-small text-uppercase text-muted">
+                        <th class="ps-4">Nº Factura</th>
+                        <th>Fecha</th>
+                        <th>Cliente / Vehículo</th>
+                        <th>Importe Total</th>
+                        <th class="text-center pe-4">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (f of facturas(); track f.idFactura) {
+                    <tr>
+                        <td class="ps-4">
+                            <span class="fw-bold text-dark">#{{ f.numeroFactura }}</span>
+                        </td>
+                        <td class="small text-muted">{{ f.fechaEmision | date:'dd/MM/yyyy' }}</td>
+                        <td>
+                            <div class="fw-bold small">{{ f.ordenReparacion?.vehiculo?.cliente?.nombre }}</div>
+                            <div class="text-muted x-small">
+                                <i class="bi bi-car-front me-1"></i>{{ f.ordenReparacion?.vehiculo?.matricula }}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-dark">{{ f.importeTotal | currency:'EUR' }}</span>
+                        </td>
+                        <td class="text-center pe-4">
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-danger" (click)="verFactura(f)"
+                                    title="Descargar PDF de esta factura">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            No hay facturas registradas en este periodo.
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+</div>

@@ -1,1 +1,136 @@
-<p>gestion-usuario-list works!</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="text-primary"><i class="bi bi-person-badge me-2"></i>Plantilla de Trabajadores</h3>
+                <button [routerLink]="['/dashboard-administrador/trabajador/nuevo']" class="btn btn-success btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i> Nuevo Trabajador
+                </button>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nombre Completo</th>
+                                <th>Usuario</th>
+                                <th>Correo</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (t of trabajadores(); track t.idTrabajador) {
+                            <tr>
+                                <td>{{ t.nombre }} {{ t.apellido1 }} {{ t.apellido2 }}</td>
+                                <td><span class="badge bg-light text-dark border">{{ t.usuario }}</span></td>
+                                <td>{{ t.correo }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-danger btn-sm"
+                                        (click)="borrar(t.idTrabajador, 'trabajadores')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            } @empty {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted p-4">No hay trabajadores registrados.</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <h3 class="text-secondary mb-3"><i class="bi bi-people me-2"></i>Gestión de Clientes</h3>
+            <div class="card shadow-sm">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Correo</th>
+                                <th>Usuario</th>
+                                <th class="text-center">Expediente</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (c of clientes(); track c.idCliente) {
+                            <tr>
+                                <td class="fw-bold">{{ c.nombre }} {{ c.apellido1 }}</td>
+                                <td>{{ c.correo }}</td>
+                                <td>{{ c.usuario }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-info btn-sm text-white"
+                                        (click)="verTodoDelCliente(c.idCliente)">
+                                        <i class="bi bi-journal-text me-1"></i> Ver Todo
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-danger btn-sm"
+                                        (click)="borrar(c.idCliente, 'clientes')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (clienteDetalle(); as detalle) {
+    <div class="mt-5 p-4 border-start border-4 border-info bg-white shadow rounded animate__animated animate__fadeIn">
+        <div class="d-flex justify-content-between">
+            <h4><i class="bi bi-file-earmark-person me-2"></i>Expediente: {{ detalle.nombre }} {{ detalle.apellido1 }}
+            </h4>
+            <button class="btn-close" (click)="clienteDetalle.set(null)"></button>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h5 class="border-bottom pb-2 text-info"><i class="bi bi-car-front me-2"></i>Vehículos</h5>
+                <div class="list-group list-group-flush">
+                    @for (v of detalle.vehiculos; track v.id_vehiculo) {
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-bold">{{ v.modelo }}</div>
+                            <small class="text-muted">VIN: {{ v.vin }}</small>
+                        </div>
+                        <span class="badge bg-dark rounded-pill">{{ v.matricula }}</span>
+                    </div>
+                    } @empty {
+                    <p class="text-muted small p-3">No hay vehículos registrados para este cliente.</p>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h5 class="border-bottom pb-2 text-info"><i class="bi bi-tools me-2"></i>Historial de Reparaciones</h5>
+                <div class="timeline mt-3">
+                    @for (h of detalle.historialReparaciones; track h.id_orden) {
+                    <div class="mb-3 p-2 border-bottom">
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold text-truncate">{{ h.descripcion }}</span>
+                            <span class="badge bg-secondary">{{ h.fecha_entrada }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between small mt-1">
+                            <span>Coche: {{ h.matricula_vehiculo }}</span>
+                            <span [class]="h.estado === 'COMPLETADO' ? 'text-success' : 'text-warning'">{{ h.estado
+                                }}</span>
+                        </div>
+                    </div>
+                    } @empty {
+                    <p class="text-muted small p-3">No hay historial de reparaciones disponible.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

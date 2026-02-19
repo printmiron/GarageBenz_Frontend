@@ -1,0 +1,29 @@
+.card-accent-blue {
+    border-top: 4px solid #0d6efd !important;
+}
+
+.x-small {
+    font-size: 0.72rem;
+}
+
+.card {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.bg-dark {
+    background-color: #1a1d20 !important;
+}
+
+.table td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.spinner-grow {
+    width: 3rem;
+    height: 3rem;
+}

@@ -123,9 +123,14 @@
             <span class="h5 mb-0 text-dark">TOTAL:</span>
             <span class="h4 mb-0 text-primary fw-bold">{{ totalPresupuesto() | currency:'EUR' }}</span>
           </div>
-          <button class="btn btn-danger w-100 py-2 fw-bold" (click)="generarInformePDF()"
+
+          <button class="btn btn-outline-primary w-100 mb-2 fw-bold" (click)="generarInformePDF()">
+            <i class="bi bi-file-earmark-pdf"></i> SOLO INFORME PDF
+          </button>
+
+          <button class="btn btn-danger w-100 py-2 fw-bold" (click)="finalizarYFacturar()"
             [disabled]="piezasAgregadas().length === 0">
-            FINALIZAR E INFORME
+            <i class="bi bi-receipt"></i> FINALIZAR Y GENERAR FACTURA
           </button>
         </div>
       </div>
