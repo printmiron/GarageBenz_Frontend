@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrdenesReparacionI } from '../../../interface/ordenes-reparacion-i';
 import { OrdenReparacionService } from '../../../service/orden-reparacion.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-ordenes-de-trabajo',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Necesarios para Standalone y formularios
+  imports: [CommonModule, FormsModule, RouterLink], // Necesarios para Standalone y formularios
   templateUrl: './ordenes-de-trabajo.component.html',
   styleUrl: './ordenes-de-trabajo.component.css',
 })

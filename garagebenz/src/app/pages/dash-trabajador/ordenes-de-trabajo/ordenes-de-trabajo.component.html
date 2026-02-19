@@ -12,19 +12,20 @@
     <div class="col-md-4 mb-3">
       <div class="card shadow-sm border-0 h-100">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-          <strong><i class="bi bi-car-front-fill me-2"></i>{{ orden.vehiculo?.matricula || 'SIN MATRÍCULA' }}</strong>
+          <strong><i class="bi bi-car-front-fill me-2"></i>{{ orden.vehiculo.matricula || 'SIN MATRÍCULA' }}</strong>
           <span class="badge bg-light text-primary small">En Proceso</span>
         </div>
 
         <div class="card-body">
-          <h6 class="fw-bold mb-3">{{ orden.vehiculo?.modelo || 'Modelo no especificado' }}</h6>
+          <h6 class="fw-bold mb-3">{{ orden.vehiculo.modelo || 'Modelo no especificado' }}</h6>
 
           <div class="bg-light p-2 rounded mb-3">
             <p class="mb-0 small text-muted"><strong>Cliente:</strong></p>
-            <p class="mb-0">
-              {{ orden.cita?.cliente?.nombre || 'Cargando...' }}
-              {{ orden.cita?.cliente?.apellido1 || '' }}
-            </p>
+            @if (orden.cita.cliente; as c) {
+            <td>{{ c.nombre }} {{ c.apellido1 }}</td>
+            } @else {
+            <td class="text-muted">Cargando cliente...</td>
+            }
           </div>
 
           <hr>
@@ -48,6 +49,9 @@
         <div class="card-footer bg-white border-top-0 d-grid pb-3">
           <button class="btn btn-success rounded-pill shadow-sm" (click)="finalizarOrden(orden)">
             <i class="bi bi-check-lg me-1"></i> Finalizar y Cerrar Cita
+          </button>
+          <button class="btn btn-outline-primary" [routerLink]="['/dashboard-trabajador/stock', orden.idOr]">
+            <i class="bi bi-box-seam"></i> Añadir Repuestos
           </button>
         </div>
       </div>

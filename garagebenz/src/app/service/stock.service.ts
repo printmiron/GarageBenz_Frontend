@@ -3,37 +3,47 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { SotckI } from '../interface/sotck-i';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class StockService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/stock';
+  // Ruta al controlador de Stock
+  private readonly baseUrl = 'http://localhost:3000/api/stock';
 
-  // Usamos un Signal para mantener el estado reactivo
+  // Signal reactivo para la UI
   stockDisponible = signal<SotckI[]>([]);
 
-  // Obtener stock convertido a Promesa
+  /**
+   * Carga la lista de Stock (Pieza + Cantidad)
+   */
   async cargarStock(): Promise<SotckI[]> {
-    const data$ = this.http.get<SotckI[]>(this.apiUrl);
+    const data$ = this.http.get<SotckI[]>(this.baseUrl);
     const res = await firstValueFrom(data$);
-    this.stockDisponible.set(res); // Actualizamos el signal para la UI
+    this.stockDisponible.set(res); 
     return res;
   }
 
-  // Consumir pieza convertido a Promesa
-  async asignarPiezaAOrden(idOr: string, idPieza: string, cantidad: number): Promise<string> {
+  /**
+   * Asigna piezas a una Orden de Trabajo (Resta del stock)
+   */
+  async asignarPiezaAOrden(idOr: string, idPieza: string, cantidad: number) {
     const params = new HttpParams()
       .set('idOr', idOr)
       .set('idPieza', idPieza)
       .set('cantidad', cantidad.toString());
 
-    const call$ = this.http.post(`${this.apiUrl}/consumir`, null, { 
-      params, 
-      responseType: 'text' 
-    });
+    return await firstValueFrom(
+      this.http.post(`${this.baseUrl}/consumir`, null, { params, responseType: 'text' })
+    );
+  }
 
-    return await firstValueFrom(call$);
+  /**
+   * Reponer stock de una pieza existente (Para el Admin)
+   */
+  async reponerStock(idPieza: string, cantidad: number): Promise<any> {
+    return await firstValueFrom(
+      this.http.put(`${this.baseUrl}/reponer`, { idPieza, cantidad })
+    );
   }
 }

@@ -18,8 +18,8 @@
             <tr>
               <td>{{ rep.fechaFin | date:'dd/MM/yyyy' }}</td>
               <td>
-                <span class="text-info">{{ rep.vehiculo?.modelo }}</span><br>
-                <small class="text-muted">{{ rep.vehiculo?.matricula }}</small>
+                <span class="text-info">{{ rep.vehiculo.modelo }}</span><br>
+                <small class="text-muted">{{ rep.vehiculo.matricula }}</small>
               </td>
               <td class="small">{{ rep.diagnostico }}</td>
               <td class="text-center font-monospace">{{ rep.horas }}h</td>

@@ -6,7 +6,7 @@ export interface CitaI {
     hora_cita: string;
     descripcion?: string;
     estado: 'Pendiente' | 'Confirmada' | 'En_proceso' | 'Completada' | 'Cancelada';
-    cliente: ClienteI;
+    cliente?: ClienteI;
     id_cliente: string; 
     id_vehiculo: string;
     vehiculo?: {

@@ -20,15 +20,12 @@ import { NuevoCitaComponent } from './pages/nuevo-cita/nuevo-cita.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
-
     { path: 'landingPage', component: LandingPageComponent },
     { path: 'login', component: LoginComponent },
     { path: 'registro', loadComponent: () => import('./pages/registro/registro').then(m => m.RegistroComponent) },
 
-
     {
         path: 'dashboard-cliente', component: HomeComponent, canActivate: [roleGuard, authGuard], data: { role: 'cliente' }, children: [
-
             { path: '', component: DashboardComponent },
             { path: 'citas', component: CitasClienteComponent },
             { path: 'citas/nuevo', component: NuevoCitaComponent },
@@ -36,34 +33,26 @@ export const routes: Routes = [
             { path: 'vehiculos', component: ListVehiculoComponent },
             { path: 'vehiculos/nuevo', component: NuevoVehiculoComponent },
             { path: 'vehiculos/view/:id', component: VehiculoViewComponent },
-            { path: 'perfil', component: ProfileComponent },
-            { path: '', redirectTo: 'dashboard-cliente', pathMatch: 'full' }
+            { path: 'perfil', component: ProfileComponent }
         ]
     },
     {
         path: 'dashboard-trabajador', component: HomeComponent, canActivate: [roleGuard, authGuard], data: { role: 'trabajador' }, children: [
-
             { path: '', component: DashboardComponent },
             { path: 'agenda', component: AgendaDiariaComponent },
             { path: 'ordenes', component: OrdenesDeTrabajoComponent },
-            { path: 'stock', component: StockComponent },
-            { path: 'perfil', component: ProfileComponent },
-            { path: '', redirectTo: 'dashboard-trabajador', pathMatch: 'full' }
+            { path: 'stock/:id', component: StockComponent }, 
+            { path: 'stock', component: StockComponent }, 
+            { path: 'perfil', component: ProfileComponent }
         ]
     },
     {
         path: 'dashboard-administrador', component: HomeComponent, canActivate: [roleGuard, authGuard], data: { role: 'administrador' }, children: [
-
             { path: '', component: DashboardComponent },
             { path: 'facturacion', component: FacturacionComponent },
             { path: 'usuarios', component: GestionUsuarioListComponent },
             { path: 'stock', component: StockComponent },
-            { path: 'perfil', component: ProfileComponent },
-            { path: '', redirectTo: 'dashboard-administrador', pathMatch: 'full' }
+            { path: 'perfil', component: ProfileComponent }
         ]
-    },
-
-
-    
-
+    }
 ];
