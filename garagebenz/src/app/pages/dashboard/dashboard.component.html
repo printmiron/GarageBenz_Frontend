@@ -1,16 +1,139 @@
-<div class="welcome-container">
-    <h2>Panel de Resumen</h2>
-    <p>Bienvenido de nuevo a GarageBenz.</p>
+<div class="container mt-4 mb-5 animate__animated animate__fadeIn">
 
-    <div class="stats-grid">
-        @if (role === 'cliente') {
-            <div class="card"><h3>Mis Vehículos</h3><p>3 Activos</p></div>
-            <div class="card"><h3>Próxima Cita</h3><p>22/10 - 10:00h</p></div>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="welcome-banner p-4 rounded-4 shadow-sm bg-dark text-white position-relative overflow-hidden">
+                <div class="position-relative z-1">
+                    <h2 class="fw-bold text-uppercase tracking-tighter">¡Hola, {{ userName() }}! 👋</h2>
+                    <p class="mb-0 opacity-75">
+                        Panel de Control: <span class="badge bg-primary text-capitalize">{{ role() }}</span>
+                    </p>
+                </div>
+                <i class="bi bi-gear-wide-connected position-absolute top-50 end-0 translate-middle-y opacity-25"
+                    style="font-size: 150px; margin-right: -30px;"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        @if (role() === 'administrador') {
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 p-3 bg-white border-top border-4 border-primary">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-box bg-primary-subtle text-primary rounded-3 p-2 me-3">
+                        <i class="bi bi-currency-euro fs-4"></i>
+                    </div>
+                    <h6 class="mb-0 fw-bold">Ingresos del Mes</h6>
+                </div>
+                <h3 class="fw-bold text-dark">{{ stats()?.totalIngresos | currency:'EUR' }}</h3>
+                <p class="text-muted small mb-0">Ticket medio: {{ stats()?.promedioTicket | currency:'EUR' }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 p-3 bg-white">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-box bg-dark-subtle text-dark rounded-3 p-2 me-3">
+                        <i class="bi bi-people fs-4"></i>
+                    </div>
+                    <h6 class="mb-0 fw-bold">Plantilla</h6>
+                </div>
+                <h3 class="fw-bold">Gestión de Usuarios</h3>
+                <a routerLink="/dashboard-administrador/usuarios"
+                    class="btn btn-sm btn-outline-dark mt-auto">Administrar →</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 p-3 bg-danger text-white">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-lightning-fill me-2"></i>
+                    <h6 class="mb-0 fw-bold">Rentabilidad</h6>
+                </div>
+                <h3 class="fw-bold">{{ stats()?.margenBeneficio }}% Margen</h3>
+                <p class="small mb-0 opacity-75">Basado en {{ stats()?.cantidadFacturas }} facturas</p>
+            </div>
+        </div>
         }
 
-        @if (role === 'administrador') {
-            <div class="card"><h3>Usuarios Totales</h3><p>150</p></div>
-            <div class="card"><h3>Ingresos Mes</h3><p>12.450€</p></div>
+        @if (role() === 'cliente') {
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-4 h-100 border-start border-4 border-primary bg-white">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="fw-bold mb-1"><i class="bi bi-car-front me-2"></i>Mi Garaje</h5>
+                        <p class="text-muted small">Vehículos registrados</p>
+                    </div>
+                    <div class="display-5 fw-bold text-primary">{{ misVehiculosCount() }}</div>
+                </div>
+                <button class="btn btn-primary w-100 mt-auto" routerLink="/dashboard-cliente/vehiculos">Gestionar mis
+                    coches</button>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-4 h-100 bg-dark text-white">
+                <h5 class="fw-bold mb-3"><i class="bi bi-calendar-event me-2"></i>Próxima Cita</h5>
+                @if (proximaCita()) {
+                <div class="p-3 bg-white bg-opacity-10 rounded-3">
+                    <div class="display-6 fw-bold text-primary">{{ proximaCita().fecha_cita | date:'dd MMM' }}</div>
+                    <div class="fw-bold text-uppercase small text-white-50">{{ proximaCita().hora_cita }}h</div>
+                    <div class="mt-2">{{ proximaCita().descripcion }}</div>
+                    <span class="badge bg-primary mt-2">{{ proximaCita().estado }}</span>
+                </div>
+                } @else {
+                <div class="text-center py-3">
+                    <p class="opacity-50">No tienes citas programadas.</p>
+                    <button class="btn btn-outline-light btn-sm px-4"
+                        routerLink="/dashboard-cliente/citas/nuevo">Solicitar Cita Ahora</button>
+                </div>
+                }
+            </div>
+        </div>
+        }
+
+        @if (role() === 'trabajador') {
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-4 h-100 text-center bg-white">
+                <div class="rounded-circle bg-warning bg-opacity-10 text-warning d-inline-flex align-items-center justify-content-center mb-3 mx-auto"
+                    style="width: 80px; height: 80px;">
+                    <i class="bi bi-tools fs-1"></i>
+                </div>
+                <h2 class="fw-bold mb-1">{{ tareasPendientes() }}</h2>
+                <p class="text-muted small mb-3">Tareas por finalizar</p>
+                <button class="btn btn-dark w-100" routerLink="/dashboard-trabajador/reparaciones">Ver mi
+                    agenda</button>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm p-4 h-100 border-start border-4 border-warning bg-white">
+                <h5 class="fw-bold mb-3">Último Trabajo Asignado</h5>
+                @if (ultimaReparacion()) {
+                <div class="p-4 bg-light rounded-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="fw-bold text-primary mb-0">{{ ultimaReparacion().vehiculo?.modelo || 'Modelo no
+                                especificado' }}</h6>
+                            <span class="badge bg-dark mt-1">{{ ultimaReparacion().vehiculo?.matricula }}</span>
+                        </div>
+                        <span class="badge bg-warning text-dark px-3 py-2 text-uppercase">{{
+                            ultimaReparacion().estadoRep }}</span>
+                    </div>
+                    <div class="alert alert-warning border-0 bg-white shadow-sm small mb-0">
+                        <strong><i class="bi bi-search me-1"></i> Diagnóstico:</strong><br>
+                        {{ ultimaReparacion().diagnostico }}
+                    </div>
+                </div>
+                } @else {
+                <div class="text-center py-5">
+                    <i class="bi bi-emoji-smile fs-1 text-muted"></i>
+                    <p class="text-muted mt-3">¡Buen trabajo! No tienes reparaciones pendientes.</p>
+                </div>
+                }
+            </div>
+        </div>
         }
     </div>
 </div>

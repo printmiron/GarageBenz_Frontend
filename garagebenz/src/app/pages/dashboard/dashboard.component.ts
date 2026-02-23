@@ -1,22 +1,86 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
+import { FacturaService } from '../../service/factura.service';
+import { VehiculoService } from '../../service/vehiculo.service';
+import { CitaService } from '../../service/cita.service';
+import { ReparacionService } from '../../service/reparacion.service';
+import { FacturaStatsI } from 'src/app/interface/factura-stats-i';
+
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
+  styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   private authService = inject(AuthService);
-  role: string | null = '';
+  private facturaService = inject(FacturaService);
+  private vehiculoService = inject(VehiculoService);
+  private citaService = inject(CitaService);
+  private reparacionService = inject(ReparacionService);
 
-  ngOnInit() {
+  role = signal<string | null>(null);
+  userName = signal<string>('');
+  userId = signal<string | null>(null);
+  
+  // Datos Admin
+  stats = signal<FacturaStatsI | null>(null);
 
-    this.role = this.authService.getRole();
+  // Datos Cliente
+  misVehiculosCount = signal<number>(0);
+  proximaCita = signal<any>(null);
+
+  // Datos Trabajador
+  tareasPendientes = signal<number>(0);
+  ultimaReparacion = signal<any>(null);
+
+  async ngOnInit() {
+    const userData = this.authService.getUserData();
+    this.role.set(this.authService.getRole());
+    this.userName.set(userData?.nombre || 'Usuario');
+    this.userId.set(userData?.id || null);
+
+    await this.cargarDatosSegunRol();
   }
 
-  logout() {
-    this.authService.logout();
+  async cargarDatosSegunRol() {
+    const r = this.role();
+    const id = this.userId();
+    const mesActual = new Date().getMonth() + 1;
+
+    // ADMINISTRADOR (Sigue usando Observable según tu código anterior)
+    if (r === 'administrador') {
+      this.facturaService.getStatsMensuales(mesActual).subscribe(data => this.stats.set(data));
+    }
+
+    // CLIENTE (Consumiendo Promesas de VehiculoService y CitaService)
+    if (r === 'cliente' && id) {
+      try {
+        // Cargar Vehículos
+        const vehiculos = await this.vehiculoService.getVehiculosPorCliente(id);
+        this.misVehiculosCount.set(vehiculos.length);
+
+        // Cargar Citas
+        const citas = await this.citaService.getCitasPorCliente(id);
+        // Buscamos la primera cita que no esté completada o cancelada
+        const proxima = citas.find(c => c.estado !== 'Completada' && c.estado !== 'Cancelada');
+        this.proximaCita.set(proxima || null);
+      } catch (e) {
+        console.error("Error cargando datos del cliente:", e);
+      }
+    }
+
+    // TRABAJADOR
+    if (r === 'trabajador' && id) {
+      this.reparacionService.getHistorialCliente(id).subscribe(reps => {
+        const activas = reps.filter(rep => rep.estadoRep !== 'Completada');
+        this.tareasPendientes.set(activas.length);
+        this.ultimaReparacion.set(activas[0] || null);
+      });
+    }
   }
 }

@@ -11,4 +11,11 @@ export interface OrdenesReparacionI {
   fechaInicio: string;
   fechaFin?: string;
   horas: number;
+  piezas?: Array<{
+    cantidadUsada: number;
+    pieza: {
+      nombre: string;
+      precio: number;
+    }
+  }>;
 }

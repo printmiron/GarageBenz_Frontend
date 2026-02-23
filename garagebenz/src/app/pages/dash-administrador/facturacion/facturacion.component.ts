@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
-import { CommonModule, CurrencyPipe, DecimalPipe, DatePipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { FacturaService } from 'src/app/service/factura.service';
 import { FacturaStatsI } from 'src/app/interface/factura-stats-i';
 import autoTable from 'jspdf-autotable';
@@ -14,10 +14,14 @@ import jsPDF from 'jspdf';
 })
 export class FacturacionComponent implements OnInit {
   private facturaService = inject(FacturaService);
+  
 
   stats = signal<FacturaStatsI | null>(null);
   facturas = signal<any[]>([]);
   loading = signal<boolean>(true);
+
+  // Colores corporativos para reusar
+  private readonly PRIMARY_COLOR = [0, 48, 135]; // Azul GarageBenz
 
   ngOnInit() {
     this.cargarDatos();
@@ -32,7 +36,10 @@ export class FacturacionComponent implements OnInit {
         this.stats.set(data);
         this.loading.set(false);
       },
-      error: () => this.loading.set(false)
+      error: (err) => {
+        console.error('Error stats:', err);
+        this.loading.set(false);
+      }
     });
 
     this.facturaService.getTodasLasFacturas().subscribe(data => this.facturas.set(data));
@@ -40,89 +47,135 @@ export class FacturacionComponent implements OnInit {
 
   margenColor = computed(() => {
     const m = this.stats()?.margenBeneficio || 0;
-    if (m > 30) return 'text-success';  // Verde si el margen es alto
-    if (m > 15) return 'text-warning';  // Naranja si es medio
-    return 'text-danger';               // Rojo si es bajo
+    if (m > 30) return 'text-success';
+    if (m > 15) return 'text-warning';
+    return 'text-danger';
   });
 
-  // DESCARGAR REPORTE MENSUAL EN PDF
+  // --- REPORTE MENSUAL PROFESIONAL ---
   descargarReporteMensual() {
     const s = this.stats();
-    // 1. Verificación de seguridad inicial
-    if (!s) {
-      alert('No hay datos disponibles para generar el reporte.');
-      return;
-    }
+    if (!s) return;
 
     const doc = new jsPDF();
+    const margin = 14;
 
-    doc.setFontSize(18);
-    doc.text(`REPORTE ECONÓMICO - MES ${s.mes || 'N/A'}/${s.anio || ''}`, 14, 20);
-    doc.setFontSize(10);
-    doc.text(`Garage Benz - Generado el: ${new Date().toLocaleDateString()}`, 14, 28);
+    // Cabecera Estilo GarageBenz
+    doc.setFillColor(this.PRIMARY_COLOR[0], this.PRIMARY_COLOR[1], this.PRIMARY_COLOR[2]);
+    doc.rect(0, 0, 210, 40, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.text('GARAGE BENZ S.L.', margin, 20);
+    doc.setFontSize(11);
+    doc.text(`REPORTE ECONÓMICO MENSUAL - ${s.mes}/${s.anio}`, margin, 30);
+    doc.text(`Generado: ${new Date().toLocaleDateString()}`, 140, 30);
 
-    // 2. Uso de (valor || 0).toFixed(2) para evitar el error de 'undefined'
+    // Tabla 1: Resumen Financiero
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('RESUMEN DE RENTABILIDAD', margin, 55);
+
     autoTable(doc, {
-      startY: 35,
-      head: [['Concepto', 'Valor']],
+      startY: 60,
+      head: [['Concepto', 'Total']],
       body: [
-        ['Ingresos Totales (Bruto)', `${(s.totalIngresos || 0).toFixed(2)} €`],
-        ['Mano de Obra', `${(s.totalManoObra || 0).toFixed(2)} €`],
-        ['Venta de Repuestos', `${(s.totalPiezasVenta || 0).toFixed(2)} €`],
-        ['Gasto en Adquisición Stock', `${(s.totalGastoStock || 0).toFixed(2)} €`],
-        ['Beneficio Neto', `${(s.beneficioNeto || 0).toFixed(2)} €`],
-        ['Margen de Beneficio', `${(s.margenBeneficio || 0)} %`],
+        ['Ingresos Brutos (Ventas + Mano Obra)', `${(s.totalIngresos || 0).toFixed(2)} €`],
+        ['Desglose: Mano de Obra', `${(s.totalManoObra || 0).toFixed(2)} €`],
+        ['Desglose: Venta de Repuestos', `${(s.totalPiezasVenta || 0).toFixed(2)} €`],
+        ['Coste Adquisición Stock (Gastos)', `${(s.totalGastoStock || 0).toFixed(2)} €`],
+        ['BENEFICIO NETO', `${(s.beneficioNeto || 0).toFixed(2)} €`],
+        ['Margen Comercial', `${s.margenBeneficio || 0}%`]
       ],
-      theme: 'striped',
-      headStyles: { fillColor: [13, 110, 253] }
+      headStyles: { fillColor: this.PRIMARY_COLOR as [number, number, number] },
+      theme: 'grid',
+      styles: { fontSize: 10 }
     });
 
+    // Tabla 2: Rendimiento Operativo
+    const finalY = (doc as any).lastAutoTable.finalY + 15;
+    doc.text('MÉTRICAS DE ACTIVIDAD', margin, finalY);
+
     autoTable(doc, {
-      startY: (doc as any).lastAutoTable.finalY + 10,
-      head: [['Métrica Operativa', 'Cantidad']],
+      startY: finalY + 5,
+      head: [['Indicador', 'Valor']],
       body: [
         ['Facturas Emitidas', s.cantidadFacturas || 0],
-        ['Clientes Atendidos', s.clientesAtendidos || 0],
-        ['Piezas Utilizadas', s.piezasVendidas || 0],
-        ['Ticket Promedio', `${(s.promedioTicket || 0).toFixed(2)} €`],
+        ['Clientes Únicos Atendidos', s.clientesAtendidos || 0],
+        ['Repuestos Instalados', s.piezasVendidas || 0],
+        ['Ticket Medio por Intervención', `${(s.promedioTicket || 0).toFixed(2)} €`]
       ],
-      headStyles: { fillColor: [33, 37, 41] }
+      headStyles: { fillColor: [60, 60, 60] },
+      theme: 'striped'
     });
+
+    // Pie de página
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.text('Confidencial - Solo para uso administrativo de Garage Benz S.L.', 105, 285, { align: 'center' });
 
     doc.save(`Reporte_Mensual_${s.mes}_${s.anio}.pdf`);
   }
+
+  // --- FACTURA INDIVIDUAL PROFESIONAL ---
   verFactura(f: any) {
     if (!f) return;
 
     const doc = new jsPDF();
+    const margin = 14;
 
-    // Encabezado Factura
-    doc.setFontSize(20);
-    doc.text("FACTURA", 105, 20, { align: 'center' });
+    // Cabecera Estilo GarageBenz (Igual que en reporte para consistencia)
+    doc.setFillColor(this.PRIMARY_COLOR[0], this.PRIMARY_COLOR[1], this.PRIMARY_COLOR[2]);
+    doc.rect(0, 0, 210, 40, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.text('GARAGE BENZ S.L.', margin, 20);
+    doc.setFontSize(10);
+    doc.text(`Factura Nº: ${f.numeroFactura}`, 140, 20);
+    doc.text(`Fecha: ${new Date(f.fechaEmision).toLocaleDateString()}`, 140, 27);
+
+    // Información del Cliente
+    doc.setTextColor(0, 0, 0);
     doc.setFontSize(12);
-    doc.text(`Nº: ${f.numeroFactura}`, 14, 40);
-    doc.text(`Fecha: ${new Date(f.fechaEmision).toLocaleDateString()}`, 14, 47);
+    doc.setFont('helvetica', 'bold');
+    doc.text('DATOS DEL CLIENTE Y VEHÍCULO', margin, 55);
+    doc.line(margin, 57, 80, 57);
 
-    // Datos Cliente
-    doc.setFont(undefined, 'bold');
-    doc.text("CLIENTE:", 14, 60);
-    doc.setFont(undefined, 'normal');
-    doc.text(`${f.ordenReparacion?.vehiculo?.cliente?.nombre || 'N/A'}`, 14, 67);
-    doc.text(`Vehículo: ${f.ordenReparacion?.vehiculo?.modelo} (${f.ordenReparacion?.vehiculo?.matricula})`, 14, 74);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Cliente: ${f.ordenReparacion?.vehiculo?.cliente?.nombre || 'Particular'}`, margin, 65);
+    doc.text(`Vehículo: ${f.ordenReparacion?.vehiculo?.modelo || 'N/A'}`, margin, 72);
+    doc.text(`Matrícula: ${f.ordenReparacion?.vehiculo?.matricula || 'N/A'}`, margin, 79);
 
-    // Tabla de conceptos (Mano de obra y piezas)
+    // Desglose de factura
     autoTable(doc, {
-      startY: 85,
-      head: [['Descripción', 'Importe']],
+      startY: 90,
+      head: [['Descripción del Servicio', 'Base Imponible']],
       body: [
-        ['Mano de Obra / Servicios', `${(f.totalManoObra || 0).toFixed(2)} €`],
-        ['Repuestos y Materiales', `${(f.totalPiezas || 0).toFixed(2)} €`],
-        ['IVA (21%)', `${(f.importeTotal - (f.importeTotal / 1.21)).toFixed(2)} €`]
+        ['Servicios de Mano de Obra Especializada', `${(f.totalManoObra || 0).toFixed(2)} €`],
+        ['Materiales, Repuestos y Consumibles', `${(f.totalPiezas || 0).toFixed(2)} €`]
       ],
-      foot: [['TOTAL FACTURA', `${(f.importeTotal || 0).toFixed(2)} €`]],
-      footStyles: { fillColor: [0, 0, 0], textColor: [255, 255, 255] }
+      headStyles: { fillColor: this.PRIMARY_COLOR as [number, number, number] },
+      theme: 'striped'
     });
 
-    doc.save(`Factura_${f.numeroFactura}.pdf`);
+    // Resumen de Totales
+    const finalY = (doc as any).lastAutoTable.finalY + 10;
+    const baseImponible = (f.totalManoObra || 0) + (f.totalPiezas || 0);
+    const iva = f.importeTotal - baseImponible;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Base Imponible: ${baseImponible.toFixed(2)} €`, 130, finalY);
+    doc.text(`IVA (21%): ${iva.toFixed(2)} €`, 130, finalY + 8);
+    
+    doc.setFontSize(16);
+    doc.setTextColor(200, 0, 0);
+    doc.text(`TOTAL: ${(f.importeTotal || 0).toFixed(2)} €`, 130, finalY + 18);
+
+    // Footer
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.text('Este documento es una copia oficial de la factura original.', 105, 285, { align: 'center' });
+
+    doc.save(`Factura_${f.numeroFactura}_${f.ordenReparacion?.vehiculo?.matricula}.pdf`);
   }
 }

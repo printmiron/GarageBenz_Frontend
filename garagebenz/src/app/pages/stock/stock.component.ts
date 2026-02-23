@@ -105,24 +105,16 @@ export class StockComponent implements OnInit {
   }
 
   // BOTÓN "FINALIZAR Y FACTURAR"
-  async finalizarYFacturar() {
-    if (!confirm('¿Deseas cerrar la orden y generar la factura definitiva?')) return;
-
-    try {
-      // 1. Llamada al servicio (descuenta stock y crea factura en DB)
-      const factura = await this.facturaService.generarFacturaDesdeOrden(this.idFinal);
-
-      alert(`Orden finalizada. Factura Nº: ${factura.numeroFactura}`);
-
-      // 2. Pasamos la factura al PDF si queremos mostrar datos reales
-      this.generarInformePDF(factura);
-
-      // 3. Redirigimos
-      this.router.navigate(['dashboard-trabajador/ordenes']);
-    } catch (e) {
-      console.error(e);
-      alert('Error en el proceso de facturación y stock.');
+  // Cambia el método finalizarYFacturar por este:
+  confirmarYVolver() {
+    if (this.piezasAgregadas().length === 0) {
+      if (!confirm('No has añadido piezas nuevas. ¿Deseas volver a la orden de todos modos?')) return;
     }
+
+    // Como el método agregarPieza() ya llama a asignarPiezaAOrden (el backend ya tiene los datos)
+    // solo necesitamos volver.
+    alert('Repuestos asignados correctamente.');
+    this.router.navigate(['/dashboard-trabajador/ordenes']);
   }
 
   // --- LÓGICA ADMINISTRADOR (PIEZA SERVICE) ---
