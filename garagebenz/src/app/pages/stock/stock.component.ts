@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { StockService } from '../../service/stock.service';
-import { PiezaService } from '../../service/pieza.service'; // <--- IMPORTADO
+import { PiezaService } from '../../service/pieza.service'; 
 import { SotckI } from '../../interface/sotck-i';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
