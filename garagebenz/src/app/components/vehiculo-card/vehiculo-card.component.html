@@ -1,37 +1,40 @@
-<div class="card h-100 benz-card shadow-lg bg-dark text-white border-secondary">
+<div class="card h-100 benz-card shadow-lg text-white border-0">
   <div class="card-body p-4 d-flex flex-column">
 
     <div class="d-flex justify-content-between align-items-start mb-3">
       <div>
-        <h6 class="text-uppercase text-muted fw-bold small" style="letter-spacing: 2px;">
-          Año {{ miVehiculo.anio }}
+        <h6 class="text-uppercase text-secondary fw-bold small mb-1 tracking-widest" style="font-size: 0.65rem;">
+          Modelo {{ miVehiculo.anio }}
         </h6>
-        <h4 class="card-title mb-0 fw-bold">{{ miVehiculo.modelo }}</h4>
+        <h4 class="card-title mb-0 fw-bold" style="letter-spacing: 1px;">{{ miVehiculo.modelo }}</h4>
       </div>
       <div class="icon-status">
-        <i class="bi bi-patch-check-fill text-success fs-4"></i>
+        <i class="bi bi-patch-check-fill fs-4" style="color: var(--color-lochmara);"></i>
       </div>
     </div>
 
-    <div class="plate-display my-3">
-      <div class="plate-bg">
+    <div class="text-center my-4">
+      <div class="plate-display shadow-sm">
         <span class="plate-number">{{ miVehiculo.matricula }}</span>
       </div>
     </div>
 
-    <div class="tech-info mb-4">
+    <div class="tech-info mb-4 pt-3 border-top border-secondary border-opacity-10">
       <div class="d-flex align-items-center mb-2 small text-secondary">
-        <i class="bi bi-fingerprint me-2"></i>
-        <span>VIN: {{ miVehiculo.vin }}</span>
+        <i class="bi bi-fingerprint me-2" style="color: var(--color-lochmara);"></i>
+        <span class="fw-light">VIN: <strong class="text-white">{{ miVehiculo.vin }}</strong></span>
       </div>
     </div>
 
     <div class="d-flex gap-2 mt-auto">
       <button [routerLink]="['/dashboard-cliente/vehiculos/view', miVehiculo.id_vehiculo]"
-        class="btn btn-outline-light flex-grow-1 btn-sm fw-bold">
-        DETALLES
+        class="btn btn-benz btn-benz-outline flex-grow-1 btn-sm py-2">
+        VER DETALLES
       </button>
-      <button (click)="deleteVehiculo(miVehiculo)" class="btn btn-outline-danger btn-sm">
+      
+      <button (click)="deleteVehiculo(miVehiculo)" 
+        class="btn btn-outline-danger btn-sm px-3 d-flex align-items-center justify-content-center"
+        style="border-radius: 0;">
         <i class="bi bi-trash3"></i>
       </button>
     </div>

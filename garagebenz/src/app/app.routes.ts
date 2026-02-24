@@ -14,17 +14,17 @@ import { GestionUsuarioListComponent } from './pages/dash-administrador/gestion-
 import { roleGuard } from './guards/role-guard';
 import { authGuard } from './guards/auth-guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-
 import { VehiculoViewComponent } from './pages/dash-cliente/vehiculo-view/vehiculo-view.component';
 import { NuevoCitaComponent } from './pages/nuevo-cita/nuevo-cita.component';
 import { NuevoVehiculoComponent } from './pages/nuevo-vehiculo/nuevo-vehiculo.component';
 import { NuevoTrabajadorComponent } from './pages/dash-administrador/nuevo-trabajador/nuevo-trabajador.component';
+import { RegistroComponent } from './pages/registro/registro';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
     { path: 'landingPage', component: LandingPageComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'registro', loadComponent: () => import('./pages/registro/registro').then(m => m.RegistroComponent) },
+    { path: 'registro', component: RegistroComponent },
 
     {
         path: 'dashboard-cliente', component: HomeComponent, canActivate: [roleGuard, authGuard], data: { role: 'cliente' }, children: [

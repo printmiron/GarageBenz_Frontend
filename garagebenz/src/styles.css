@@ -9,20 +9,223 @@
     /* Tipografía */
     --font-corporate-a: 'Corporate A', 'Arial Narrow', sans-serif;
     --font-corporate-s: 'Corporate S', Arial, sans-serif;
+
+    /* Nuevas variables de apoyo para componentes */
+    --sidebar-width: 280px;
+    --transition-standard: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
+/* Base Setup */
 body {
     background-color: var(--color-albaster);
     color: var(--color-black);
     font-family: var(--font-corporate-s);
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; /* Evita scrolls horizontales raros en móvil */
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-corporate-a);
+    font-weight: 300; /* Mercedes usa fuentes delgadas para elegancia */
+    letter-spacing: 1px;
 }
+
+/* --- CLASES DE UTILIDAD PARA NAVEGACIÓN --- */
+
+/* Clase para el enlace activo de Angular (Lochmara) */
+.active-lochmara {
+    background-color: var(--color-lochmara) !important;
+    color: var(--color-white) !important;
+    box-shadow: 0 4px 12px rgba(0, 120, 214, 0.25);
+}
+
+/* Espaciado de letras estilo Logo */
+.tracking-widest {
+    letter-spacing: 5px !important;
+    text-transform: uppercase;
+}
+
+/* --- ADAPTACIÓN DE CARDS (BENZ STYLE) --- */
+
+.benz-card {
+    background: linear-gradient(145deg, #1e1e1e 0%, #000000 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    transition: var(--transition-standard);
+}
+
+.benz-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-lochmara);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Matrícula Realista */
+.plate-display {
+    background: #ffffff;
+    padding: 5px 15px;
+    border-radius: 4px;
+    border: 2px solid #333;
+    display: inline-block;
+}
+
+.plate-number {
+    color: #111;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+/* --- BOTONES PREMIUM --- */
+
+.btn-benz {
+    border-radius: 0; /* Estilo geométrico */
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: var(--transition-standard);
+    padding: 0.6rem 1.5rem;
+}
+
+.btn-benz-primary {
+    background-color: var(--color-lochmara);
+    border-color: var(--color-lochmara);
+    color: white;
+}
+
+.btn-benz-primary:hover {
+    background-color: #005fa3;
+    transform: scale(1.02);
+}
+
+.btn-benz-outline {
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+}
+
+.btn-benz-outline:hover {
+    background-color: white;
+    color: black;
+}
+
+/* --- RESPONSIVE FIXES PARA BOOTSTRAP --- */
+
+/* Asegura que el Offcanvas de Bootstrap no se rompa */
+@media (max-width: 991.98px) {
+    .offcanvas-lg {
+        --bs-offcanvas-bg: var(--color-black);
+    }
+}
+
+/* Scrollbar personalizada minimalista */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-albaster);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Badge estilizado para servicios */
+.badge-benz-service {
+    background-color: rgba(0, 120, 214, 0.1);
+    color: var(--color-lochmara);
+    border: 1px solid rgba(0, 120, 214, 0.2);
+    border-radius: 0;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+}
+
+/* Animación sutil para las filas de citas */
+.benz-card {
+    animation: fadeInUp 0.5s ease backwards;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ESTILOS DE FORMULARIO PREMIUM --- */
+
+.label-benz {
+  color: #888;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.benz-input {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border-radius: 0 !important; /* Estilo cuadrado = Lujo */
+  padding: 0.75rem 1rem;
+  transition: var(--transition-standard);
+}
+
+.benz-input:focus {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--color-lochmara) !important;
+  box-shadow: 0 0 0 0.25rem rgba(0, 120, 214, 0.15) !important;
+  outline: none;
+}
+
+/* Estilo para los options del select (depende del navegador, pero ayuda) */
+.benz-input option {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+/* Quitar icono de calendario nativo para que sea más limpio (opcional) */
+.benz-input::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Hace el icono blanco */
+  cursor: pointer;
+}
+
+
+/* --- COMPONENTES DE PERFIL --- */
+
+.avatar-circle {
+    border-radius: 0; /* Si prefieres el estilo Mercedes-Benz moderno, los cuadros son elegantes, pero los círculos con borde grueso también funcionan */
+    background: var(--color-lochmara);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-info-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    transition: var(--transition-standard);
+}
+
+.profile-info-box:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-lochmara);
+}
+
+/* Clases dinámicas para el Rol */
+.badge-admin { background-color: #dc3545 !important; }
+.badge-cliente { background-color: var(--color-lochmara) !important; }
+.badge-trabajador { background-color: #6c757d !important; }

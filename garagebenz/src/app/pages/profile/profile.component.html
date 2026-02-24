@@ -1,61 +1,71 @@
-<div class="profile-container p-4">
+<div class="profile-container p-0 p-lg-4">
   @if (user()) {
-  <div class="card bg-dark text-white border-secondary border-opacity-25 shadow-lg animate__animated animate__fadeIn">
+  <div class="card benz-card shadow-lg border-0 animate__animated animate__fadeIn">
 
-    <div class="card-header border-0 p-5 text-center bg-gradient-benz position-relative">
-      <div class="avatar-circle mx-auto mb-3 shadow-lg border border-2 border-secondary">
+    <div class="card-header border-0 p-5 text-center bg-transparent position-relative border-bottom border-secondary border-opacity-10">
+      <div class="avatar-circle mx-auto mb-4 shadow-lg d-flex align-items-center justify-content-center text-white" 
+           style="width: 100px; height: 100px; background: var(--color-lochmara); font-size: 2.5rem; font-family: var(--font-corporate-a); border: 4px solid rgba(255,255,255,0.1);">
         {{ initials() }}
       </div>
-      <h2 class="fw-bold mb-0 letter-spacing-1">{{ user()?.nombre }} {{ user()?.apellido1 }}</h2>
-      <span class="badge rounded-pill mt-3 px-4 py-2 text-uppercase fw-bold shadow-sm" [ngClass]="roleBadgeClass()">
+      <h2 class="fw-light tracking-widest mb-0 text-white">
+        {{ user()?.nombre }} <span class="fw-bold">{{ user()?.apellido1 }}</span>
+      </h2>
+      <span class="badge mt-3 px-4 py-2 text-uppercase fw-bold shadow-sm" 
+            [ngClass]="roleBadgeClass()" 
+            style="letter-spacing: 2px; font-size: 0.7rem; border-radius: 0;">
         <i class="bi bi-person-badge-fill me-2"></i> {{ user()?.rol }}
       </span>
     </div>
 
     <div class="card-body p-4 p-lg-5">
       <div class="row g-4">
+        
         <div class="col-md-6">
           <div class="info-field">
-            <label class="text-secondary small fw-bold text-uppercase mb-2 d-block">Identidad Digital</label>
-            <div class="profile-info-box shadow-sm">
-              <i class="bi bi-person-circle me-2 text-primary"></i> {{ user()?.usuario }}
+            <label class="label-benz">Identidad Digital</label>
+            <div class="profile-info-box">
+              <i class="bi bi-person-circle me-3 text-primary"></i> 
+              <span class="text-white fw-bold">{{ user()?.usuario }}</span>
             </div>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="info-field">
-            <label class="text-secondary small fw-bold text-uppercase mb-2 d-block">Contacto</label>
-            <div class="profile-info-box shadow-sm">
-              <i class="bi bi-envelope-at me-2 text-primary"></i> {{ user()?.correo }}
+            <label class="label-benz">Contacto Oficial</label>
+            <div class="profile-info-box">
+              <i class="bi bi-envelope-at me-3 text-primary"></i> 
+              <span class="text-white fw-bold">{{ user()?.correo }}</span>
             </div>
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="info-field">
-            <label class="text-secondary small fw-bold text-uppercase mb-2 d-block">Apellidos</label>
-            <div class="profile-info-box shadow-sm">
-              {{ user()?.apellido1 }} {{ user()?.apellido2 || '' }}
+            <label class="label-benz">Nombre y Apellidos del Titular</label>
+            <div class="profile-info-box">
+              <span class="text-white fw-bold">
+                {{ user()?.nombre }} {{ user()?.apellido1 }} {{ user()?.apellido2 || '' }}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       <div class="mt-5 pt-4 border-top border-secondary border-opacity-10 d-flex flex-wrap gap-3">
-        <button class="btn btn-primary rounded-pill px-4 py-2 transition-all">
-          <i class="bi bi-pencil-square me-2"></i> Actualizar Datos
+        <button class="btn btn-benz btn-benz-primary px-5 py-3">
+          <i class="bi bi-pencil-square me-2"></i> ACTUALIZAR DATOS
         </button>
-        <button class="btn btn-outline-light rounded-pill px-4 py-2">
-          <i class="bi bi-key me-2"></i> Seguridad
+        <button class="btn btn-benz btn-benz-outline px-5 py-3">
+          <i class="bi bi-key me-2"></i> SEGURIDAD
         </button>
       </div>
     </div>
   </div>
   } @else {
-  <div class="d-flex flex-column align-items-center justify-content-center p-5 text-white">
-    <div class="spinner-grow text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
-    <h5 class="text-secondary fw-light">Sincronizando con GarageBenz...</h5>
+  <div class="d-flex flex-column align-items-center justify-content-center p-5 text-dark" style="min-height: 60vh;">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem; border-width: 0.2rem;"></div>
+    <h5 class="tracking-widest fw-light text-uppercase" style="font-size: 0.8rem;">Sincronizando con GarageBenz...</h5>
   </div>
   }
 </div>
