@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { StockService } from '../../service/stock.service';
-import { PiezaService } from '../../service/pieza.service'; 
+import { PiezaService } from '../../service/pieza.service';
 import { SotckI } from '../../interface/sotck-i';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
@@ -25,12 +25,12 @@ export class StockComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  
+
   idRecuperadoDeUrl = signal<string>('');
   piezasAgregadas = signal<{ item: SotckI, cantidad: number }[]>([]);
   esAdmin = signal<boolean>(false);
 
-  
+
   nuevaPieza = signal({
     nombre: '',
     descripcion: '',
@@ -40,18 +40,18 @@ export class StockComponent implements OnInit {
   });
 
   async ngOnInit() {
-    
+
     const idUrl = this.route.snapshot.paramMap.get('id');
     if (idUrl) this.idRecuperadoDeUrl.set(idUrl);
 
-    
+
     const usuario = this.authService.getUserData();
     const rolLocalStorage = localStorage.getItem('userRole');
     const rolObjeto = usuario?.id_rol || usuario?.rol;
 
     const rolFinal = (rolObjeto || rolLocalStorage || '').toUpperCase();
 
-    
+
     this.esAdmin.set(rolFinal === 'ADMINISTRADOR');
 
     await this.cargarDatos();
@@ -67,7 +67,7 @@ export class StockComponent implements OnInit {
 
   get idFinal() { return this.idRecuperadoDeUrl(); }
 
-  
+
   stockPorCategoria = computed(() => {
     const stock = this.stockService.stockDisponible();
     const grupos: { [key: string]: SotckI[] } = {};
@@ -85,50 +85,50 @@ export class StockComponent implements OnInit {
     return this.piezasAgregadas().reduce((acc, p) => acc + ((p.item.pieza.precio || 0) * p.cantidad), 0);
   });
 
-  
+
   async agregarPieza(item: SotckI, cantidad: number) {
     if (!this.idFinal) return alert('No hay una Orden de Trabajo activa.');
     if (cantidad > item.cantidad) return alert('No hay stock suficiente en almacén.');
 
     try {
-      
+
       await this.stockService.asignarPiezaAOrden(this.idFinal, item.pieza.idPieza, cantidad);
 
-      
+
       this.piezasAgregadas.update(prev => [...prev, { item, cantidad }]);
 
-      
+
       item.cantidad -= cantidad;
     } catch (e) {
       alert('Error al asignar pieza a la orden');
     }
   }
 
-  
-  
+
+
   confirmarYVolver() {
     if (this.piezasAgregadas().length === 0) {
       if (!confirm('No has añadido piezas nuevas. ¿Deseas volver a la orden de todos modos?')) return;
     }
 
-    
-    
+
+
     alert('Repuestos asignados correctamente.');
     this.router.navigate(['/dashboard-trabajador/ordenes']);
   }
 
-  
+
   async crearNuevaPieza() {
     try {
-      
+
       await this.piezaService.crearPiezaConStock(this.nuevaPieza());
 
       alert('Pieza y Stock creados con éxito');
 
-      
+
       this.nuevaPieza.set({ nombre: '', descripcion: '', precio: 0, categoria: 'General', cantidadInicial: 0 });
 
-      
+
       await this.cargarDatos();
     } catch (e) {
       console.error('Error en crearNuevaPieza:', e);
@@ -136,10 +136,10 @@ export class StockComponent implements OnInit {
     }
   }
 
-  
+
   async reponerStock(item: SotckI, cantidad: number) {
     try {
-      
+
       await this.stockService.reponerStock(item.pieza.idPieza, cantidad);
       alert(`Stock actualizado: +${cantidad} unidades para ${item.pieza.nombre}`);
       await this.cargarDatos();

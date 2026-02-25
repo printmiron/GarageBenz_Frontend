@@ -14,15 +14,7 @@ export class HomeComponent implements OnInit {
   role = signal<string | null>(null);
   userName = signal<string>('');
 
-  userInitials = computed(() => {
-    const name = this.userName();
-    if (!name || name === 'Usuario') return 'MB';
-    return name.split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  });
+ 
 
   ngOnInit() {
     const userData = this.authService.getUserData();

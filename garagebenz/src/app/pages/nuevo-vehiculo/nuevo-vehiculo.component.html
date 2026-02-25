@@ -1,29 +1,69 @@
-<div class="registro-container">
-    <h2>Añadir Nuevo Vehículo</h2>
+<div class="page-benz anim-fade-up">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        
+        <header class="section-header-benz mb-5">
+          <h2 class="benz-title">REGISTRO DE <span class="fw-bold">UNIDAD</span></h2>
+        </header>
 
-    <form (ngSubmit)="registrar()" #f="ngForm">
-        <div class="form-group">
-            <label>Matrícula</label>
-            <input type="text" name="matricula" [(ngModel)]="nuevoVehiculo.matricula" required
-                placeholder="Ej: 1234ABC">
+        <div class="card-benz p-4 p-md-5">
+          <form (ngSubmit)="registrar()" #f="ngForm">
+            
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="form-group-benz">
+                  <label class="label-benz">IDENTIFICACIÓN (MATRÍCULA)</label>
+                  <input type="text" name="matricula" [(ngModel)]="nuevoVehiculo.matricula" 
+                         required placeholder="0000AAA" class="form-control benz-input-light text-uppercase">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group-benz">
+                  <label class="label-benz">Nº DE BASTIDOR (VIN)</label>
+                  <input type="text" name="vin" [(ngModel)]="nuevoVehiculo.vin" 
+                         required placeholder="17 CARACTERES" class="form-control benz-input-light text-uppercase">
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <div class="form-group-benz">
+                  <label class="label-benz">MODELO COMERCIAL</label>
+                  <input type="text" name="modelo" [(ngModel)]="nuevoVehiculo.modelo" 
+                         required placeholder="Ej: Mercedes-Benz Clase A" class="form-control benz-input-light">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group-benz">
+                  <label class="label-benz">AÑO DE PRODUCCIÓN</label>
+                  <input type="number" name="anio" [(ngModel)]="nuevoVehiculo.anio" 
+                         required class="form-control benz-input-light" min="1900" max="2026">
+                </div>
+              </div>
+
+              <div class="col-12 mt-5">
+                <div class="d-flex flex-column flex-md-row gap-3">
+                  <button type="submit" [disabled]="f.invalid" 
+                          class="btn-benz btn-benz-primary flex-grow-1 py-3">
+                    REGISTRAR EN GARAJE DIGITAL
+                  </button>
+                  
+                  <button type="button" [routerLink]="['/dashboard-cliente/vehiculos']" 
+                          class="btn-benz btn-benz-ghost py-3">
+                    CANCELAR
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </form>
         </div>
 
-        <div class="form-group">
-            <label>VIN (Nº Bastidor)</label>
-            <input type="text" name="vin" [(ngModel)]="nuevoVehiculo.vin" required placeholder="17 caracteres">
-        </div>
+       
 
-        <div class="form-group">
-            <label>Modelo</label>
-            <input type="text" name="modelo" [(ngModel)]="nuevoVehiculo.modelo" required
-                placeholder="Ej: Mercedes Clase C">
-        </div>
-
-        <div class="form-group">
-            <label>Año</label>
-            <input type="number" name="anio" [(ngModel)]="nuevoVehiculo.anio" required>
-        </div>
-
-        <button type="submit" [disabled]="f.invalid">Registrar Vehículo</button>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>

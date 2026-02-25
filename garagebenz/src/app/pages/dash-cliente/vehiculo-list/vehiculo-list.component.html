@@ -1,12 +1,12 @@
 <div class="container-fluid p-4 main-garage-container">
-  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
-    <div class="header-text">
-      <h1 class="benz-title">MI GARAJE</h1>
-      <p class="benz-subtitle">GESTIÓN DE UNIDADES REGISTRADAS</p>
+   <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
+    <div>
+      <h1 class="benz-title">MIS VEHICULOS</h1>
+      <p class="benz-subtitle">VEHICULOS REGISTRARDOS</p>
     </div>
-    <div class="text-end">
-       <span class="badge-count">{{ vehiculosAMostrar.length }} UNIDADES</span>
-    </div>
+    <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn-benz-black">
+      <i class="bi bi-plus-lg me-2"></i> NUEVO VEHICULO
+    </button>
   </header>
 
   <div class="row g-4 mb-5">
@@ -32,13 +32,5 @@
     }
   </div>
 
-  <div class="action-bar-fixed">
-    <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn-benz-register">
-      <span class="btn-content">
-        <i class="bi bi-plus-lg"></i>
-        <span class="btn-text">REGISTRAR NUEVO VEHÍCULO</span>
-      </span>
-      <div class="btn-hover-effect"></div>
-    </button>
-  </div>
+  
 </div>

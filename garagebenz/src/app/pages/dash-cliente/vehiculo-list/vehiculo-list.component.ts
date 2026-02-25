@@ -11,7 +11,8 @@ import { RouterLink } from '@angular/router';
   selector: 'app-vehiculo-list',
   standalone: true,
   imports: [CardVehiculoComponent, FormsModule, RouterLink],
-  templateUrl: './vehiculo-list.component.html'
+  templateUrl: './vehiculo-list.component.html',
+  styleUrl: './vehiculo-list.component.css'
 })
 export class ListVehiculoComponent implements OnInit {
   serviceVehiculo = inject(VehiculoService);

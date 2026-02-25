@@ -7,12 +7,7 @@
   position: relative;
 }
 
-.benz-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-}
+
 
 .benz-card:hover {
   transform: translateY(-5px);
@@ -118,7 +113,7 @@
 
 
 .tech-info {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(161, 161, 161, 0.02);
   margin: 0 -1rem;
   padding-left: 1rem;
   padding-right: 1rem;

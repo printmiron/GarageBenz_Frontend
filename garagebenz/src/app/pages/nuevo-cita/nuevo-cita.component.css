@@ -1,0 +1,63 @@
+
+.form-group-benz {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+
+.benz-title {
+  font-size: 2.2rem;
+  color: var(--color-black);
+}
+
+
+.benz-input-light {
+  border: 1px solid #e0e0e0 ;
+  background-color: #fafafa ;
+  font-weight: 500;
+  color: var(--color-carbon) ;
+  padding: 0.85rem 1rem;
+}
+
+.benz-input-light:focus {
+  background-color: #ffffff ;
+  border-color: var(--color-lochmara) ;
+}
+
+
+.error-msg {
+  color: #dc2626;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 5px;
+  display: block;
+}
+
+
+.card-benz {
+  border-top: 4px solid var(--color-black) ;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05) ;
+}
+
+
+.form-group-benz label {
+  transition: color 0.3s ease;
+}
+
+.form-group-benz:focus-within label {
+  color: var(--color-lochmara);
+}
+
+
+@media (max-width: 768px) {
+  .btn-benz {
+    width: 100%;
+  }
+}
+
+.col-md-6{
+    display: block;
+    
+}
