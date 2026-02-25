@@ -26,7 +26,7 @@ export class LoginComponent {
 
     try {
       const res = await this.authService.login(this.loginForm.value);
-      // Redirigimos usando el rol que acabamos de guardar
+      
       this.router.navigate([`/dashboard-${res.rol.toLowerCase()}`]);
     } catch (err) {
       alert('Usuario o contraseña incorrectos');

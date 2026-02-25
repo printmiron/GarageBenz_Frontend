@@ -1,0 +1,108 @@
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.benz-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.benz-sidebar {
+  width: 280px;
+  background-color: #000000 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  z-index: 1050;
+}
+
+.benz-sidebar-header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.benz-logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.benz-logo-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.benz-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  min-width: 0;
+}
+
+.benz-topbar {
+  height: 70px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 2rem;
+  flex-shrink: 0;
+}
+
+.benz-content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+.benz-content {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 991.98px) {
+  .benz-layout {
+    flex-direction: column;
+  }
+
+  .benz-mobile-nav {
+    height: 60px;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    justify-content: space-between;
+    z-index: 1100;
+    position: sticky;
+    top: 0;
+  }
+
+  .benz-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    transform: translateX(-100%);
+    visibility: hidden;
+  }
+
+  .benz-sidebar.show {
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  .benz-content {
+    padding: 1rem;
+  }
+}

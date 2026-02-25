@@ -11,11 +11,11 @@ import jsPDF from 'jspdf';
 @Component({
   selector: 'app-ordenes-de-trabajo',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink], // Necesarios para Standalone y formularios
+  imports: [CommonModule, FormsModule, RouterLink], 
   templateUrl: './ordenes-de-trabajo.component.html',
   styleUrl: './ordenes-de-trabajo.component.css',
 })
-// ... (imports iguales)
+
 
 export class OrdenesDeTrabajoComponent implements OnInit {
   private ordenService = inject(OrdenReparacionService);
@@ -49,15 +49,15 @@ export class OrdenesDeTrabajoComponent implements OnInit {
       return;
     }
 
-    // 1. Primero guardamos los datos (Diagnóstico y Horas)
+    
     this.ordenService.actualizarOrden(orden).subscribe({
       next: async () => {
         try {
-          // 2. Generamos la factura en el servidor
+          
           const factura = await this.facturaService.generarFacturaDesdeOrden(orden.idOr!);
           
-          // 3. LLAMADA CRÍTICA: Generamos el informe PDF
-          // Usamos un try/catch específico para el PDF por si acaso
+          
+          
           try {
             this.generarPDFProfesional(orden, factura);
           } catch (pdfError) {
@@ -67,7 +67,7 @@ export class OrdenesDeTrabajoComponent implements OnInit {
 
           alert(`¡Orden Cerrada! Factura generada: ${factura.numeroFactura}`);
 
-          // 4. ELIMINAR DE LA VISTA
+          
           this.ordenes.update(prev => prev.filter(o => o.idOr !== orden.idOr));
           
         } catch (err) {
@@ -82,7 +82,7 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     });
   }
 
-  // FUNCIÓN DE APOYO PARA EL HTML (Para mostrar total en la card antes de cerrar)
+  
   calcularTotalTemporal(orden: OrdenesReparacionI): number {
     const totalPiezas = orden.piezas?.reduce((acc, p) => acc + ((p.pieza?.precio || 0) * (p.cantidadUsada || 0)), 0) || 0;
     const totalMano = (orden.horas || 0) * 40;
@@ -93,7 +93,7 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     const doc = new jsPDF();
     const margin = 14;
 
-    // --- CABECERA ---
+    
     doc.setFillColor(0, 48, 135); 
     doc.rect(0, 0, 210, 40, 'F');
     doc.setTextColor(255, 255, 255);
@@ -103,7 +103,7 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     doc.text('Servicio Técnico Especializado', margin, 28);
     doc.text(`Factura Nº: ${factura.numeroFactura}`, 140, 25);
 
-    // --- INFORMACIÓN VEHÍCULO ---
+    
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
@@ -115,14 +115,14 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     doc.text(`Modelo: ${orden.vehiculo?.modelo || 'N/A'}`, margin, 67);
     doc.text(`Fecha Cierre: ${new Date().toLocaleDateString()}`, margin, 74);
 
-    // --- DIAGNÓSTICO ---
+    
     doc.setFont('helvetica', 'bold');
     doc.text('DIAGNÓSTICO TÉCNICO', margin, 85);
     doc.setFont('helvetica', 'normal');
     const splitDiag = doc.splitTextToSize(orden.diagnostico || 'Sin diagnóstico.', 180);
     doc.text(splitDiag, margin, 92);
 
-    // --- TABLA DE COSTES ---
+    
     const rows: any[] = [];
     if (orden.piezas) {
       orden.piezas.forEach(p => {
@@ -144,7 +144,7 @@ export class OrdenesDeTrabajoComponent implements OnInit {
       theme: 'striped'
     });
 
-    // --- TOTALES ---
+    
     const finalY = (doc as any).lastAutoTable.finalY + 10;
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
@@ -155,7 +155,7 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     doc.setTextColor(200, 0, 0);
     doc.text(`TOTAL FACTURA: ${(factura.importeTotal || 0).toFixed(2)} €`, 130, finalY + 16);
 
-    // Pie de página
+    
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
     doc.text('Gracias por confiar en Garage Benz. Documento oficial generado por sistema.', 105, 285, { align: 'center' });

@@ -16,7 +16,7 @@ export class NuevoTrabajadorComponent {
   private userRef = inject(UsuarioService);
   private router = inject(Router);
 
-  // Definimos el formulario con validaciones
+  
   workerForm: FormGroup = this.fb.group({
     nombre: ['', [Validators.required, Validators.minLength(2)]],
     apellido1: ['', [Validators.required]],

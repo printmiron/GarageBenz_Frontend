@@ -1,111 +1,136 @@
-<div class="d-flex min-vh-100">
-  
-  <nav class="navbar navbar-dark bg-black fixed-top d-lg-none shadow-sm">
-    <div class="container-fluid">
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
-        <i class="bi bi-list fs-3"></i>
-      </button>
-      <span class="navbar-brand fw-light tracking-widest small">
-        GARAGE<span class="fw-bold text-info">BENZ</span>
-      </span>
+<div class="benz-layout">
+
+  <nav class="benz-mobile-nav d-lg-none">
+    <button class="benz-hamburger" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="benz-mobile-logo">
+
+      GARAGE<strong>BENZ</strong>
+    </div>
+
+    <div class="benz-topbar-avatar" [routerLink]="['perfil']">
+      {{ userInitials() }}
     </div>
   </nav>
 
-  <div class="offcanvas-lg offcanvas-start bg-black text-white border-0 shadow" 
-       tabindex="-1" id="sidebarMenu" style="width: var(--sidebar-width);">
-    
-    <div class="offcanvas-header justify-content-center py-5 border-bottom border-secondary border-opacity-10">
-      <div class="text-center">
-        <h2 class="h5 mb-0 fw-light tracking-widest">
-          GARAGE<span class="fw-bold" style="color: var(--color-lochmara);">BENZ</span>
-        </h2>
+  <div class="offcanvas-lg offcanvas-start benz-sidebar" tabindex="-1" id="sidebarMenu">
+
+    <div class="benz-sidebar-header">
+      <div class="benz-sidebar-logo">
+        <div class="benz-logo-mark">
+          <img src="logo.png" alt="GarageBenz" class="benz-logo-img">
+          <div class="benz-logo-text">GARAGE<strong>BENZ</strong></div>
+        </div>
       </div>
+     
     </div>
 
     <div class="offcanvas-body d-flex flex-column p-0">
-      <nav class="nav flex-column p-3 flex-grow-1">
-        
-        <small class="text-secondary fw-bold mb-3 ps-3 tracking-widest" style="font-size: 0.6rem;">MENÚ PRINCIPAL</small>
-        
-        <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2 mb-1" 
-           [routerLink]="['./']" routerLinkActive="active-lochmara" [routerLinkActiveOptions]="{exact: true}"
-           data-bs-dismiss="offcanvas">
-          <i class="bi bi-speedometer2"></i> <span>Panel Principal</span>
+      <nav class="benz-nav">
+        <span class="benz-nav-section-label">Menú Principal</span>
+        <a class="benz-nav-link" [routerLink]="['./']" routerLinkActive="benz-nav-active"
+          [routerLinkActiveOptions]="{exact: true}" (click)="closeSidebar()">
+          <i class="bi bi-speedometer2 benz-nav-icon"></i>
+          <span>Panel Principal</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
         </a>
 
-        <div class="my-3 border-top border-secondary border-opacity-10"></div>
+        <div class="benz-nav-divider"></div>
 
         @if (role() === 'cliente') {
-          <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2 mb-1" 
-             routerLink="vehiculos" routerLinkActive="active-lochmara" data-bs-dismiss="offcanvas">
-            <i class="bi bi-car-front"></i> Mis Vehículos
-          </a>
-          <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2 mb-1" 
-             routerLink="citas" routerLinkActive="active-lochmara" data-bs-dismiss="offcanvas">
-            <i class="bi bi-calendar-check"></i> Mis Citas
-          </a>
+        <span class="benz-nav-section-label">Mi Garaje</span>
+        <a class="benz-nav-link" routerLink="vehiculos" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-car-front benz-nav-icon"></i> <span>Mis Vehículos</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
+        <a class="benz-nav-link" routerLink="citas" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-calendar-check benz-nav-icon"></i> <span>Mis Citas</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
+        <a class="benz-nav-link" routerLink="reparaciones" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-tools benz-nav-icon"></i> <span>Mis Reparaciones</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
         }
 
         @if (role() === 'trabajador') {
-          <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2 mb-1" 
-             routerLink="agenda" routerLinkActive="active-lochmara" data-bs-dismiss="offcanvas">
-            <i class="bi bi-journal-text"></i> Mi Agenda
-          </a>
-          <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2 mb-1" 
-             routerLink="ordenes" routerLinkActive="active-lochmara" data-bs-dismiss="offcanvas">
-            <i class="bi bi-wrench"></i> Órdenes de Trabajo
-          </a>
+        <span class="benz-nav-section-label">Taller</span>
+        <a class="benz-nav-link" routerLink="agenda" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-journal-text benz-nav-icon"></i> <span>Mi Agenda</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
+        <a class="benz-nav-link" routerLink="ordenes" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-wrench benz-nav-icon"></i> <span>Órdenes de Trabajo</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
+        <a class="benz-nav-link" routerLink="stock" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-search benz-nav-icon"></i> <span>Consultar Stock</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
         }
 
         @if (role() === 'administrador') {
-          <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2 mb-1" 
-             routerLink="usuarios" routerLinkActive="active-lochmara" data-bs-dismiss="offcanvas">
-            <i class="bi bi-people"></i> Gestión Usuarios
-          </a>
-          <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2 mb-1" 
-             routerLink="facturacion" routerLinkActive="active-lochmara" data-bs-dismiss="offcanvas">
-            <i class="bi bi-receipt"></i> Facturación
-          </a>
+        <span class="benz-nav-section-label">Administración</span>
+        <a class="benz-nav-link" routerLink="usuarios" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-people benz-nav-icon"></i> <span>Gestión Usuarios</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
+        <a class="benz-nav-link" routerLink="stock" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-boxes benz-nav-icon"></i> <span>Gestión de Stock</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
+        <a class="benz-nav-link" routerLink="facturacion" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-receipt benz-nav-icon"></i> <span>Facturación</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
+        </a>
         }
 
-        <div class="my-3 border-top border-secondary border-opacity-10"></div>
-        
-        <a class="nav-link text-white-50 d-flex align-items-center gap-3 py-3 px-3 rounded-2" 
-           routerLink="perfil" routerLinkActive="active-lochmara" data-bs-dismiss="offcanvas">
-          <i class="bi bi-person-circle"></i> Mi Perfil
+        <div class="benz-nav-divider"></div>
+        <a class="benz-nav-link" routerLink="perfil" routerLinkActive="benz-nav-active" (click)="closeSidebar()">
+          <i class="bi bi-person-circle benz-nav-icon"></i> <span>Mi Perfil</span>
+          <i class="bi bi-chevron-right benz-nav-arrow"></i>
         </a>
       </nav>
 
-      <div class="p-3 mt-auto">
-        <button (click)="logout()" class="btn btn-benz btn-benz-outline w-100 d-flex align-items-center justify-content-center gap-2 py-2" style="font-size: 0.75rem;">
+      <div class="benz-sidebar-footer">
+        <div class="benz-sidebar-user">
+          <div class="benz-sidebar-avatar">{{ userInitials() }}</div>
+          <div class="benz-sidebar-userinfo">
+            <span class="benz-sidebar-username">{{ userName() }}</span>
+            <span class="benz-sidebar-role text-uppercase">{{ role() }}</span>
+          </div>
+        </div>
+        <button (click)="logout()" class="benz-logout-btn">
           <i class="bi bi-box-arrow-right"></i> CERRAR SESIÓN
         </button>
       </div>
     </div>
   </div>
 
-  <main class="flex-grow-1 d-flex flex-column w-100">
-    <header class="navbar bg-white border-bottom px-4 py-3 shadow-sm sticky-top d-none d-lg-flex">
-      <div class="container-fluid justify-content-end">
-        <div class="d-flex align-items-center gap-3">
-          <div class="text-end">
-            <p class="mb-0 small fw-bold">{{ userName() }}</p>
-            <p class="mb-0 text-muted" style="font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;">
-              Acceso {{ role() }}
-            </p>
+  <main class="benz-main">
+    <header class="benz-topbar d-none d-lg-flex">
+      <div class="benz-topbar-left">
+        <div class="benz-topbar-status">
+          <div class="benz-status-dot"></div> Sincronizado con Central Benz
+        </div>
+      </div>
+      <div class="benz-topbar-right">
+        <div class="benz-topbar-user" [routerLink]="['perfil']">
+          <div class="benz-topbar-userinfo">
+            <span class="benz-topbar-name">{{ userName() }}</span>
+            <span class="benz-topbar-role">ID: 00{{ role()?.length }}—T</span>
           </div>
-          <div class="bg-black text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm fw-bold" 
-               style="width: 40px; height: 40px; font-size: 0.8rem;">
-            MB
-          </div>
+          <div class="benz-topbar-avatar">{{ userInitials() }}</div>
         </div>
       </div>
     </header>
 
-    <div class="d-lg-none" style="height: 60px;"></div>
-
-    <div class="p-4 p-md-5">
-      <router-outlet />
+    <div class="benz-content-wrapper">
+      <div class="benz-content">
+        <router-outlet />
+      </div>
     </div>
   </main>
 </div>

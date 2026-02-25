@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { VehiculoService } from '../../service/vehiculo.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // 👈 Crucial para la última versión
+import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nuevo-vehiculo',
-  standalone: true, // Aseguramos que sea standalone
-  imports: [FormsModule, CommonModule], // Importamos lo necesario aquí
+  standalone: true, 
+  imports: [FormsModule, CommonModule], 
   templateUrl: './nuevo-vehiculo.component.html',
   styleUrl: './nuevo-vehiculo.component.css',
 })
@@ -26,10 +26,10 @@ export class NuevoVehiculoComponent implements OnInit {
   };
 
   ngOnInit() {
-    // Intentamos obtenerlo de 'userId' (como haces en la lista)
+    
     const idDesdeStorage = localStorage.getItem('userId');
 
-    // O intentamos obtenerlo del objeto 'usuario' si es que lo guardas ahí
+    
     const usuarioData = localStorage.getItem('usuario');
     const usuarioObj = usuarioData ? JSON.parse(usuarioData) : null;
 
@@ -40,13 +40,13 @@ export class NuevoVehiculoComponent implements OnInit {
     } else {
       console.error('No se encontró el ID del cliente en localStorage');
       alert('Sesión caducada o usuario no identificado. Por favor, inicia sesión de nuevo.');
-      // opcional: this.router.navigate(['/login']);
+      
     }
   }
 
   async registrar() {
     try {
-      // Validación básica antes de enviar
+      
       if (!this.nuevoVehiculo.cliente.idCliente) {
         alert('Error: No se pudo identificar al cliente logueado.');
         return;

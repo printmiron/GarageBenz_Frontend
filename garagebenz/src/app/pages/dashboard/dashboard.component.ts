@@ -27,14 +27,14 @@ export class DashboardComponent implements OnInit {
   userName = signal<string>('');
   userId = signal<string | null>(null);
   
-  // Datos Admin
+  
   stats = signal<FacturaStatsI | null>(null);
 
-  // Datos Cliente
+  
   misVehiculosCount = signal<number>(0);
   proximaCita = signal<any>(null);
 
-  // Datos Trabajador
+  
   tareasPendientes = signal<number>(0);
   ultimaReparacion = signal<any>(null);
 
@@ -52,21 +52,21 @@ export class DashboardComponent implements OnInit {
     const id = this.userId();
     const mesActual = new Date().getMonth() + 1;
 
-    // ADMINISTRADOR (Sigue usando Observable según tu código anterior)
+    
     if (r === 'administrador') {
       this.facturaService.getStatsMensuales(mesActual).subscribe(data => this.stats.set(data));
     }
 
-    // CLIENTE (Consumiendo Promesas de VehiculoService y CitaService)
+    
     if (r === 'cliente' && id) {
       try {
-        // Cargar Vehículos
+        
         const vehiculos = await this.vehiculoService.getVehiculosPorCliente(id);
         this.misVehiculosCount.set(vehiculos.length);
 
-        // Cargar Citas
+        
         const citas = await this.citaService.getCitasPorCliente(id);
-        // Buscamos la primera cita que no esté completada o cancelada
+        
         const proxima = citas.find(c => c.estado !== 'Completada' && c.estado !== 'Cancelada');
         this.proximaCita.set(proxima || null);
       } catch (e) {
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
       }
     }
 
-    // TRABAJADOR
+    
     if (r === 'trabajador' && id) {
       this.reparacionService.getHistorialCliente(id).subscribe(reps => {
         const activas = reps.filter(rep => rep.estadoRep !== 'Completada');

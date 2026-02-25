@@ -17,7 +17,7 @@ export class RegistroComponent {
 
   statusMessage: { text: string, type: 'success' | 'error' } | null = null;
 
-  // ESTE ES EL UUID QUE TU BASE DE DATOS RECONOCE
+  
   private readonly ROLE_CLIENTE_UUID = 'e3b0c442-98fc-11ee-b9d1-0242ac120002';
 
   constructor() {
@@ -44,7 +44,7 @@ export class RegistroComponent {
 
       this.showMessage('REGISTRO COMPLETADO. BIENVENIDO.', 'success');
 
-      // Redirigimos al login tras el éxito
+      
       setTimeout(() => this.router.navigate(['/login']), 2500);
 
     } catch (err) {

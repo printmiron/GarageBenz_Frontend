@@ -1,38 +1,53 @@
-<div class="card bg-dark text-white shadow-lg border-0">
-  <div class="card-header border-secondary">
-    <h5 class="mb-0"><i class="bi bi-tools me-2"></i>Mis Reparaciones Finalizadas</h5>
-  </div>
-  <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table table-dark table-hover mb-0">
-        <thead>
-          <tr class="text-secondary">
-            <th>Fecha</th>
-            <th>Vehículo</th>
-            <th>Trabajo Realizado</th>
-            <th class="text-center">Horas</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (rep of reparaciones(); track rep.idOr) {
-            <tr>
-              <td>{{ rep.fechaFin | date:'dd/MM/yyyy' }}</td>
-              <td>
-                <span class="text-info">{{ rep.vehiculo.modelo }}</span><br>
-                <small class="text-muted">{{ rep.vehiculo.matricula }}</small>
-              </td>
-              <td class="small">{{ rep.diagnostico }}</td>
-              <td class="text-center font-monospace">{{ rep.horas }}h</td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="4" class="text-center py-5 text-secondary">
-                No hay registros de reparaciones completadas.
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+<div class="container-fluid p-4">
+  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
+    <div>
+      <h1 class="benz-title">HISTORIAL</h1>
+      <p class="benz-subtitle">REGISTRO TÉCNICO DE REPARACIONES FINALIZADAS</p>
+    </div>
+    <div class="text-end">
+       <span class="badge-total">{{ reparaciones().length }} INTERVENCIONES</span>
+    </div>
+  </header>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="rep-list">
+        @for (rep of reparaciones(); track rep.idOr) {
+        <div class="rep-item">
+          <div class="rep-date">
+            <span class="day">{{ rep.fechaFin | date:'dd' }}</span>
+            <span class="month">{{ rep.fechaFin | date:'MMM' | uppercase }}</span>
+            <span class="year">{{ rep.fechaFin | date:'yyyy' }}</span>
+          </div>
+
+          <div class="rep-vehicle">
+            <div class="meta-label">VEHÍCULO</div>
+            <h3 class="model-name">{{ rep.vehiculo.modelo }}</h3>
+            <span class="plate-mini">{{ rep.vehiculo.matricula }}</span>
+          </div>
+
+          <div class="rep-work">
+            <div class="meta-label">DIAGNÓSTICO Y TRABAJO</div>
+            <p class="work-text">{{ rep.diagnostico }}</p>
+          </div>
+
+          <div class="rep-stats">
+            <div class="hours-box">
+              <span class="hours-val">{{ rep.horas }}</span>
+              <span class="hours-unit">HRS</span>
+            </div>
+            <div class="status-tag">
+              <i class="bi bi-check2-all me-1"></i> FINALIZADO
+            </div>
+          </div>
+        </div>
+        } @empty {
+        <div class="empty-history text-center">
+          <i class="bi bi-clipboard-x"></i>
+          <p>NO SE HAN ENCONTRADO REGISTROS TÉCNICOS EN EL HISTORIAL.</p>
+        </div>
+        }
+      </div>
     </div>
   </div>
 </div>

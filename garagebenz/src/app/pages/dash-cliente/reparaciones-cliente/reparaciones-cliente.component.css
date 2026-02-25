@@ -1,0 +1,135 @@
+
+.benz-title {
+  font-weight: 900;
+  letter-spacing: -1px;
+  font-size: 2.8rem;
+  color: #000;
+}
+
+.benz-subtitle {
+  letter-spacing: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #888;
+}
+
+.badge-total {
+  background: #000;
+  color: #fff;
+  padding: 8px 15px;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+
+.rep-list {
+  background: #fff;
+  border: 1px solid #eee;
+}
+
+.rep-item {
+  display: flex;
+  align-items: center;
+  padding: 30px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.3s ease;
+}
+
+.rep-item:hover {
+  background: #fcfcfc;
+}
+
+.rep-item:last-child {
+  border-bottom: none;
+}
+
+
+.rep-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  padding-right: 30px;
+  border-right: 1px solid #eee;
+}
+
+.rep-date .day { font-size: 1.8rem; font-weight: 900; line-height: 1; color: #000; }
+.rep-date .month { font-size: 0.7rem; font-weight: 700; color: #0078d6; }
+.rep-date .year { font-size: 0.7rem; color: #bbb; }
+
+.rep-vehicle {
+  padding: 0 40px;
+  min-width: 250px;
+}
+
+.meta-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #bbb;
+  letter-spacing: 1.5px;
+  margin-bottom: 5px;
+}
+
+.model-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.plate-mini {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #0078d6;
+  background: rgba(0, 120, 214, 0.05);
+  padding: 2px 6px;
+}
+
+.rep-work {
+  flex: 1;
+  padding: 0 40px;
+  border-left: 1px solid #f5f5f5;
+}
+
+.work-text {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.6;
+}
+
+
+.rep-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 150px;
+}
+
+.hours-box {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.hours-val { font-size: 1.5rem; font-weight: 900; color: #000; }
+.hours-unit { font-size: 0.6rem; font-weight: 800; margin-left: 4px; color: #888; }
+
+.status-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #00ff88;
+  letter-spacing: 1px;
+  background: #000;
+  padding: 4px 12px;
+}
+
+
+.empty-history {
+  padding: 100px;
+  color: #bbb;
+}
+
+.empty-history i { font-size: 3rem; margin-bottom: 20px; display: block; }
+.empty-history p { font-size: 0.75rem; letter-spacing: 2px; }

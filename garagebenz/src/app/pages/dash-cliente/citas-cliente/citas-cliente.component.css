@@ -1,31 +1,221 @@
-.text-indigo { color: #6366f1; }
-.fw-black { font-weight: 900; }
-.bg-gradient-benz {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border: 1px solid rgba(255,255,255,0.1);
+
+.benz-title {
+  font-weight: 900;
+  letter-spacing: -1px; 
+  font-size: 2.8rem;
+  color: #000;
+  line-height: 1;
 }
 
-.hover-card:hover {
-  transform: translateX(10px);
-  background-color: rgba(255,255,255,0.05) !important;
-  border-color: #6366f1 !important;
+.benz-subtitle {
+  letter-spacing: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #888;
+  margin-top: 10px;
 }
 
-.status-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
+
+.btn-benz-black {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+  padding: 14px 30px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  font-size: 0.75rem;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.btn-benz-black:hover {
+  background: #fff;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+
+.cita-card {
+  background: #000;
+  color: #fff;
+  display: flex;
+  margin-bottom: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.cita-card:hover {
+  border-color: #0078d6;
+  transform: scale(1.01);
+}
+
+.cita-main {
+  flex: 1;
+  padding: 30px;
+}
+
+.cita-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.cita-badge {
+  color: #0078d6;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.cita-id {
+  color: #444;
+  font-size: 0.65rem;
+  font-family: monospace;
+}
+
+.cita-vehiculo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.cita-vehiculo span {
+  font-weight: 300;
+  color: #666;
+}
+
+.cita-desc {
+  color: #999;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  max-width: 80%;
+}
+
+
+.cita-footer {
+  margin-top: 25px;
+}
+
+.cita-status-pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  padding: 5px 15px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
+  background: #444;
+  margin-right: 10px;
 }
-.status-dot.pendiente { background-color: #0ea5e9; box-shadow: 0 0 10px #0ea5e9; }
-.status-dot.confirmada { background-color: #10b981; box-shadow: 0 0 10px #10b981; }
-.status-dot.finalizada { background-color: #64748b; }
 
-.icon-circle {
+.dot.completed {
+  background: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+
+.cita-date-box {
+  background: rgba(255,255,255,0.03);
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.cita-date-box .time {
+  font-size: 0.8rem;
+  color: #0078d6;
+  font-weight: 700;
+}
+
+.cita-date-box .date {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.cita-date-box .month {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: #666;
+}
+
+
+.benz-sidebar-box {
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.benz-sidebar-box.primary {
+  background: #0078d6;
+  color: #fff;
+}
+
+.benz-sidebar-box h3 {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.icon-wrap {
   width: 45px;
   height: 45px;
+  background: rgba(255,255,255,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  font-size: 1.5rem;
+  margin-right: 15px;
+}
+
+.label { font-size: 0.7rem; opacity: 0.8; margin: 0; }
+.value { font-size: 0.9rem; font-weight: 800; margin: 0; }
+
+.benz-sidebar-box.info {
+  background: #fff;
+  border: 1px solid #eee;
+}
+
+.cita-vehiculo-wrapper {
+  margin-bottom: 12px;
+}
+
+.cita-vehiculo-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  color: #666; 
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.meta-item i {
+  color: #0078d6; 
+}
+
+.meta-item strong {
+  color: #eee; 
+  font-family: 'Courier New', monospace; 
+}
+
+.meta-divider {
+  color: #333;
+  font-weight: 300;
+}
+
+
+.cita-desc {
+  border-left: 2px solid #222;
+  padding-left: 15px;
+  margin-top: 15px;
+  font-style: italic;
 }

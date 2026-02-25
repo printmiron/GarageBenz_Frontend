@@ -1,74 +1,79 @@
-<div class="container-fluid p-4 min-h-screen">
-  <div class="d-flex justify-content-between align-items-center mb-5">
+<div class="container-fluid p-4">
+  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
     <div>
-      <h2 class="fw-light tracking-widest mb-0 text-dark">MIS <span class="fw-bold">CITAS</span></h2>
-      <span class="text-muted small text-uppercase" style="letter-spacing: 1px;">Gestión de servicios y mantenimiento</span>
+      <h1 class="benz-title">MIS CITAS</h1>
+      <p class="benz-subtitle">PORTAL OFICIAL DE MANTENIMIENTO</p>
     </div>
-    <button [routerLink]="['/dashboard-cliente/citas/nuevo']"
-      class="btn btn-benz btn-benz-primary shadow-sm">
-      <i class="bi bi-calendar-plus me-2"></i> NUEVA CITA
+    <button [routerLink]="['/dashboard-cliente/citas/nuevo']" class="btn-benz-black">
+      <i class="bi bi-plus-lg me-2"></i> AGENDAR CITA
     </button>
-  </div>
+  </header>
 
-  <div class="row g-4">
+  <div class="row g-5">
     <div class="col-lg-8">
       @for (cita of citas(); track cita.idCita) {
-      <div class="card mb-3 benz-card border-0 shadow-lg text-white">
-        <div class="card-body p-4">
-          <div class="row align-items-center">
-            
-            <div class="col-auto text-center border-end border-secondary border-opacity-25 pe-4">
-              <h3 class="mb-0 fw-bold" style="color: var(--color-lochmara);">{{ cita.fecha_cita | date:'dd' }}</h3>
-              <small class="text-uppercase text-secondary fw-bold tracking-widest" style="font-size: 0.7rem;">{{ cita.fecha_cita | date:'MMM' }}</small>
-            </div>
+      <div class="cita-card">
+        <div class="cita-main">
+          <div class="cita-header">
+            <span class="cita-badge">SERVICIO TÉCNICO</span>
+            <span class="cita-id">REF: #{{ cita.idCita }}</span>
+          </div>
 
-            <div class="col ps-4">
-              <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge rounded-0 py-2 px-3 fw-bold" style="background-color: rgba(0, 120, 214, 0.1); color: var(--color-lochmara); font-size: 0.65rem; letter-spacing: 1px;">
-                  SERVICIO TÉCNICO
-                </span>
-                <span class="text-secondary small fw-bold"><i class="bi bi-clock me-1"></i> {{ cita.hora_cita }}</span>
-              </div>
-              
-              <h5 class="mb-1 fw-bold text-white">{{ cita.id_vehiculo }}</h5> 
-              <p class="text-secondary small mb-0 fw-light">{{ cita.descripcion }}</p>
-            </div>
+          <div class="cita-vehiculo-wrapper">
+            <h2 class="cita-vehiculo">
+              VEHÍCULO <span class="ms-2">{{ cita.vehiculo?.modelo || cita.id_vehiculo }}</span>
+            </h2>
 
-            <div class="col-auto text-end">
-              <div class="d-flex align-items-center">
-                <span class="small fw-bold text-uppercase me-2 tracking-widest" style="font-size: 0.7rem;">{{ cita.estado }}</span>
-                <i class="bi bi-circle-fill" [style.color]="cita.estado === 'Pendiente' ? '#ffc107' : '#00ff88'" style="font-size: 0.5rem;"></i>
-              </div>
+            <div class="cita-vehiculo-meta">
+              <span class="meta-item">
+                <i class="bi bi-reception-4 me-1"></i>
+                MATRÍCULA: <strong>{{ cita.vehiculo?.matricula || 'N/A' }}</strong>
+              </span>
+              <span class="meta-divider">|</span>
+              <span class="meta-item">
+                MOD. {{ cita.vehiculo?.anio || '----' }}
+              </span>
+            </div>
+          </div>
+          <p class="cita-desc">{{ cita.descripcion }}</p>
+
+          <div class="cita-footer">
+            <div class="cita-status-pill">
+              <span class="dot" [class.completed]="cita.estado === 'Completada'"></span>
+              {{ cita.estado | uppercase }}
             </div>
           </div>
         </div>
-      </div>
-      } @empty {
-      <div class="text-center py-5 border border-dashed border-secondary border-opacity-25 rounded-2 bg-white shadow-sm">
-        <i class="bi bi-calendar-x text-muted fs-1"></i>
-        <p class="mt-3 text-muted tracking-widest small">No tienes citas programadas próximamente.</p>
+
+        <div class="cita-date-box">
+          <div class="time"><i class="bi bi-clock me-2"></i>{{ cita.hora_cita }}</div>
+          <div class="date">{{ cita.fecha_cita | date:'dd' }}</div>
+          <div class="month text-uppercase">{{ cita.fecha_cita | date:'MMM' }}</div>
+        </div>
       </div>
       }
     </div>
 
     <div class="col-lg-4">
-      <div class="card rounded-2 border-0 p-4 mb-4 text-white shadow-lg" style="background-color: var(--color-lochmara);">
-        <h6 class="fw-bold mb-3 tracking-widest small">SIGUIENTE REVISIÓN</h6>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bg-white text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
-            <i class="bi bi-tools fs-5"></i>
-          </div>
+      <div class="benz-sidebar-box primary">
+        <h3>PRÓXIMA REVISIÓN</h3>
+        <div class="d-flex align-items-center mt-4">
+          <div class="icon-wrap"><i class="bi bi-shield-check"></i></div>
           <div>
-            <p class="mb-0 small opacity-75">Tu Mercedes-Benz necesita:</p>
-            <p class="mb-0 fw-bold">Chequeo Preventivo</p>
+            <p class="label">Estado del sistema</p>
+            <p class="value">MANTENIMIENTO RECOMENDADO</p>
           </div>
         </div>
       </div>
 
-      <div class="p-4 border-start border-warning border-4 bg-white shadow-sm">
-        <small class="text-warning fw-bold d-block mb-2 tracking-widest">RECORDATORIO</small>
-        <p class="small text-dark mb-0 fw-light" style="line-height: 1.6;">
-          Por favor, preséntese <strong>10 minutos antes</strong> de la hora acordada para la recepción técnica de su vehículo.
+      <div class="benz-sidebar-box info">
+        <div class="d-flex align-items-center mb-3">
+          <i class="bi bi-info-circle-fill text-warning me-2"></i>
+          <span class="fw-bold small tracking-widest">PROTOCOLO</span>
+        </div>
+        <p class="text-muted small lh-lg">
+          Para garantizar un servicio óptimo, le recomendamos llegar 10 minutos antes. La recepción técnica se realizará
+          en el área de taller principal.
         </p>
       </div>
     </div>

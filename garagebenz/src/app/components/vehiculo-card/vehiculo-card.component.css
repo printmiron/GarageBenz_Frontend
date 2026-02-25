@@ -1,0 +1,125 @@
+
+.benz-card {
+  background: linear-gradient(145deg, #1a1a1a 0%, #000000 100%);
+  border-radius: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.benz-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.benz-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+
+.benz-label {
+
+  color: #888;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+}
+
+.benz-model-name {
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.text-primary-benz {
+  color: var(--color-lochmara);
+}
+
+.tracking-wider {
+  letter-spacing: 1.5px;
+}
+
+
+.plate-display {
+  background: white;
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 0;
+  height: 50px;
+  min-width: 180px;
+  overflow: hidden;
+}
+
+.plate-euro-band {
+  background-color: #003399; 
+  width: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 5px;
+  align-items: center;
+}
+
+.euro-e {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+.plate-number {
+  color: #1a1a1a;
+  font-family: 'Courier New', Courier, monospace; 
+  font-weight: 800;
+  font-size: 1.5rem;
+  padding: 0 15px;
+  letter-spacing: 2px;
+  flex: 1;
+  text-align: center;
+}
+
+
+.btn-benz-primary {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-benz-primary:hover {
+  background: var(--color-lochmara);
+  color: white;
+}
+
+.btn-benz-danger {
+  background: transparent;
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 0;
+  width: 45px;
+  transition: all 0.3s ease;
+}
+
+.btn-benz-danger:hover {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+
+.tech-info {
+  background: rgba(255, 255, 255, 0.02);
+  margin: 0 -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

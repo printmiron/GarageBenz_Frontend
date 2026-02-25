@@ -8,10 +8,10 @@ import { SotckI } from '../interface/sotck-i';
 })
 export class StockService {
   private http = inject(HttpClient);
-  // Ruta al controlador de Stock
+  
   private readonly baseUrl = 'http://localhost:3000/api/stock';
 
-  // Signal reactivo para la UI
+  
   stockDisponible = signal<SotckI[]>([]);
 
   /**

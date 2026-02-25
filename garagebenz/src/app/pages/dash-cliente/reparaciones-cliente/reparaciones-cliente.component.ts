@@ -14,7 +14,7 @@ export class ReparacionesClienteComponent {
   private reparacionService = inject(ReparacionService);
   private authService = inject(AuthService);
 
-  // Signal para guardar las reparaciones
+  
   reparaciones = signal<OrdenesReparacionI[]>([]);
   cargando = signal<boolean>(true);
 
@@ -26,7 +26,7 @@ export class ReparacionesClienteComponent {
   }
 
   cargarHistorial(idCliente: string) {
-    // En tu componente, dentro de cargarHistorial():
+    
     this.reparacionService.getHistorialCliente(idCliente).subscribe({ 
       next: (data) => {
         this.reparaciones.set(data);

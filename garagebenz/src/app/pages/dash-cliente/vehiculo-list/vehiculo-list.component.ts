@@ -24,7 +24,7 @@ export class ListVehiculoComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      // Obtenemos el ID del cliente logueado
+      
       const clienteId = localStorage.getItem('userId');
       if (clienteId) {
         this.arrVehiculos = await this.serviceVehiculo.getVehiculosPorCliente(clienteId);
@@ -34,7 +34,7 @@ export class ListVehiculoComponent implements OnInit {
     }
   }
 
-  // Getter para filtrar en tiempo real en el HTML
+  
   get vehiculosAMostrar(): VehicloI[] {
     return this.arrVehiculos.filter(v => 
       v.matricula.toLowerCase().includes(this.filtroMatricula.toLowerCase())

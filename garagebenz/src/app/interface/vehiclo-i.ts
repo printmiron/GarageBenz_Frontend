@@ -1,8 +1,8 @@
 export interface VehicloI {
-    id_vehiculo: string;  // UUID (PK)
-    matricula: string;    // UNIQUE
-    vin: string;          // UNIQUE
-    modelo: string;       //
-    anio: number;          // YEAR en SQL
-    id_cliente: string;   // FK -> Cliente
+    id_vehiculo: string;  
+    matricula: string;    
+    vin: string;          
+    modelo: string;       
+    anio: number;          
+    id_cliente: string;   
 }

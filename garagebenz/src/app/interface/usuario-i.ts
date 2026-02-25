@@ -4,6 +4,6 @@ export interface UsuarioI {
     apellido2: string;
     correo: string;
     usuario: string;
-    contraseña?: string; // opcional porque no solemos recibirla del backend por seguridad
+    contraseña?: string; 
     id_rol: string;
 }

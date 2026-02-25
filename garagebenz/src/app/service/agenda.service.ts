@@ -11,7 +11,7 @@ export class AgendaService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:3000/api/citas/hoy';
 
-  // Signal para manejar el estado de las citas
+
   citas = signal<CitaI[]>([]);
   loading = signal<boolean>(false);
 

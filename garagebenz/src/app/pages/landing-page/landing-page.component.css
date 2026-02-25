@@ -1,4 +1,4 @@
-/* Global Layout */
+
 .landing-page {
     display: flex;
     flex-direction: column;
@@ -13,13 +13,13 @@
     padding: 0 1.5rem;
 }
 
-/* Header */
+
 .header {
     background-color: var(--color-black);
     color: var(--color-white);
     padding: 1.25rem 0;
     position: absolute;
-    /* Overlay sobre el hero */
+    
     top: 0;
     left: 0;
     width: 100%;
@@ -59,17 +59,17 @@
     opacity: 0.8;
 }
 
-/* Sección Hero */
+
 .hero {
     position: relative;
     height: 90vh;
-    /* Impacto a pantalla completa */
+    
     display: flex;
     align-items: center;
     color: var(--color-white);
     background-color: #1a1a1a;
     background-image: url('https://cdn-xy.drivek.com/eyJidWNrZXQiOiJkYXRhay1jZG4teHkiLCJrZXkiOiJjb25maWd1cmF0b3ItaW1ncy9jYXJzL2VzL29yaWdpbmFsL01FUkNFREVTL0MtQ0xBU1MvNDAzMjZfU0VEQU4tNC1ET09SUy9tZXJjZWRlcy1iZW56LWMtY2xhc3Mtc2VkYW4tMjAyMS1mcm9udC1zaWRlLTEuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjoxMDI0LCJoZWlnaHQiOm51bGwsImZpdCI6ImNvdmVyIn19fQ==');
-    /* Mercedes-Benz plateado gris estándar */
+    
     background-size: cover;
     background-position: center;
     margin-bottom: 0;
@@ -129,7 +129,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 2px;
-    /* Slight geometric feel */
+    
     transition: background-color 0.3s;
     border: 2px solid var(--color-lochmara);
     display: inline-block;
@@ -159,7 +159,7 @@
     color: var(--color-black);
 }
 
-/* Sección de características */
+
 .features {
     padding: 6rem 0;
     background-color: var(--color-white);
@@ -224,7 +224,7 @@
     line-height: 1.6;
 }
 
-/* Banner CTA */
+
 .cta-banner {
     background-color: var(--color-black);
     color: var(--color-white);
@@ -257,7 +257,7 @@
     background-color: #ddd;
 }
 
-/* Footer */
+
 .footer {
     background-color: #0c0c0c;
     color: #e0e0e0;
@@ -359,7 +359,7 @@
     color: #888;
 }
 
-/* Ajustes responsivos */
+
 @media (max-width: 992px) {
     .footer-top {
         grid-template-columns: 1fr 1fr;
@@ -389,4 +389,16 @@
     .social-links {
         justify-content: center;
     }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.logo-img {
+  width: 70px;   /* ajusta tamaño */
+  height: 70px;
 }

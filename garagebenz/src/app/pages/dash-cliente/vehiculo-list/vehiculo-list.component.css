@@ -1,0 +1,132 @@
+/* --- Estilos de Cabecera --- */
+.benz-title {
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  font-size: 3rem;
+  color: #000;
+  line-height: 0.9;
+}
+
+.benz-subtitle {
+  letter-spacing: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #888;
+  margin-top: 10px;
+}
+
+.badge-count {
+  background: #000;
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+/* --- Animación de Entrada --- */
+.animate-in {
+  animation: slideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- El Botón de Registro (El Cambio Grande) --- */
+.action-bar-fixed {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+
+.btn-benz-register {
+  position: relative;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  padding: 18px 30px;
+  position: relative;
+  z-index: 2;
+  gap: 15px;
+}
+
+.btn-text {
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+}
+
+.btn-benz-register i {
+  font-size: 1.2rem;
+  transition: transform 0.4s ease;
+}
+
+/* Efecto de Hover Mercedes */
+.btn-hover-effect {
+  position: absolute;
+  top: 0; left: 0; width: 0; height: 100%;
+  background: #0078d6; /* Azul Mercedes */
+  transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 1;
+}
+
+.btn-benz-register:hover .btn-hover-effect {
+  width: 100%;
+}
+
+.btn-benz-register:hover i {
+  transform: rotate(90deg);
+}
+
+.btn-benz-register:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 120, 214, 0.4);
+}
+
+/* --- Estado Vacío Refinado --- */
+.empty-garage-box {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 60px;
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  background: #f8f8f8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 2rem;
+  color: #ccc;
+}
+
+.btn-benz-outline {
+  background: transparent;
+  border: 1px solid #000;
+  color: #000;
+  padding: 12px 25px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+
+.btn-benz-outline:hover {
+  background: #000;
+  color: #fff;
+}

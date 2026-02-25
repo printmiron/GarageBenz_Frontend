@@ -17,7 +17,7 @@ export class CitasClienteComponent implements OnInit {
   private citaService = inject(CitaService);
   private authService = inject(AuthService);
 
-  // Inicializamos el signal vacío
+  
   citas = signal<CitaI[]>([]);
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class CitasClienteComponent implements OnInit {
     const clienteId = this.authService.getUserId();
     if (clienteId) {
       try {
-        // Traemos las citas reales del backend
+        
         const data = await this.citaService.getCitasPorCliente(clienteId);
         this.citas.set(data);
       } catch (error) {

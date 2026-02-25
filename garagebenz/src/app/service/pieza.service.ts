@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class PiezaService {
   private http = inject(HttpClient);
-  // Ruta al controlador de Piezas que creamos en Java
+  
   private readonly baseUrl = 'http://localhost:3000/api/piezas';
 
   /**
@@ -20,7 +20,7 @@ export class PiezaService {
     );
   }
 
-  // Opcional: Para listar solo piezas sin stock si lo necesitaras
+  
   async listarTodas(): Promise<any[]> {
     return await firstValueFrom(this.http.get<any[]>(this.baseUrl));
   }

@@ -21,7 +21,7 @@ export class NuevoCitaComponent implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  // Signals para el estado
+  
   misVehiculos = signal<any[]>([]);
   isSubmitting = signal(false);
 
@@ -42,7 +42,7 @@ export class NuevoCitaComponent implements OnInit {
     }
 
     try {
-      // Ahora TS sabe que clienteId NO es null aquí
+      
       const vehiculos = await this.vehiculoService.getVehiculosPorCliente(clienteId);
       this.misVehiculos.set(vehiculos);
     } catch (error) {
@@ -59,7 +59,7 @@ export class NuevoCitaComponent implements OnInit {
       horaCita: this.citaForm.value.hora_cita,
       descripcion: this.citaForm.value.descripcion,
       estado: 'Pendiente',
-      // IMPORTANTE: Enviar objetos con el ID que espera la entidad Java
+      
       cliente: { idCliente: this.authService.getUserId() },
       vehiculo: { idVehiculo: this.citaForm.value.id_vehiculo }
     };

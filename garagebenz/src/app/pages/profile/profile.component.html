@@ -1,71 +1,71 @@
-<div class="profile-container p-0 p-lg-4">
-  @if (user()) {
-  <div class="card benz-card shadow-lg border-0 animate__animated animate__fadeIn">
-
-    <div class="card-header border-0 p-5 text-center bg-transparent position-relative border-bottom border-secondary border-opacity-10">
-      <div class="avatar-circle mx-auto mb-4 shadow-lg d-flex align-items-center justify-content-center text-white" 
-           style="width: 100px; height: 100px; background: var(--color-lochmara); font-size: 2.5rem; font-family: var(--font-corporate-a); border: 4px solid rgba(255,255,255,0.1);">
-        {{ initials() }}
-      </div>
-      <h2 class="fw-light tracking-widest mb-0 text-white">
-        {{ user()?.nombre }} <span class="fw-bold">{{ user()?.apellido1 }}</span>
-      </h2>
-      <span class="badge mt-3 px-4 py-2 text-uppercase fw-bold shadow-sm" 
-            [ngClass]="roleBadgeClass()" 
-            style="letter-spacing: 2px; font-size: 0.7rem; border-radius: 0;">
-        <i class="bi bi-person-badge-fill me-2"></i> {{ user()?.rol }}
+<div class="container-fluid p-4">
+  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
+    <div>
+      <h1 class="benz-title">MI PERFIL</h1>
+      <p class="benz-subtitle">ID DIGITAL Y CONFIGURACIÓN DE CUENTA</p>
+    </div>
+    @if (user()) {
+    <div class="text-end">
+      <span class="status-badge-online">
+        <span class="dot-online"></span> CONECTADO
       </span>
     </div>
+    }
+  </header>
 
-    <div class="card-body p-4 p-lg-5">
-      <div class="row g-4">
-        
-        <div class="col-md-6">
-          <div class="info-field">
-            <label class="label-benz">Identidad Digital</label>
-            <div class="profile-info-box">
-              <i class="bi bi-person-circle me-3 text-primary"></i> 
-              <span class="text-white fw-bold">{{ user()?.usuario }}</span>
-            </div>
-          </div>
+  @if (user()) {
+  <div class="row g-5 animate-in">
+    <div class="col-lg-4">
+      <div class="profile-sidebar-card text-center">
+        <div class="avatar-square mx-auto mb-4">
+          {{ initials() }}
         </div>
+        <h2 class="user-name">{{ user()?.nombre }} <br> <strong>{{ user()?.apellido1 }}</strong></h2>
+        <div class="role-pill">{{ user()?.rol | uppercase }}</div>
 
-        <div class="col-md-6">
-          <div class="info-field">
-            <label class="label-benz">Contacto Oficial</label>
-            <div class="profile-info-box">
-              <i class="bi bi-envelope-at me-3 text-primary"></i> 
-              <span class="text-white fw-bold">{{ user()?.correo }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <div class="info-field">
-            <label class="label-benz">Nombre y Apellidos del Titular</label>
-            <div class="profile-info-box">
-              <span class="text-white fw-bold">
-                {{ user()?.nombre }} {{ user()?.apellido1 }} {{ user()?.apellido2 || '' }}
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
+    </div>
 
-      <div class="mt-5 pt-4 border-top border-secondary border-opacity-10 d-flex flex-wrap gap-3">
-        <button class="btn btn-benz btn-benz-primary px-5 py-3">
-          <i class="bi bi-pencil-square me-2"></i> ACTUALIZAR DATOS
-        </button>
-        <button class="btn btn-benz btn-benz-outline px-5 py-3">
-          <i class="bi bi-key me-2"></i> SEGURIDAD
-        </button>
+    <div class="col-lg-8">
+      <div class="details-container">
+        <h4 class="section-divider">INFORMACIÓN DE CUENTA</h4>
+
+        <div class="row g-4 mt-2">
+          <div class="col-md-6">
+            <div class="benz-input-group">
+              <label>NOMBRE DE USUARIO</label>
+              <div class="info-value">{{ user()?.usuario }}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="benz-input-group">
+              <label>CORREO ELECTRÓNICO</label>
+              <div class="info-value">{{ user()?.correo }}</div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="benz-input-group">
+              <label>NOMBRE COMPLETO DEL TITULAR</label>
+              <div class="info-value">
+                {{ user()?.nombre }} {{ user()?.apellido1 }} {{ user()?.apellido2 || '' }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-footer mt-5 pt-4">
+          <button class="btn-benz-black me-3">
+            <i class="bi bi-pencil-square me-2"></i> ACTUALIZAR PERFIL
+          </button>
+
+        </div>
       </div>
     </div>
   </div>
   } @else {
-  <div class="d-flex flex-column align-items-center justify-content-center p-5 text-dark" style="min-height: 60vh;">
-    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem; border-width: 0.2rem;"></div>
-    <h5 class="tracking-widest fw-light text-uppercase" style="font-size: 0.8rem;">Sincronizando con GarageBenz...</h5>
+  <div class="loading-state">
+    <div class="benz-spinner"></div>
+    <p>SINCRONIZANDO CON CENTRAL BENZ...</p>
   </div>
   }
 </div>

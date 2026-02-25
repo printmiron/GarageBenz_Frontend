@@ -1,53 +1,44 @@
-<div class="container-fluid py-4 animate__animated animate__fadeIn">
-    
-    <div class="row mb-5 align-items-center border-bottom border-secondary pb-4">
-        <div class="col-md-6">
-            <h2 class="fw-light m-0 text-white">MI <span class="fw-bold">GARAJE</span></h2>
-            <p class="text-muted small mb-0">Gestione sus unidades registradas en el sistema.</p>
-        </div>
-        
-        <div class="col-md-6 mt-3 mt-md-0">
-            <div class="input-group">
-                <span class="input-group-text bg-transparent border-secondary text-secondary">
-                    <i class="bi bi-search"></i>
-                </span>
-                <input 
-                    type="text" 
-                    class="form-control bg-transparent border-secondary text-white" 
-                    [(ngModel)]="filtroMatricula" 
-                    placeholder="Buscar por matrícula o modelo...">
-            </div>
-        </div>
+<div class="container-fluid p-4 main-garage-container">
+  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
+    <div class="header-text">
+      <h1 class="benz-title">MI GARAJE</h1>
+      <p class="benz-subtitle">GESTIÓN DE UNIDADES REGISTRADAS</p>
     </div>
+    <div class="text-end">
+       <span class="badge-count">{{ vehiculosAMostrar.length }} UNIDADES</span>
+    </div>
+  </header>
 
-    <div class="row g-4">
-        @for (vehiculo of vehiculosAMostrar; track vehiculo.id_vehiculo) {
-            <div class="col-12 col-md-6 col-xl-4">
-                <app-card-vehiculo [miVehiculo]="vehiculo"></app-card-vehiculo>
-            </div>
-        } @empty {
-            <div class="col-12 text-center py-5">
-                <div class="p-5 border border-secondary border-dashed rounded-3">
-                    <i class="bi bi-car-front text-secondary display-1 mb-3"></i>
-                    <h4 class="text-secondary fw-light">No se han encontrado vehículos</h4>
-                    @if (filtroMatricula !== '') {
-                        <p class="text-muted">No hay coincidencias para "{{ filtroMatricula }}"</p>
-                    } @else {
-                        <p class="text-muted">Aún no tienes vehículos en tu garaje.</p>
-                        <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn btn-outline-light btn-sm mt-3">
-                            Añadir mi primer vehículo
-                        </button>
-                    }
-                </div>
-            </div>
-        }
-    </div>
+  <div class="row g-4 mb-5">
+    @for (vehiculo of vehiculosAMostrar; track vehiculo.id_vehiculo) {
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card-wrapper animate-in">
+          <app-card-vehiculo [miVehiculo]="vehiculo"></app-card-vehiculo>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12 text-center py-5">
+        <div class="empty-garage-box">
+          <div class="icon-circle mb-4">
+            <i class="bi bi-car-front"></i>
+          </div>
+          <h4 class="fw-bold tracking-tight">GARAJE VACÍO</h4>
+          <p class="text-muted small letter-spacing-2">NO SE HAN DETECTADO UNIDADES VINCULADAS A SU CUENTA</p>
+          <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn-benz-outline mt-4">
+            AÑADIR VEHÍCULO
+          </button>
+        </div>
+      </div>
+    }
+  </div>
 
-    <div class="fixed-bottom p-4 text-end">
-        <button 
-            [routerLink]="['/dashboard-cliente/vehiculos/nuevo']"
-            class="btn btn-light shadow-lg fw-bold px-4 py-3 rounded-pill hover-scale">
-            <i class="bi bi-plus-lg me-2"></i>REGISTRAR VEHÍCULO
-        </button>
-    </div>
+  <div class="action-bar-fixed">
+    <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn-benz-register">
+      <span class="btn-content">
+        <i class="bi bi-plus-lg"></i>
+        <span class="btn-text">REGISTRAR NUEVO VEHÍCULO</span>
+      </span>
+      <div class="btn-hover-effect"></div>
+    </button>
+  </div>
 </div>

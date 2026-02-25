@@ -60,37 +60,15 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-muted small text-uppercase fw-bold">Ticket Promedio</h6>
-                    <h3 class="fw-bold text-primary mb-1">{{ stats()?.promedioTicket | currency:'EUR' }}</h3>
-                    <p class="text-muted x-small mb-0">Gasto medio por orden</p>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <div class="row g-3 mb-5 text-center">
         <div class="col-4 col-md-2">
             <div class="p-3 bg-white rounded-3 shadow-sm border">
-                <i class="bi bi-file-earmark-text text-primary fs-3"></i>
-                <h5 class="fw-bold mt-2 mb-0">{{ stats()?.cantidadFacturas }}</h5>
-                <span class="text-muted x-small">Facturas</span>
-            </div>
-        </div>
-        <div class="col-4 col-md-2">
-            <div class="p-3 bg-white rounded-3 shadow-sm border">
                 <i class="bi bi-people text-primary fs-3"></i>
                 <h5 class="fw-bold mt-2 mb-0">{{ stats()?.clientesAtendidos }}</h5>
                 <span class="text-muted x-small">Clientes</span>
-            </div>
-        </div>
-        <div class="col-4 col-md-2">
-            <div class="p-3 bg-white rounded-3 shadow-sm border">
-                <i class="bi bi-box-seam text-primary fs-3"></i>
-                <h5 class="fw-bold mt-2 mb-0">{{ stats()?.piezasVendidas }}</h5>
-                <span class="text-muted x-small">Piezas Usadas</span>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ export interface AuthResponse {
     id: string; 
     rol: string;
     nombreUsuario: string;
-    // Añadimos esto para que TypeScript reconozca los datos del perfil
+   
     user: {
         id: string;
         nombre: string;

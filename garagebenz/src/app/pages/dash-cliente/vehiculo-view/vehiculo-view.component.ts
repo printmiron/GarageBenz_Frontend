@@ -6,7 +6,7 @@ import { VehiculoService } from '../../../service/vehiculo.service';
 
 @Component({
   selector: 'app-vehiculo-view',
-  standalone: true, // Siempre standalone en versiones modernas
+  standalone: true, 
   imports: [CommonModule, RouterLink],
   templateUrl: './vehiculo-view.component.html'
 })
@@ -14,7 +14,7 @@ export class VehiculoViewComponent implements OnInit {
   private vehiculoService = inject(VehiculoService);
   private router = inject(Router);
 
-  // Usamos un Signal para los datos
+  
   vehiculos = signal<any[]>([]);
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class VehiculoViewComponent implements OnInit {
   async eliminar(id: string) {
     if(confirm('¿Retirar este vehículo del sistema?')) {
        await this.vehiculoService.deleteById(id);
-       this.cargarDatos(); // Refrescar
+       this.cargarDatos(); 
     }
   }
 }

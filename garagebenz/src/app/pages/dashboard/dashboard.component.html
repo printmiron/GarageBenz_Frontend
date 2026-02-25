@@ -1,22 +1,5 @@
 <div class="container mt-4 mb-5 animate__animated animate__fadeIn">
-
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="welcome-banner p-4 rounded-4 shadow-sm bg-dark text-white position-relative overflow-hidden">
-                <div class="position-relative z-1">
-                    <h2 class="fw-bold text-uppercase tracking-tighter">¡Hola, {{ userName() }}! 👋</h2>
-                    <p class="mb-0 opacity-75">
-                        Panel de Control: <span class="badge bg-primary text-capitalize">{{ role() }}</span>
-                    </p>
-                </div>
-                <i class="bi bi-gear-wide-connected position-absolute top-50 end-0 translate-middle-y opacity-25"
-                    style="font-size: 150px; margin-right: -30px;"></i>
-            </div>
-        </div>
-    </div>
-
     <div class="row g-4">
-
         @if (role() === 'administrador') {
         <div class="col-md-4">
             <div class="card border-0 shadow-sm h-100 p-3 bg-white border-top border-4 border-primary">
@@ -27,7 +10,7 @@
                     <h6 class="mb-0 fw-bold">Ingresos del Mes</h6>
                 </div>
                 <h3 class="fw-bold text-dark">{{ stats()?.totalIngresos | currency:'EUR' }}</h3>
-                <p class="text-muted small mb-0">Ticket medio: {{ stats()?.promedioTicket | currency:'EUR' }}</p>
+                
             </div>
         </div>
 
@@ -41,18 +24,7 @@
                 </div>
                 <h3 class="fw-bold">Gestión de Usuarios</h3>
                 <a routerLink="/dashboard-administrador/usuarios"
-                    class="btn btn-sm btn-outline-dark mt-auto">Administrar →</a>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100 p-3 bg-danger text-white">
-                <div class="d-flex align-items-center mb-3">
-                    <i class="bi bi-lightning-fill me-2"></i>
-                    <h6 class="mb-0 fw-bold">Rentabilidad</h6>
-                </div>
-                <h3 class="fw-bold">{{ stats()?.margenBeneficio }}% Margen</h3>
-                <p class="small mb-0 opacity-75">Basado en {{ stats()?.cantidadFacturas }} facturas</p>
+                    class="btn btn-sm btn-outline-dark mt-auto">Administrar</a>
             </div>
         </div>
         }

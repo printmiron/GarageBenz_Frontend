@@ -65,7 +65,7 @@ export class UsuarioService {
     return await firstValueFrom(this.http.put(`${this.baseUrl}/${id}`, datos));
   }
 
-  // En tu service .ts
+  
   deleteTrabajador(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/trabajador/${id}`);
   }

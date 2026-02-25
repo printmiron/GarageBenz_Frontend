@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Importante para redirigir
+import { Router } from '@angular/router'; 
 import { AgendaService } from '../../../service/agenda.service';
 import { OrdenReparacionService } from '../../../service/orden-reparacion.service';
 
@@ -27,11 +27,11 @@ export class AgendaDiariaComponent implements OnInit {
 
     this.ordenService.abrirDesdeCita(idCita, idTrabajador!).subscribe({
       next: () => {
-        // Actualizamos el estado localmente para que el botón se bloquee y cambie el color
+        
         this.agendaService.citas.update(citas =>
           citas.map(c => c.idCita === idCita ? { ...c, estado: 'En_proceso' } : c)
         );
-        // Redirigimos a las órdenes
+        
         this.router.navigate(['/dashboard-trabajador/ordenes']);
       }
     });

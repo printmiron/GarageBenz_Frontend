@@ -1,4 +1,4 @@
-import { ClienteI } from "./cliente-i"; // Asegúrate de importar esto
+import { ClienteI } from "./cliente-i"; 
 
 export interface CitaI {
     idCita: string;
