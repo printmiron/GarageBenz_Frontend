@@ -1,75 +1,97 @@
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow border-0">
-                <div class="card-header bg-dark text-white p-3">
-                    <h4 class="mb-0">
-                        <i class="bi bi-person-plus me-2"></i>Registrar Nuevo Trabajador
-                    </h4>
-                </div>
-                <div class="card-body p-4">
+<div class="page-benz anim-fade-up">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+
+                <header class="section-header-benz mb-5">
+                    <h2 class="benz-title">REGISTRAR <span class="fw-bold">PERSONAL</span></h2>
+                    <p class="stat-benz-label">CREDENCIALES DE ACCESO ALSISTEMA</p>
+                </header>
+
+                <div class="card-benz p-4 p-md-5">
                     <form [formGroup]="workerForm" (ngSubmit)="guardar()">
 
-                        <div class="row mb-3">
+                        <div class="row g-4">
                             <div class="col-md-4">
-                                <label class="form-label fw-bold">Nombre</label>
-                                <input type="text" formControlName="nombre" class="form-control"
-                                    [class.is-invalid]="workerForm.get('nombre')?.touched && workerForm.get('nombre')?.invalid">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">Primer Apellido</label>
-                                <input type="text" formControlName="apellido1" class="form-control"
-                                    [class.is-invalid]="workerForm.get('apellido1')?.touched && workerForm.get('apellido1')?.invalid">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">Segundo Apellido</label>
-                                <input type="text" formControlName="apellido2" class="form-control"
-                                    [class.is-invalid]="workerForm.get('apellido2')?.touched && workerForm.get('apellido2')?.invalid">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold">Correo Electrónico</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                    <input type="email" formControlName="correo" class="form-control"
-                                        [class.is-invalid]="workerForm.get('correo')?.touched && workerForm.get('correo')?.invalid">
+                                <div class="form-group-benz">
+                                    <label class="label-benz">NOMBRE</label>
+                                    <input type="text" formControlName="nombre"
+                                        class="form-control benz-input-light text-uppercase">
+                                    @if (workerForm.get('nombre')?.touched && workerForm.get('nombre')?.invalid) {
+                                    <span class="error-msg">DATO OBLIGATORIO</span>
+                                    }
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold">Nombre de Usuario</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                    <input type="text" formControlName="usuario" class="form-control"
-                                        [class.is-invalid]="workerForm.get('usuario')?.touched && workerForm.get('usuario')?.invalid">
+
+                            <div class="col-md-4">
+                                <div class="form-group-benz">
+                                    <label class="label-benz">PRIMER APELLIDO</label>
+                                    <input type="text" formControlName="apellido1"
+                                        class="form-control benz-input-light text-uppercase">
+                                    @if (workerForm.get('apellido1')?.touched && workerForm.get('apellido1')?.invalid) {
+                                    <span class="error-msg">DATO OBLIGATORIO</span>
+                                    }
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Contraseña</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" formControlName="contrasena" class="form-control"
-                                    [class.is-invalid]="workerForm.get('contrasena')?.touched && workerForm.get('contrasena')?.invalid">
+                            <div class="col-md-4">
+                                <div class="form-group-benz">
+                                    <label class="label-benz">SEGUNDO APELLIDO</label>
+                                    <input type="text" formControlName="apellido2"
+                                        class="form-control benz-input-light text-uppercase">
+                                </div>
                             </div>
-                            <small class="text-muted">Mínimo 6 caracteres.</small>
-                        </div>
 
-                        <hr>
+                            <div class="col-md-6">
+                                <div class="form-group-benz">
+                                    <label class="label-benz">CORREO ELECTRÓNICO</label>
+                                    <input type="email" formControlName="correo" class="form-control benz-input-light">
+                                    @if (workerForm.get('correo')?.touched && workerForm.get('correo')?.invalid) {
+                                    <span class="error-msg">FORMATO INVÁLIDO</span>
+                                    }
+                                </div>
+                            </div>
 
-                        <div class="d-flex justify-content-end gap-2">
-                            <button [routerLink]="['/dashboard-administrador/usuarios']" type="button" class="btn btn-outline-secondary">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-success px-4" [disabled]="workerForm.invalid">
-                                <i class="bi bi-save me-1"></i> Guardar Trabajador
-                            </button>
+                            <div class="col-md-6">
+                                <div class="form-group-benz">
+                                    <label class="label-benz">NOMBRE DE USUARIO</label>
+                                    <input type="text" formControlName="usuario" class="form-control benz-input-light">
+                                    @if (workerForm.get('usuario')?.touched && workerForm.get('usuario')?.invalid) {
+                                    <span class="error-msg">DATO OBLIGATORIO</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group-benz">
+                                    <label class="label-benz">CONTRASEÑA DE ACCESO</label>
+                                    <input type="password" formControlName="contrasena"
+                                        class="form-control benz-input-light">
+                                    @if (workerForm.get('contrasena')?.touched && workerForm.get('contrasena')?.invalid)
+                                    {
+                                    <span class="error-msg">MÍNIMO 6 CARACTERES</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-5">
+                                <div class="d-flex flex-column flex-md-row gap-3">
+                                    <button type="submit" [disabled]="workerForm.invalid"
+                                        class="btn-benz btn-benz-primary flex-grow-1 py-3">
+                                        AUTORIZAR ACCESO
+                                    </button>
+
+                                    <button type="button" [routerLink]="['/dashboard-administrador/usuarios']"
+                                        class="btn-benz btn-benz-ghost py-3">
+                                        CANCELAR
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                     </form>
                 </div>
+
             </div>
         </div>
     </div>

@@ -1,80 +1,74 @@
-<div class="container-fluid p-4">
-  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
-    <div>
-      <h1 class="benz-title">MIS CITAS</h1>
-      <p class="benz-subtitle">PORTAL OFICIAL DE MANTENIMIENTO</p>
+<div class="page-benz animate-in">
+  <header class="section-header-benz">
+    <div class="anim-fade-up">
+      <h1 class="benz-gradient-text fs-1 mb-0">GESTIÓN DE CITAS</h1>
+      <p class="stat-benz-label">AGENDA DE MANTENIMIENTO AUTORIZADO</p>
     </div>
-    <button [routerLink]="['/dashboard-cliente/citas/nuevo']" class="btn-benz-black">
-      <i class="bi bi-plus-lg me-2"></i> AGENDAR CITA
-    </button>
+    <div class="ms-auto anim-fade-up">
+      <button class="btn-benz btn-benz-primary" routerLink="nuevo">
+        <i class="bi bi-calendar-plus me-2"></i> SOLICITAR NUEVA CITA
+      </button>
+    </div>
   </header>
 
   <div class="row g-5">
     <div class="col-lg-8">
-      @for (cita of citas(); track cita.idCita) {
-      <div class="cita-card">
-        <div class="cita-main">
-          <div class="cita-header">
-            <span class="cita-badge">SERVICIO TÉCNICO</span>
-            <span class="cita-id">REF: #{{ cita.idCita }}</span>
-          </div>
-
-          <div class="cita-vehiculo-wrapper">
-            <h2 class="cita-vehiculo">
-              VEHÍCULO <span class="ms-2">{{ cita.vehiculo?.modelo || cita.id_vehiculo }}</span>
-            </h2>
-
-            <div class="cita-vehiculo-meta">
-              <span class="meta-item">
-                <i class="bi bi-reception-4 me-1"></i>
-                MATRÍCULA: <strong>{{ cita.vehiculo?.matricula || 'N/A' }}</strong>
-              </span>
-              <span class="meta-divider">|</span>
-              <span class="meta-item">
-                MOD. {{ cita.vehiculo?.anio || '----' }}
-              </span>
+      <div class="d-flex flex-column gap-4">
+        @for (cita of citas(); track cita.idCita) {
+        <div class="card-benz anim-fade-up" [style.animation-delay]="$index * 0.1 + 's'">
+          <div class="row align-items-center">
+            <div class="col-md-3 text-center border-md-end border-light border-opacity-10 py-3">
+              <div class="stat-benz-value">{{ cita.fecha_cita | date:'dd' }}</div>
+              <div class="stat-benz-label">{{ cita.fecha_cita | date:'MMM' | uppercase }}</div>
+              <div class="mt-2 fw-bold text-white-50 small" style="letter-spacing: 2px;">{{ cita.hora_cita }}H</div>
             </div>
-          </div>
-          <p class="cita-desc">{{ cita.descripcion }}</p>
-
-          <div class="cita-footer">
-            <div class="cita-status-pill">
-              <span class="dot" [class.completed]="cita.estado === 'Completada'"></span>
-              {{ cita.estado | uppercase }}
+            <div class="col-md-9 ps-md-5">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <h5 class="fw-bold mb-1">{{ cita.vehiculo?.modelo }}</h5>
+                  <div class="plate-display" style="transform: scale(0.65); transform-origin: left;">
+                    <span class="plate-number">{{ cita.vehiculo?.matricula }}</span>
+                  </div>
+                </div>
+                <span class="badge-benz-service">{{ cita.estado }}</span>
+              </div>
+              <p class="text-secondary small mb-0 italic">{{ cita.descripcion }}</p>
             </div>
           </div>
         </div>
-
-        <div class="cita-date-box">
-          <div class="time"><i class="bi bi-clock me-2"></i>{{ cita.hora_cita }}</div>
-          <div class="date">{{ cita.fecha_cita | date:'dd' }}</div>
-          <div class="month text-uppercase">{{ cita.fecha_cita | date:'MMM' }}</div>
+        } @empty {
+        <div class="card-benz text-center py-5">
+          <i class="bi bi-calendar-x opacity-25 fs-1 mb-3"></i>
+          <p class="text-white-50">No dispone de citas programadas en este momento.</p>
         </div>
+        }
       </div>
-      }
     </div>
 
     <div class="col-lg-4">
-      <div class="benz-sidebar-box primary">
-        <h3>PRÓXIMA REVISIÓN</h3>
-        <div class="d-flex align-items-center mt-4">
-          <div class="icon-wrap"><i class="bi bi-shield-check"></i></div>
-          <div>
-            <p class="label">Estado del sistema</p>
-            <p class="value">MANTENIMIENTO RECOMENDADO</p>
+      <div class="card-benz-dark sticky-top" style="top: 2rem;">
+        <h5 class="fw-bold mb-4 text-white">SERVICIO TÉCNICO</h5>
+        <p class="text-white-50 small mb-4 lh-lg">
+          Para cancelaciones o modificaciones con menos de 24h de antelación, por favor contacte directamente con su
+          centro GarageBenz.
+        </p>
+        <div class="border-top border-light border-opacity-10 pt-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <i class="bi bi-telephone text-primary"></i>
+            <span class="small text-white-50">+34 900 123 456</span>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-clock text-primary"></i>
+            <span class="small text-white-50">LUN-VIE: 08:30 - 18:30h</span>
           </div>
         </div>
-      </div>
-
-      <div class="benz-sidebar-box info">
-        <div class="d-flex align-items-center mb-3">
-          <i class="bi bi-info-circle-fill text-warning me-2"></i>
-          <span class="fw-bold small tracking-widest">PROTOCOLO</span>
+        <div class="mt-5 p-3 benz-glass rounded-1 border-opacity-10">
+          <span class="stat-benz-label mb-2 d-block">ESTADO DEL SISTEMA</span>
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge rounded-circle bg-success p-1"></span>
+            <span class="small fw-bold text-white">RECEPCIÓN OPERATIVA</span>
+          </div>
         </div>
-        <p class="text-muted small lh-lg">
-          Para garantizar un servicio óptimo, le recomendamos llegar 10 minutos antes. La recepción técnica se realizará
-          en el área de taller principal.
-        </p>
       </div>
     </div>
   </div>

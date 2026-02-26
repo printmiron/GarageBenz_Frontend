@@ -1,139 +1,147 @@
-<div class="container mt-4">
+<div class="page-benz animate-in">
+
   @if (!esAdmin() && !idFinal) {
-  <div class="alert alert-danger shadow-sm border-start border-5 border-danger">
-    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-    <strong>Atención:</strong> No se ha detectado ninguna Orden de Trabajo activa. Las funciones de asignación están
-    deshabilitadas.
+  <div class="card-benz bg-danger bg-opacity-10 border-danger border-opacity-25 mb-4">
+    <div class="d-flex align-items-start gap-3 text-danger">
+      <i class="bi bi-exclamation-triangle-fill fs-4 mt-1"></i>
+      <p class="mb-0 small"><strong>ATENCIÓN TÉCNICA:</strong> No se ha detectado ninguna Orden de Trabajo activa. Las
+        funciones de asignación están restringidas.</p>
+    </div>
   </div>
   }
 
-  <div class="row">
+  <header class="section-header-benz">
+    <div class="anim-fade-up">
+      <h1 class="benz-gradient-text fs-1 mb-0">{{ esAdmin() ? 'GESTIÓN DE INVENTARIO' : 'ALMACÉN TÉCNICO' }}</h1>
+      <p class="stat-benz-label">CONTROL DE REPUESTOS Y LOGÍSTICA</p>
+    </div>
+    @if (!esAdmin()) {
+    <div class="ms-auto">
+      <span class="badge-benz-service">OT VINCULADA: #{{ idFinal || '---' }}</span>
+    </div>
+    }
+  </header>
+
+  <div class="row g-4">
+
+    <!-- Stock por categoría -->
     <div [class]="esAdmin() ? 'col-12' : 'col-lg-8'">
 
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-primary mb-0">
-          <i class="bi" [class]="esAdmin() ? 'bi-gear-fill' : 'bi-tags'"></i>
-          {{ esAdmin() ? 'Gestión de Inventario' : 'Almacén de Repuestos' }}
-        </h2>
-        @if (!esAdmin()) {
-        <span class="badge bg-dark fs-6 p-2">
-          <i class="bi bi-hash"></i> OT: {{ idFinal || '---' }}
-        </span>
-        }
-      </div>
-
       @if (esAdmin()) {
-      <div class="card mb-5 border-0 shadow-sm bg-light">
-        <div class="card-body">
-          <h5 class="text-success mb-3"><i class="bi bi-plus-circle me-2"></i>Registrar Nuevo Repuesto</h5>
-          <div class="row g-2">
-            <div class="col-md-2">
-              <input type="text" class="form-control" [(ngModel)]="nuevaPieza().nombre" placeholder="Nombre">
-            </div>
-            <div class="col-md-3">
-              <input type="text" class="form-control" [(ngModel)]="nuevaPieza().descripcion"
-                placeholder="Descripción breve">
-            </div>
-            <div class="col-md-2">
-              <input type="text" class="form-control" [(ngModel)]="nuevaPieza().categoria" placeholder="Categoría">
-            </div>
-            <div class="col-md-2">
-              <input type="number" class="form-control" [(ngModel)]="nuevaPieza().precio" placeholder="Precio €">
-            </div>
-            <div class="col-md-1">
-              <input type="number" class="form-control" [(ngModel)]="nuevaPieza().cantidadInicial" placeholder="Cant.">
-            </div>
-            <div class="col-md-2">
-              <button class="btn btn-success w-100" (click)="crearNuevaPieza()">
-                <i class="bi bi-check-lg"></i> Crear
-              </button>
-            </div>
+      <div class="card-benz mb-5">
+        <h5 class="mb-4 fw-bold tracking-wider">REGISTRAR NUEVO COMPONENTE</h5>
+        <div class="row g-3">
+          <div class="col-md-3">
+            <span class="stat-benz-label mb-2 d-block">IDENTIFICACIÓN</span>
+            <input type="text" class="benz-input w-100" [(ngModel)]="nuevaPieza().nombre" placeholder="Nombre pieza">
+          </div>
+          <div class="col-md-3">
+            <span class="stat-benz-label mb-2 d-block">ESPECIFICACIONES</span>
+            <input type="text" class="benz-input w-100" [(ngModel)]="nuevaPieza().descripcion"
+              placeholder="Descripción">
+          </div>
+          <div class="col-md-2">
+            <span class="stat-benz-label mb-2 d-block">FAMILIA</span>
+            <input type="text" class="benz-input w-100" [(ngModel)]="nuevaPieza().categoria" placeholder="Categoría">
+          </div>
+          <div class="col-md-2">
+            <span class="stat-benz-label mb-2 d-block">PRECIO UNIT.</span>
+            <input type="number" class="benz-input w-100" [(ngModel)]="nuevaPieza().precio" placeholder="0.00 €">
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <button class="btn-benz btn-benz-primary w-100" (click)="crearNuevaPieza()">
+              <i class="bi bi-plus-lg me-2"></i> CREAR
+            </button>
           </div>
         </div>
       </div>
       }
 
       @for (cat of categorias; track cat) {
-      <div class="category-section mb-5">
-        <h4 class="border-bottom pb-2 text-secondary text-uppercase small fw-bold">{{ cat }}</h4>
-        <div class="row g-4" [class]="esAdmin() ? 'row-cols-md-4' : 'row-cols-md-2'">
-          @for (item of stockPorCategoria()[cat]; track item.idStock) {
+      <div class="mb-5 anim-fade-up">
+        <div class="border-bottom border-light border-opacity-10 pb-2 mb-4">
+          <h4 class="fs-6 fw-bold mb-0 tracking-widest">{{ cat }}</h4>
+        </div>
+        <div class="row g-3" [class]="esAdmin() ? 'row-cols-md-4' : 'row-cols-md-3'">
+          @for (item of stockPorCategoria()[cat]; track item.pieza.idPieza) {
           <div class="col">
-            <div class="card h-100 shadow-sm border-0" [class.opacity-50]="!esAdmin() && item.cantidad <= 0">
-              <div class="card-body d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <h5 class="card-title text-dark mb-0 small fw-bold">{{ item.pieza.nombre }}</h5>
-                  <span class="badge" [class]="item.cantidad > 5 ? 'bg-success' : 'bg-danger'">
-                    {{ item.cantidad }} uds
-                  </span>
+            <div class="card-benz h-100 d-flex flex-column" [class.opacity-50]="!esAdmin() && item.cantidad <= 0">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <h5 class="fs-6 fw-bold mb-0">{{ item.pieza.nombre }}</h5>
+                <span [class]="item.cantidad > 5 ? 'badge-benz-service' : 'badge-benz-pending'">
+                  {{ item.cantidad }} UDS
+                </span>
+              </div>
+              <p class="text-white-50 small mb-3 flex-grow-1">{{ item.pieza.descripcion }}</p>
+              <div class="stat-benz-value fs-4 mb-4">{{ item.pieza.precio | currency:'EUR' }}</div>
+              <div class="mt-auto pt-3 border-top border-light border-opacity-10">
+                @if (esAdmin()) {
+                <div class="input-group">
+                  <input type="number" #addStock class="benz-input flex-grow-1" value="10">
+                  <button class="btn-benz btn-benz-dark px-3" (click)="reponerStock(item, +addStock.value)">
+                    <i class="bi bi-box-arrow-in-down"></i>
+                  </button>
                 </div>
-                <p class="card-text text-muted x-small flex-grow-1">{{ item.pieza.descripcion }}</p>
-                <div class="h6 text-primary">{{ item.pieza.precio | currency:'EUR' }}</div>
-
-                <div class="mt-3 pt-3 border-top">
-                  @if (esAdmin()) {
-                  <div class="input-group input-group-sm">
-                    <input type="number" #addStock class="form-control" value="10">
-                    <button class="btn btn-outline-success" (click)="reponerStock(item, +addStock.value)">
-                      <i class="bi bi-box-arrow-in-down"></i> +
-                    </button>
-                  </div>
-                  } @else {
-                  <div class="input-group input-group-sm">
-                    <input type="number" #cantInput class="form-control" value="1" min="1" [max]="item.cantidad">
-                    <button class="btn btn-primary" (click)="agregarPieza(item, +cantInput.value)"
-                      [disabled]="item.cantidad <= 0 || !idFinal">
-                      Añadir
-                    </button>
-                  </div>
-                  }
+                } @else {
+                <div class="input-group">
+                  <input type="number" #cantInput class="benz-input flex-grow-1" value="1" min="1"
+                    [max]="item.cantidad">
+                  <button class="btn-benz btn-benz-primary ms-2" (click)="agregarPieza(item, +cantInput.value)"
+                    [disabled]="item.cantidad <= 0 || !idFinal">
+                    AÑADIR
+                  </button>
                 </div>
+                }
               </div>
             </div>
+          </div>
+          } @empty {
+          <div class="col-12">
+            <p class="text-white-50 small italic">Sin componentes en esta categoría.</p>
           </div>
           }
         </div>
       </div>
       }
+
     </div>
 
+    <!-- Presupuesto OT (sólo para trabajador) -->
     @if (!esAdmin()) {
     <div class="col-lg-4">
-      <div class="card sticky-top shadow border-primary" style="top: 20px; z-index: 1000;">
-        <div class="card-header bg-primary text-white py-3">
-          <h5 class="card-title mb-0"><i class="bi bi-cart-check me-2"></i>Presupuesto OT</h5>
-        </div>
-        <div class="card-body p-0">
-          <ul class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
+      <div class="card-benz benz-glass sticky-top" style="top: 20px;">
+        <h5 class="mb-4 fw-bold"><i class="bi bi-cart-check me-3 text-primary"></i>PRESUPUESTO OT</h5>
+        <div class="benz-glass overflow-hidden mb-4">
+          <div style="max-height: 400px; overflow-y: auto;">
             @for (linea of piezasAgregadas(); track $index) {
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="me-auto">
+            <div
+              class="p-3 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
+              <div>
                 <div class="fw-bold small">{{ linea.item.pieza.nombre }}</div>
-                <small class="text-muted">{{ linea.cantidad }} unidad(es)</small>
+                <small class="text-white-50">{{ linea.cantidad }} unidad(es)</small>
               </div>
               <span class="fw-bold">{{ (linea.cantidad * (linea.item.pieza.precio || 0)) | currency:'EUR' }}</span>
-            </li>
+            </div>
             } @empty {
-            <li class="list-group-item text-center py-5 text-muted">No hay piezas añadidas</li>
+            <div class="p-5 text-center text-white-50 italic small">No hay piezas añadidas</div>
             }
-          </ul>
-        </div>
-        <div class="card-footer bg-light p-3">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="h5 mb-0 text-dark">SUBTOTAL REPUESTOS:</span>
-            <span class="h4 mb-0 text-primary fw-bold">{{ totalPresupuesto() | currency:'EUR' }}</span>
           </div>
-
-          <button class="btn btn-success w-100 py-3 fw-bold shadow" (click)="confirmarYVolver()">
-            <i class="bi bi-arrow-left-circle me-2"></i> CONFIRMAR Y VOLVER A LA ORDEN
+        </div>
+        <div class="pt-4 border-top border-light border-opacity-10">
+          <div class="d-flex justify-content-between align-items-end mb-4">
+            <span class="stat-benz-label">SUBTOTAL:</span>
+            <span class="stat-benz-value fs-2">{{ totalPresupuesto() | currency:'EUR' }}</span>
+          </div>
+          <button class="btn-benz btn-benz-primary w-100 py-3" (click)="confirmarYVolver()">
+            <i class="bi bi-check2-all me-2"></i> CONFIRMAR ASIGNACIÓN
           </button>
-
-          <p class="text-center text-muted small mt-2">
-            * Las piezas se guardarán en la OT {{ idFinal }}.
+          <p class="text-center text-white-50 small mt-3 mb-0">
+            * Cargados a la Orden #{{ idFinal }}.
           </p>
         </div>
       </div>
     </div>
     }
+
   </div>
 </div>

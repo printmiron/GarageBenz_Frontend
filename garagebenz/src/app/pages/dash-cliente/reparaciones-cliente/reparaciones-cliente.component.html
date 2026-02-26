@@ -1,53 +1,66 @@
-<div class="container-fluid p-4">
-  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
+<div class="page-benz animate-in">
+  <header class="section-header-benz">
     <div>
-      <h1 class="benz-title">HISTORIAL</h1>
-      <p class="benz-subtitle">REGISTRO TÉCNICO DE REPARACIONES FINALIZADAS</p>
+      <h1 class="benz-gradient-text fs-1 mb-0">HISTORIAL DE ASISTENCIA</h1>
+      <p class="stat-benz-label">REGISTRO TÉCNICO DE INTERVENCIONES</p>
     </div>
-    <div class="text-end">
-       <span class="badge-total">{{ reparaciones().length }} INTERVENCIONES</span>
+    <div class="ms-auto anim-fade-up">
+      <span class="badge-benz-service">{{ reparaciones().length }} REGISTROS ENCONTRADOS</span>
     </div>
   </header>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="rep-list">
+  <div class="card-benz p-0 border-0 overflow-hidden">
+    <table class="table-benz mb-0">
+      <thead>
+        <tr class="anim-fade-up">
+          <th class="ps-4">FECHA / ID</th>
+          <th>VEHÍCULO</th>
+          <th>TRABAJOS REALIZADOS</th>
+          <th>COSTE FINAL</th>
+          <th class="text-end pe-4">DOCUMENTACIÓN</th>
+        </tr>
+      </thead>
+      <tbody>
         @for (rep of reparaciones(); track rep.idOr) {
-        <div class="rep-item">
-          <div class="rep-date">
-            <span class="day">{{ rep.fechaFin | date:'dd' }}</span>
-            <span class="month">{{ rep.fechaFin | date:'MMM' | uppercase }}</span>
-            <span class="year">{{ rep.fechaFin | date:'yyyy' }}</span>
-          </div>
-
-          <div class="rep-vehicle">
-            <div class="meta-label">VEHÍCULO</div>
-            <h3 class="model-name">{{ rep.vehiculo.modelo }}</h3>
-            <span class="plate-mini">{{ rep.vehiculo.matricula }}</span>
-          </div>
-
-          <div class="rep-work">
-            <div class="meta-label">DIAGNÓSTICO Y TRABAJO</div>
-            <p class="work-text">{{ rep.diagnostico }}</p>
-          </div>
-
-          <div class="rep-stats">
-            <div class="hours-box">
-              <span class="hours-val">{{ rep.horas }}</span>
-              <span class="hours-unit">HRS</span>
+        <tr class="anim-fade-up" [style.animation-delay]="$index * 0.05 + 's'">
+          <td class="ps-4">
+            <div class="fw-bold">{{ rep.fechaInicio | date:'dd/MM/yyyy' }}</div>
+            <div class="text-white-50 small tracking-wider">#{{ rep.idOr }}</div>
+          </td>
+          <td>
+            <div class="fw-bold text-uppercase">{{ rep.vehiculo?.modelo }}</div>
+            <div class="plate-display mt-2" style="transform: scale(0.65); transform-origin: left;">
+              <span class="plate-number">{{ rep.vehiculo?.matricula }}</span>
             </div>
-            <div class="status-tag">
-              <i class="bi bi-check2-all me-1"></i> FINALIZADO
+          </td>
+          <td>
+            <div class="small text-secondary lh-base max-w-md">{{ rep.diagnostico }}</div>
+            <div class="mt-2">
+              <span class="badge-benz-service py-1" style="font-size: 0.5rem;">{{ rep.estadoRep }}</span>
             </div>
-          </div>
-        </div>
+          </td>
+          <td>
+            <div class="stat-benz-value fs-4">
+              {{ rep.horas }}h · {{ rep.piezas?.length || 0 }} piezas
+            </div>
+          </td>
+          <td class="text-end pe-4">
+            <button class="btn btn-outline-light border-0 rounded-0" title="Ver Factura">
+              <i class="bi bi-file-earmark-pdf fs-5"></i>
+            </button>
+          </td>
+        </tr>
         } @empty {
-        <div class="empty-history text-center">
-          <i class="bi bi-clipboard-x"></i>
-          <p>NO SE HAN ENCONTRADO REGISTROS TÉCNICOS EN EL HISTORIAL.</p>
-        </div>
+        <tr>
+          <td colspan="5" class="text-center py-5">
+            <div class="empty-state opacity-50">
+              <i class="bi bi-folder2-open fs-1 d-block mb-3"></i>
+              <p>No se han encontrado registros de intervenciones técnicas.</p>
+            </div>
+          </td>
+        </tr>
         }
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
 </div>

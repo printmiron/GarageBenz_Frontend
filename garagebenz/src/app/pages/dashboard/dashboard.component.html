@@ -1,116 +1,139 @@
-<div class="container mt-4 mb-5 animate__animated animate__fadeIn">
-    <div class="row g-4">
-        <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
-            <div>
-                <h1 class="benz-title">PANEL PRINCIPAL</h1>
-                <p class="benz-subtitle">¡BIENVENIDO!</p>
-            </div>
-        </header>
-        @if (role() === 'administrador') {
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100 p-3 bg-white border-top border-4 border-primary">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="icon-box bg-primary-subtle text-primary rounded-3 p-2 me-3">
-                        <i class="bi bi-currency-euro fs-4"></i>
-                    </div>
-                    <h6 class="mb-0 fw-bold">Ingresos del Mes</h6>
-                </div>
-                <h3 class="fw-bold text-dark">{{ stats()?.totalIngresos | currency:'EUR' }}</h3>
-
-            </div>
+<div class="page-benz animate-in">
+    <header class="section-header-benz">
+        <div class="anim-fade-up">
+            <h1 class="benz-gradient-text fs-1">PANEL PRINCIPAL</h1>
+            <p class="stat-benz-label">CENTRO DE OPERACIONES GARAGEBENZ</p>
         </div>
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100 p-3 bg-white">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="icon-box bg-dark-subtle text-dark rounded-3 p-2 me-3">
-                        <i class="bi bi-people fs-4"></i>
-                    </div>
-                    <h6 class="mb-0 fw-bold">Plantilla</h6>
-                </div>
-                <h3 class="fw-bold">Gestión de Usuarios</h3>
-                <a routerLink="/dashboard-administrador/usuarios"
-                    class="btn btn-sm btn-outline-dark mt-auto">Administrar</a>
-            </div>
+        <div class="anim-delay-1">
+            <span class="badge-benz-service">{{ role() }} AUTHORIZED ACCESS</span>
         </div>
-        }
+    </header>
 
-        @if (role() === 'cliente') {
-        <div class="col-md-6">
-            <div class="card border-0 shadow-sm p-4 h-100 border-start border-4 border-primary bg-white">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 class="fw-bold mb-1"><i class="bi bi-car-front me-2"></i>Mi Garaje</h5>
-                        <p class="text-muted small">Vehículos registrados</p>
-                    </div>
-                    <div class="display-5 fw-bold text-primary">{{ misVehiculosCount() }}</div>
-                </div>
-                <button class="btn btn-primary w-100 mt-auto" routerLink="/dashboard-cliente/vehiculos">Gestionar mis
-                    coches</button>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card border-0 shadow-sm p-4 h-100 bg-dark text-white">
-                <h5 class="fw-bold mb-3"><i class="bi bi-calendar-event me-2"></i>Próxima Cita</h5>
-                @if (proximaCita()) {
-                <div class="p-3 bg-white bg-opacity-10 rounded-3">
-                    <div class="display-6 fw-bold text-primary">{{ proximaCita().fecha_cita | date:'dd MMM' }}</div>
-                    <div class="fw-bold text-uppercase small text-white-50">{{ proximaCita().hora_cita }}h</div>
-                    <div class="mt-2">{{ proximaCita().descripcion }}</div>
-                    <span class="badge bg-primary mt-2">{{ proximaCita().estado }}</span>
-                </div>
-                } @else {
-                <div class="text-center py-3">
-                    <p class="opacity-50">No tienes citas programadas.</p>
-                    <button class="btn btn-outline-light btn-sm px-4"
-                        routerLink="/dashboard-cliente/citas/nuevo">Solicitar Cita Ahora</button>
-                </div>
-                }
-            </div>
-        </div>
-        }
-
-        @if (role() === 'trabajador') {
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm p-4 h-100 text-center bg-white">
-                <div class="rounded-circle bg-warning bg-opacity-10 text-warning d-inline-flex align-items-center justify-content-center mb-3 mx-auto"
-                    style="width: 80px; height: 80px;">
-                    <i class="bi bi-tools fs-1"></i>
-                </div>
-                <h2 class="fw-bold mb-1">{{ tareasPendientes() }}</h2>
-                <p class="text-muted small mb-3">Tareas por finalizar</p>
-                <button class="btn btn-dark w-100" routerLink="/dashboard-trabajador/reparaciones">Ver mi
-                    agenda</button>
-            </div>
-        </div>
-
-        <div class="col-md-8">
-            <div class="card border-0 shadow-sm p-4 h-100 border-start border-4 border-warning bg-white">
-                <h5 class="fw-bold mb-3">Último Trabajo Asignado</h5>
-                @if (ultimaReparacion()) {
-                <div class="p-4 bg-light rounded-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div>
-                            <h6 class="fw-bold text-primary mb-0">{{ ultimaReparacion().vehiculo?.modelo || 'Modelo no
-                                especificado' }}</h6>
-                            <span class="badge bg-dark mt-1">{{ ultimaReparacion().vehiculo?.matricula }}</span>
-                        </div>
-                        <span class="badge bg-warning text-dark px-3 py-2 text-uppercase">{{
-                            ultimaReparacion().estadoRep }}</span>
-                    </div>
-                    <div class="alert alert-warning border-0 bg-white shadow-sm small mb-0">
-                        <strong><i class="bi bi-search me-1"></i> Diagnóstico:</strong><br>
-                        {{ ultimaReparacion().diagnostico }}
+    <!-- ADMIN VIEW -->
+    @if (role() === 'administrador') {
+    <div class="row g-4 mb-5">
+        <div class="col-md-4 anim-fade-up anim-delay-1">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">FACTURACIÓN MENSUAL</span>
+                    <div class="stat-benz-value mt-2">{{ stats()?.totalIngresos | currency:'EUR' }}</div>
+                    <div class="stat-benz-delta up mt-2">
+                        <i class="bi bi-graph-up pe-1"></i> +12.5% vs MES ANTERIOR
                     </div>
                 </div>
-                } @else {
-                <div class="text-center py-5">
-                    <p class="text-muted mt-3">No tienes reparaciones pendientes.</p>
-                </div>
-                }
             </div>
         </div>
-        }
+        <div class="col-md-4 anim-fade-up anim-delay-2">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">CLIENTES REGISTRADOS</span>
+                    <div class="stat-benz-value mt-2">1,240</div>
+                    <div class="stat-benz-delta up mt-2">
+                        <i class="bi bi-people pe-1"></i> +4 NUEVOS HOY
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 anim-fade-up anim-delay-3">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">DISPONIBILIDAD TALLER</span>
+                    <div class="stat-benz-value mt-2">98.2%</div>
+                    <div class="stat-benz-delta up mt-2">
+                        <i class="bi bi-check-circle pe-1"></i> OPTIMIZADO
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- CLIENT VIEW -->
+    @if (role() === 'cliente') {
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 anim-fade-up anim-delay-1">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">MI GARAGE</span>
+                    <div class="stat-benz-value mt-2">{{ misVehiculosCount() }}</div>
+                    <div class="mt-4">
+                        <button class="btn-benz btn-benz-outline w-100" routerLink="/dashboard-cliente/vehiculos">VER
+                            CATÁLOGO PERSONAL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 anim-fade-up anim-delay-2">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">PRÓXIMA CITA</span>
+                    @if (proximaCita()) {
+                    <div class="stat-benz-value mt-2">{{ proximaCita().fecha_cita | date:'dd MMM' }}</div>
+                    <p class="text-secondary small mt-2">A las {{ proximaCita().hora_cita }}h</p>
+                    } @else {
+                    <div class="stat-benz-value mt-2">---</div>
+                    <p class="text-secondary small mt-2">Sin mantenimientos programados</p>
+                    }
+                    <div class="mt-4">
+                        <button class="btn-benz btn-benz-outline w-100" routerLink="/dashboard-cliente/citas">GESTIONAR
+                            AGENDA</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- WORKER VIEW -->
+    @if (role() === 'trabajador') {
+    <div class="row g-4 mb-5">
+        <div class="col-md-4 anim-fade-up anim-delay-1">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">CITAS ASIGNADAS</span>
+                    <div class="stat-benz-value mt-2">08</div>
+                    <button class="btn-benz btn-benz-dark mt-4 w-100" routerLink="/dashboard-trabajador/agenda">VER
+                        AGENDA</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 anim-fade-up anim-delay-2">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">ÓRDENES ACTIVAS</span>
+                    <div class="stat-benz-value mt-2">{{ tareasPendientes() }}</div>
+                    <button class="btn-benz btn-benz-dark mt-4 w-100" routerLink="/dashboard-trabajador/ordenes">ÓRDENES
+                        DE TRABAJO</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 anim-fade-up anim-delay-3">
+            <div class="card-benz">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">RECAMBIOS EN STOCK</span>
+                    <div class="stat-benz-value mt-2">94%</div>
+                    <button class="btn-benz btn-benz-dark mt-4 w-100" routerLink="/dashboard-trabajador/stock">CONSULTAR
+                        ALMACÉN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- HERO SECTION -->
+    <div class="row anim-fade-up anim-delay-4">
+        <div class="col-12">
+            <div class="card-benz p-0 border-0 overflow-hidden" style="min-height: 400px; position: relative;">
+                <div class="p-5 d-flex flex-column justify-content-center h-100"
+                    style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('assets/hero-bg.jpg') center/cover; position: absolute; inset: 0;">
+                    <h2 class="benz-gradient-text display-3 mb-3">RESUMEN OPERATIVO GARAGEBENZ</h2>
+                    <p class="text-white-50 lead max-w-2xl">
+                        Supervise y gestione con precisión técnica toda la actividad de la plataforma en tiempo real.
+                        Acceso centralizado a métricas, vehículos, citas y facturación con los estándares de calidad de
+                        Mercedes-Benz.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,132 +1,163 @@
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12 mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="text-primary"><i class="bi bi-person-badge me-2"></i>Plantilla de Trabajadores</h3>
-                <button [routerLink]="['/dashboard-administrador/trabajador/nuevo']" class="btn btn-success btn-sm">
-                    <i class="bi bi-plus-circle me-1"></i> Nuevo Trabajador
-                </button>
-            </div>
-
-            <div class="card shadow-sm">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Nombre Completo</th>
-                                <th>Usuario</th>
-                                <th>Correo</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (t of trabajadores(); track t.idTrabajador) {
-                            <tr>
-                                <td>{{ t.nombre }} {{ t.apellido1 }} {{ t.apellido2 }}</td>
-                                <td><span class="badge bg-light text-dark border">{{ t.usuario }}</span></td>
-                                <td>{{ t.correo }}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-danger btn-sm"
-                                        (click)="borrar(t.idTrabajador, 'trabajadores')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            } @empty {
-                            <tr>
-                                <td colspan="4" class="text-center text-muted p-4">No hay trabajadores registrados.</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="page-benz animate-in">
+    <header class="section-header-benz">
+        <div class="anim-fade-up">
+            <h1 class="benz-gradient-text fs-1 mb-0">GESTIÓN DE PERSONAL</h1>
+            <p class="stat-benz-label">DERECHOS DE ACCESO Y PORTAFOLIO DE CLIENTES</p>
         </div>
-
-        <div class="col-12">
-            <h3 class="text-secondary mb-3"><i class="bi bi-people me-2"></i>Gestión de Clientes</h3>
-            <div class="card shadow-sm">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-secondary">
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Correo</th>
-                                <th>Usuario</th>
-                                <th class="text-center">Expediente</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (c of clientes(); track c.idCliente) {
-                            <tr>
-                                <td class="fw-bold">{{ c.nombre }} {{ c.apellido1 }}</td>
-                                <td>{{ c.correo }}</td>
-                                <td>{{ c.usuario }}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-info btn-sm text-white"
-                                        (click)="verTodoDelCliente(c.idCliente)">
-                                        <i class="bi bi-journal-text me-1"></i> Ver Todo
-                                    </button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-danger btn-sm"
-                                        (click)="borrar(c.idCliente, 'clientes')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="ms-auto anim-fade-up">
+            <button class="btn-benz btn-benz-primary">
+                <i class="bi bi-person-plus me-2"></i> REGISTRAR NUEVO ACCESO
+            </button>
         </div>
+    </header>
+
+    <div class="card-benz p-0 border-0 overflow-hidden mb-5 anim-fade-up">
+        <div class="p-4 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">EQUIPO TÉCNICO Y ADMINISTRATIVO</h5>
+            <span class="badge-benz-service">{{ trabajadores().length }} PERSONAL AUTORIZADO</span>
+        </div>
+        <table class="table-benz mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">NOMBRE Y APELLIDOS</th>
+                    <th>USUARIO</th>
+                    <th>CORREO</th>
+                    <th class="text-end pe-4">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (t of trabajadores(); track t.idTrabajador) {
+                <tr>
+                    <td class="ps-4">
+                        <div class="fw-bold">{{ t.nombre }} {{ t.apellido1 }} {{ t.apellido2 }}</div>
+                    </td>
+                    <td>
+                        <code class="text-primary font-mono small">{{ t.usuario }}</code>
+                    </td>
+                    <td>
+                        <span class="text-white-50 small">{{ t.correo }}</span>
+                    </td>
+                    <td class="text-end pe-4">
+                        <button (click)="borrar(t.idTrabajador, 'trabajadores')"
+                            class="btn btn-outline-danger border-0">
+                            <i class="bi bi-trash fs-5"></i>
+                        </button>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="4" class="text-center py-5">
+                        <div class="empty-state opacity-50">
+                            <i class="bi bi-people fs-1 d-block mb-3"></i>
+                            <p>No hay personal registrado en el sistema.</p>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-benz p-0 border-0 overflow-hidden anim-fade-up anim-delay-1">
+        <div class="p-4 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">BASE DE DATOS DE CLIENTES</h5>
+            <span class="badge-benz-service">{{ clientes().length }} DOSSIER ACTIVOS</span>
+        </div>
+        <table class="table-benz mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">CLIENTE</th>
+                    <th>CORREO</th>
+                    <th>USUARIO</th>
+                    <th class="text-end pe-4">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (c of clientes(); track c.idCliente) {
+                <tr>
+                    <td class="ps-4">
+                        <div class="fw-bold fs-5">{{ c.nombre }} {{ c.apellido1 }}</div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-envelope text-primary"></i>
+                            <span class="small text-white-50">{{ c.correo }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <code class="text-white-50 font-mono small">{{ c.usuario }}</code>
+                    </td>
+                    <td class="text-end pe-4">
+                        <div class="d-flex justify-content-end gap-2">
+                            <button (click)="verTodoDelCliente(c.idCliente)"
+                                class="btn-benz btn-benz-outline py-2">EXPEDIENTE</button>
+                            <button (click)="borrar(c.idCliente, 'clientes')" class="btn btn-outline-danger border-0">
+                                <i class="bi bi-person-x fs-5"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="4" class="text-center py-5">
+                        <div class="empty-state opacity-50">
+                            <i class="bi bi-person-x fs-1 d-block mb-3"></i>
+                            <p>No hay clientes registrados en el sistema.</p>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
     </div>
 
     @if (clienteDetalle(); as detalle) {
-    <div class="mt-5 p-4 border-start border-4 border-info bg-white shadow rounded animate__animated animate__fadeIn">
-        <div class="d-flex justify-content-between">
-            <h4><i class="bi bi-file-earmark-person me-2"></i>Expediente: {{ detalle.nombre }} {{ detalle.apellido1 }}
-            </h4>
+    <div class="mt-5 card-benz benz-glass border-primary border-opacity-25 animate-in">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0"><i class="bi bi-file-earmark-person me-3 text-primary"></i>Expediente: {{ detalle.nombre }}
+                {{ detalle.apellido1 }}</h4>
             <button class="btn-close" (click)="clienteDetalle.set(null)"></button>
         </div>
 
-        <div class="row mt-4">
+        <div class="row g-4">
             <div class="col-md-6">
-                <h5 class="border-bottom pb-2 text-info"><i class="bi bi-car-front me-2"></i>Vehículos</h5>
-                <div class="list-group list-group-flush">
+                <span class="stat-benz-label mb-3">VEHÍCULOS VINCULADOS</span>
+                <div class="benz-glass p-0 rounded-2 overflow-hidden" style="background: white;">
                     @for (v of detalle.vehiculos; track v.id_vehiculo) {
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="p-3 border-bottom border-light d-flex justify-content-between align-items-center">
                         <div>
                             <div class="fw-bold">{{ v.modelo }}</div>
-                            <small class="text-muted">VIN: {{ v.vin }}</small>
+                            <small class="text-secondary italic">VIN: {{ v.vin }}</small>
                         </div>
-                        <span class="badge bg-dark rounded-pill">{{ v.matricula }}</span>
+                        <div class="plate-display" style="transform: scale(0.7); transform-origin: right;">
+                            <span class="plate-number">{{ v.matricula }}</span>
+                        </div>
                     </div>
                     } @empty {
-                    <p class="text-muted small p-3">No hay vehículos registrados para este cliente.</p>
+                    <p class="text-muted small p-4 text-center italic">No hay vehículos registrados para este cliente.
+                    </p>
                     }
                 </div>
             </div>
 
             <div class="col-md-6">
-                <h5 class="border-bottom pb-2 text-info"><i class="bi bi-tools me-2"></i>Historial de Reparaciones</h5>
-                <div class="timeline mt-3">
+                <span class="stat-benz-label mb-3">HISTORIAL DE INTERVENCIONES</span>
+                <div class="benz-glass p-3 rounded-2" style="background: white; max-height: 300px; overflow-y: auto;">
                     @for (h of detalle.historialReparaciones; track h.id_orden) {
-                    <div class="mb-3 p-2 border-bottom">
-                        <div class="d-flex justify-content-between">
-                            <span class="fw-bold text-truncate">{{ h.descripcion }}</span>
-                            <span class="badge bg-secondary">{{ h.fecha_entrada }}</span>
+                    <div class="mb-3 pb-3 border-bottom border-light last-child-no-border">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <span class="fw-bold small">{{ h.descripcion }}</span>
+                            <span class="badge-benz-service">{{ h.fecha_entrada }}</span>
                         </div>
-                        <div class="d-flex justify-content-between small mt-1">
-                            <span>Coche: {{ h.matricula_vehiculo }}</span>
-                            <span [class]="h.estado === 'COMPLETADO' ? 'text-success' : 'text-warning'">{{ h.estado
-                                }}</span>
+                        <div class="d-flex justify-content-between small mt-2">
+                            <span class="text-secondary">Matrícula: {{ h.matricula_vehiculo }}</span>
+                            <span
+                                [class]="h.estado === 'COMPLETADO' ? 'text-success fw-bold' : 'text-warning fw-bold'">{{
+                                h.estado }}</span>
                         </div>
                     </div>
                     } @empty {
-                    <p class="text-muted small p-3">No hay historial de reparaciones disponible.</p>
+                    <p class="text-muted small p-4 text-center italic">No hay historial de reparaciones disponible.</p>
                     }
                 </div>
             </div>

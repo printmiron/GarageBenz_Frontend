@@ -1,128 +1,132 @@
-<div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h2 class="fw-bold text-dark mb-0">Control Financiero</h2>
-            <p class="text-muted small">Mes actual: {{ stats()?.mes }}/{{ stats()?.anio }}</p>
+<div class="page-benz animate-in">
+    <header class="section-header-benz">
+        <div class="anim-fade-up">
+            <h1 class="benz-gradient-text fs-1 mb-0">CONTROL FINANCIERO</h1>
+            <p class="stat-benz-label">MÉTRICAS DE RENDIMIENTO ECONÓMICO · {{ stats()?.mes }}/{{ stats()?.anio }}</p>
         </div>
-        <div class="d-flex gap-2">
-            <button class="btn btn-danger shadow-sm d-flex align-items-center" (click)="descargarReporteMensual()"
+        <div class="ms-auto anim-fade-up">
+            <button class="btn-benz btn-benz-primary" (click)="descargarReporteMensual()"
                 [disabled]="loading() || !stats()">
-                <i class="bi bi-file-earmark-pdf-fill me-2"></i>
-                Descargar Reporte Mensual
+                <i class="bi bi-file-earmark-pdf me-2"></i> DESCARGAR REPORTE ANUAL
             </button>
-
-            
         </div>
-    </div>
+    </header>
 
     @if (loading()) {
     <div class="text-center py-5">
-        <div class="spinner-grow text-primary" role="status"></div>
-        <p class="text-muted mt-3">Analizando rentabilidad y generando métricas...</p>
+        <div class="spinner-border text-white-50" role="status"></div>
+        <p class="mt-3 stat-benz-label animate-pulse">SINCRONIZANDO REGISTROS DE FACTURACIÓN...</p>
     </div>
     } @else if (stats()) {
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm card-accent-blue">
-                <div class="card-body">
-                    <h6 class="text-muted small text-uppercase fw-bold">Ingresos Totales (Bruto)</h6>
-                    <h3 class="fw-bold mb-1">{{ stats()?.totalIngresos | currency:'EUR' }}</h3>
-                    <div class="d-flex justify-content-between x-small">
-                        <span>Mano Obra: {{ stats()?.totalManoObra | currency:'EUR' }}</span>
-                        <span>Piezas: {{ stats()?.totalPiezasVenta | currency:'EUR' }}</span>
+    <div class="row g-4 mb-5">
+        <!-- INGRESOS -->
+        <div class="col-md-3 anim-fade-up">
+            <div class="card-benz h-100">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">INGRESOS BRUTOS</span>
+                    <div class="stat-benz-value fs-2 mt-2">{{ stats()?.totalIngresos | currency:'EUR' }}</div>
+                    <div class="mt-4 pt-4 border-top border-light border-opacity-10">
+                        <div class="d-flex justify-content-between small text-white-50">
+                            <span>SERVICIOS TÉCNICOS</span>
+                            <span class="fw-bold">{{ stats()?.totalManoObra | currency:'EUR' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between small text-white-50 mt-2">
+                            <span>VENTA RECAMBIOS</span>
+                            <span class="fw-bold">{{ stats()?.totalPiezasVenta | currency:'EUR' }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm bg-dark text-white">
-                <div class="card-body">
-                    <h6 class="text-white-50 small text-uppercase fw-bold">Beneficio Neto (Limpio)</h6>
-                    <h3 class="fw-bold text-success mb-1">{{ stats()?.beneficioNeto | currency:'EUR' }}</h3>
-                    <p class="mb-0 x-small" [ngClass]="margenColor()">
-                        Margen de ganancia: <strong>{{ stats()?.margenBeneficio }}%</strong>
-                    </p>
+        <!-- BENEFICIO -->
+        <div class="col-md-3 anim-fade-up anim-delay-1">
+            <div class="card-benz-dark h-100 benz-glass">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">BENEFICIO OPERATIVO</span>
+                    <div class="stat-benz-value fs-2 mt-2 text-white">{{ stats()?.beneficioNeto | currency:'EUR' }}
+                    </div>
+                    <div class="stat-benz-delta up mt-3">
+                        <i class="bi bi-graph-up-arrow"></i> MARGEN: {{ stats()?.margenBeneficio }}%
+                    </div>
+                    <p class="text-white-50 small mt-4 mb-0 italic">Optimización de recursos activa</p>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm border-start border-danger border-4">
-                <div class="card-body">
-                    <h6 class="text-muted small text-uppercase fw-bold">Inversión en Repuestos</h6>
-                    <h3 class="fw-bold text-danger mb-1">{{ stats()?.totalGastoStock | currency:'EUR' }}</h3>
-                    <p class="text-muted x-small mb-0">Coste real de adquisición</p>
+        <!-- STOCK -->
+        <div class="col-md-3 anim-fade-up anim-delay-2">
+            <div class="card-benz h-100">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">INVERSIÓN ALMACÉN</span>
+                    <div class="stat-benz-value fs-2 mt-2">{{ stats()?.totalGastoStock | currency:'EUR' }}</div>
+                    <p class="text-white-50 small mt-3 italic">Coste de adquisición acumulado</p>
                 </div>
             </div>
         </div>
 
-        
-    </div>
-
-    <div class="row g-3 mb-5 text-center">
-        <div class="col-4 col-md-2">
-            <div class="p-3 bg-white rounded-3 shadow-sm border">
-                <i class="bi bi-people text-primary fs-3"></i>
-                <h5 class="fw-bold mt-2 mb-0">{{ stats()?.clientesAtendidos }}</h5>
-                <span class="text-muted x-small">Clientes</span>
+        <!-- CLIENTES -->
+        <div class="col-md-3 anim-fade-up anim-delay-3">
+            <div class="card-benz h-100">
+                <div class="stat-benz">
+                    <span class="stat-benz-label">VOLUMEN DE CLIENTES</span>
+                    <div class="stat-benz-value fs-1 mt-1">{{ stats()?.clientesAtendidos }}</div>
+                    <div class="mt-2"><i class="bi bi-people-fill text-primaryOpacity"></i></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-bold text-secondary">Historial de Facturación Reciente</h5>
-            <span class="badge bg-primary-subtle text-primary rounded-pill">{{ facturas().length }} registros</span>
+    <div class="card-benz p-0 border-0 overflow-hidden anim-fade-up anim-delay-4">
+        <div class="p-4 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">TRANSACCIONES RECIENTES</h5>
+            <span class="badge-benz-service">{{ facturas().length }} FACTURAS EMITIDAS</span>
         </div>
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="bg-light">
-                    <tr class="x-small text-uppercase text-muted">
-                        <th class="ps-4">Nº Factura</th>
-                        <th>Fecha</th>
-                        <th>Cliente / Vehículo</th>
-                        <th>Importe Total</th>
-                        <th class="text-center pe-4">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (f of facturas(); track f.idFactura) {
-                    <tr>
-                        <td class="ps-4">
-                            <span class="fw-bold text-dark">#{{ f.numeroFactura }}</span>
-                        </td>
-                        <td class="small text-muted">{{ f.fechaEmision | date:'dd/MM/yyyy' }}</td>
-                        <td>
-                            <div class="fw-bold small">{{ f.ordenReparacion?.vehiculo?.cliente?.nombre }}</div>
-                            <div class="text-muted x-small">
-                                <i class="bi bi-car-front me-1"></i>{{ f.ordenReparacion?.vehiculo?.matricula }}
-                            </div>
-                        </td>
-                        <td>
-                            <span class="fw-bold text-dark">{{ f.importeTotal | currency:'EUR' }}</span>
-                        </td>
-                        <td class="text-center pe-4">
-                            <div class="btn-group">
-                                <button class="btn btn-sm btn-outline-danger" (click)="verFactura(f)"
-                                    title="Descargar PDF de esta factura">
-                                    <i class="bi bi-file-earmark-pdf"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    } @empty {
-                    <tr>
-                        <td colspan="5" class="text-center py-5 text-muted">
-                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                            No hay facturas registradas en este periodo.
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+        <table class="table-benz mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">REFERENCIA</th>
+                    <th>FECHA EMISIÓN</th>
+                    <th>DETALLE CLIENTE / VEHÍCULO</th>
+                    <th>IMPORTE TOTAL</th>
+                    <th class="text-end pe-4">DOCUMENTACIÓN</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (f of facturas(); track f.idFactura) {
+                <tr class="anim-fade-up" [style.animation-delay]="$index * 0.05 + 's'">
+                    <td class="ps-4">
+                        <span class="fw-bold tracking-wider">#{{ f.numeroFactura }}</span>
+                    </td>
+                    <td><span class="text-white-50 small">{{ f.fechaEmision | date:'dd/MM/yyyy' }}</span></td>
+                    <td>
+                        <div class="fw-bold">{{ f.ordenReparacion?.vehiculo?.cliente?.nombre }}</div>
+                        <div class="plate-display mt-2" style="transform: scale(0.65); transform-origin: left;">
+                            <span class="plate-number">{{ f.ordenReparacion?.vehiculo?.matricula }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="stat-benz-value fs-5">{{ f.importeTotal | currency:'EUR' }}</div>
+                    </td>
+                    <td class="text-end pe-4">
+                        <button class="btn btn-outline-light border-0" (click)="verFactura(f)" title="Ver PDF">
+                            <i class="bi bi-file-earmark-pdf fs-4"></i>
+                        </button>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="5" class="text-center py-5">
+                        <div class="empty-state opacity-50">
+                            <i class="bi bi-receipt-cutoff fs-1 d-block mb-3"></i>
+                            <p>No se han detectado movimientos en el periodo seleccionado.</p>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
     </div>
     }
 </div>

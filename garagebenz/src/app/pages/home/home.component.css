@@ -1,7 +1,7 @@
 :host {
   display: block;
   height: 100vh;
-  
+
 }
 
 .benz-layout {
@@ -43,7 +43,13 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #f8f9fa;
+  background-color: var(--bg-main);
+  background-image:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 100%),
+    url('https://cdn-xy.drivek.com/eyJidWNrZXQiOiJkYXRhay1jZG4teHkiLCJrZXkiOiJjb25maWd1cmF0b3ItaW1ncy9jYXJzL2VzL29yaWdpbmFsL01FUkNFREVTL0MtQ0xBU1MvNDAzMjZfU0VEQU4tNC1ET09SUy9tZXJjZWRlcy1iZW56LWMtY2xhc3Mtc2VkYW4tMjAyMS1mcm9udC1zaWRlLTEuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjoxMDI0LCJoZWlnaHQiOm51bGwsImZpdCI6ImNvdmVyIn19fQ==');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   min-width: 0;
 }
 
@@ -59,7 +65,7 @@
 .benz-content-wrapper {
   flex: 1;
   overflow-y: auto;
-  background-color: #f8f9fa;
+  background-color: transparent;
 }
 
 .benz-content {

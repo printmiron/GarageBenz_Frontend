@@ -2,49 +2,55 @@
 
 
 :root {
-
-    --color-albaster: #F4F4F4;
-    --color-white: #FFFFFF;
-    --color-black: #000000;
-    --color-carbon: #0a0a0a;
-    --color-graphite: #111111;
-    --color-steel: #1a1a1a;
-    --color-iron: #242424;
+    /* Pure Mercedes Dark Palette */
+    --color-pure-black: #000000;
+    --color-carbon: #080808;
+    --color-graphite: #121212;
+    --color-steel: #1c1c1c;
+    --color-iron: #222222;
     --color-chrome: #808080;
-    --color-silver: #C8C8C8;
+    --color-silver: #d2d2d7;
+    --color-white: #ffffff;
+
+    /* Semantic Overrides for Dark Mode */
+    --bg-main: var(--color-pure-black);
+    --bg-surface: var(--color-carbon);
+    --bg-card: var(--color-graphite);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+
+    /* Primary Accent - Sophisticated Blue */
+    --color-lochmara: #007aff;
+    --color-lochmara-lt: #4096ff;
+    --color-lochmara-dk: #0056b3;
+    --color-lochmara-xs: rgba(0, 122, 255, 0.1);
+
+    /* Typography */
+    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Layout */
+    --sidebar-width: 290px;
+    --topbar-h: 70px;
+    --mobile-nav-h: 60px;
 
 
-    --color-lochmara: #0078D6;
-    --color-lochmara-lt: #1a8ee8;
-    --color-lochmara-dk: #0060B0;
-    --color-lochmara-xs: rgba(0, 120, 214, 0.08);
+    --sidebar-border: rgba(255, 255, 255, 0.05);
+    --light-border: rgba(0, 0, 0, 0.06);
 
 
-    --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
-    --font-body: 'DM Sans', Arial, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --transition-fast: all 0.2s ease;
+    --transition-standard: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 
 
-    --sidebar-width: 280px;
-    --topbar-h: 62px;
-    --mobile-nav-h: 58px;
-
-
-    --sidebar-border: rgba(255, 255, 255, 0.065);
-    --light-border: rgba(0, 0, 0, 0.08);
-
-
-    --transition-fast: all 0.15s ease;
-    --transition-standard: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-
-
-    --shadow-xs: 0 1px 4px rgba(0, 0, 0, 0.06);
-    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.07);
-    --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.10);
-    --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.14);
-    --shadow-blue: 0 6px 24px rgba(0, 120, 214, 0.28);
-    --shadow-dark: 0 10px 35px rgba(0, 0, 0, 0.4);
+    /* Shadows (Now Light Glows) */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.8);
+    --shadow-blue: 0 10px 30px rgba(0, 122, 255, 0.2);
+    --shadow-dark: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -58,7 +64,7 @@
 
 html {
 
-    height: -webkit-fill-available; 
+    height: -webkit-fill-available;
     scroll-behavior: smooth;
 
     overflow-y: auto;
@@ -66,27 +72,26 @@ html {
 }
 
 body {
-    background-color: var(--color-albaster);
-    color: var(--color-carbon);
+    background-color: var(--bg-main);
+    color: var(--color-white);
     font-family: var(--font-body);
-    font-size: 0.95rem;
-    font-weight: 400;
+    font-weight: 300;
     margin: 0;
-    
-    
-    min-height: 100vh;
-    
-    min-height: -webkit-fill-available; 
-    height: auto !important; 
-    overflow-y: auto !important;
     overflow-x: hidden;
-    
-    
+
+
+    min-height: 100vh;
+
+    min-height: -webkit-fill-available;
+    height: auto !important;
+    overflow-y: auto !important;
+
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    
-    
+
+
     -webkit-overflow-scrolling: touch;
 }
 
@@ -105,10 +110,10 @@ h4,
 h5,
 h6 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-white);
+    line-height: 1.2;
     margin-bottom: 0;
 }
 
@@ -160,7 +165,7 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 0;
 }
 
@@ -247,68 +252,51 @@ a:hover {
 }
 
 .btn-benz-primary {
-    background: var(--color-lochmara);
-    border: 1px solid var(--color-lochmara);
-    color: white;
+    background: var(--color-white);
+    border: 1px solid var(--color-white);
+    color: var(--color-pure-black);
 }
 
 .btn-benz-primary:hover {
-    background: var(--color-lochmara-dk);
-    border-color: var(--color-lochmara-dk);
-    box-shadow: var(--shadow-blue);
-    color: white;
-    transform: translateY(-1px);
-}
-
-.btn-benz-primary:active {
-    transform: translateY(0);
+    background: var(--color-silver);
+    border-color: var(--color-silver);
+    color: var(--color-pure-black);
+    transform: translateY(-2px);
 }
 
 .btn-benz-dark {
-    background: var(--color-carbon);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--color-pure-black);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
 }
 
 .btn-benz-dark:hover {
     background: var(--color-iron);
-    box-shadow: var(--shadow-dark);
-    color: white;
-    transform: translateY(-1px);
-    border-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 .btn-benz-outline {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: white;
+    border: 1px solid var(--border-subtle);
+    color: var(--color-white);
 }
 
 .btn-benz-outline:hover {
-    background: white;
-    color: black;
-    border-color: white;
+    background: var(--color-white);
+    color: var(--color-pure-black);
 }
 
 .btn-benz-ghost {
     background: transparent;
-    border: 1px solid var(--light-border);
-    color: var(--color-carbon);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 0.55rem 1.25rem;
-    border-radius: 0;
-    transition: var(--transition-standard);
-    cursor: pointer;
-    font-family: var(--font-body);
+    border: none;
+    color: var(--color-white);
+    opacity: 0.6;
 }
 
 .btn-benz-ghost:hover {
-    background: var(--color-carbon);
-    color: white;
-    border-color: var(--color-carbon);
+    opacity: 1;
+    color: var(--color-lochmara);
 }
 
 
@@ -348,9 +336,9 @@ a:hover {
 
 
 .benz-input-light {
-    background-color: white !important;
-    border: 1px solid var(--light-border) !important;
-    color: var(--color-carbon) !important;
+    background-color: var(--color-carbon) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--color-white) !important;
     border-radius: 0 !important;
     padding: 0.72rem 1rem;
     font-family: var(--font-body);
@@ -360,6 +348,7 @@ a:hover {
 
 .benz-input-light::placeholder {
     color: var(--color-silver);
+    opacity: 0.4;
     font-size: 0.83rem;
 }
 
@@ -371,14 +360,12 @@ a:hover {
 
 
 .plate-display {
-    background: #fff;
-    padding: 4px 14px 4px 8px;
-    border-radius: 3px;
-    border: 2px solid #1a1a1a;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: var(--shadow-xs);
+    background: white;
+    padding: 6px 14px;
+    border-radius: 2px;
+    border: 1px solid #777;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    display: inline-block;
 }
 
 .plate-display::before {
@@ -398,11 +385,10 @@ a:hover {
 }
 
 .plate-number {
-    color: #111;
-    font-family: var(--font-mono);
-    font-weight: 800;
-    font-size: 1.05rem;
-    letter-spacing: 3px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: black;
+    letter-spacing: 1px;
 }
 
 
@@ -434,16 +420,14 @@ a:hover {
 }
 
 .badge-benz-service {
-    background-color: rgba(0, 120, 214, 0.08);
-    color: var(--color-lochmara);
-    border: 1px solid rgba(0, 120, 214, 0.22);
-    border-radius: 0;
-    font-size: 0.58rem;
-    letter-spacing: 2px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    padding: 4px 12px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    padding: 0.28rem 0.6rem;
-    font-family: var(--font-body);
-    font-weight: 600;
 }
 
 .badge-benz-pending {
@@ -546,52 +530,71 @@ a:hover {
 }
 
 
+/* --- Mercedes Premium Cards (Dark Overhaul) --- */
 .card-benz {
-    background: white;
-    border: 1px solid var(--light-border);
-    border-radius: 0 !important;
-    padding: 1.75rem;
+    background: rgba(18, 18, 18, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px !important;
+    padding: 2.5rem;
     transition: var(--transition-standard);
     position: relative;
     overflow: hidden;
-}
-
-.card-benz::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--color-lochmara);
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.28s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+    color: var(--color-white);
 }
 
 .card-benz:hover {
-    box-shadow: var(--shadow-md);
+    background: rgba(24, 24, 24, 0.85);
     transform: translateY(-2px);
-}
-
-.card-benz:hover::before {
-    transform: scaleY(1);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .card-benz-dark {
-    background: var(--color-steel);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 0 !important;
-    padding: 1.75rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px !important;
+    padding: 2.5rem;
     transition: var(--transition-standard);
+    box-shadow: var(--shadow-dark);
+    color: var(--color-white);
+}
+
+.card-benz-dark:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.benz-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.benz-gradient-text {
+    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    letter-spacing: -1px;
 }
 
 
+/* --- Tables (Dark) --- */
 .table-benz {
     width: 100%;
     border-collapse: collapse;
     font-family: var(--font-body);
     font-size: 0.83rem;
+    color: var(--color-white);
 }
 
 .table-benz thead tr {
@@ -604,10 +607,11 @@ a:hover {
     text-transform: uppercase;
     font-weight: 700;
     color: var(--color-chrome);
-    padding: 0.75rem 1rem;
+    padding: 1.5rem 1rem;
     text-align: left;
     white-space: nowrap;
-    background: transparent;
+    background: var(--color-pure-black);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .table-benz tbody tr {
@@ -616,7 +620,7 @@ a:hover {
 }
 
 .table-benz tbody tr:hover {
-    background: rgba(0, 120, 214, 0.03);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .table-benz tbody tr:last-child {
@@ -624,9 +628,10 @@ a:hover {
 }
 
 .table-benz tbody td {
-    padding: 0.9rem 1rem;
-    color: var(--color-carbon);
+    padding: 2rem 1rem;
+    color: var(--color-white);
     vertical-align: middle;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 
@@ -641,7 +646,7 @@ a:hover {
     font-size: 2.4rem;
     letter-spacing: 3px;
     line-height: 1;
-    color: var(--color-carbon);
+    color: var(--color-white);
 }
 
 .stat-benz-label {
@@ -809,9 +814,15 @@ a:hover {
 .benz-layout {
     display: flex;
     min-height: 100vh;
-    height: auto;
+    background: var(--bg-main);
 }
 
+.benz-main {
+    flex-grow: 1;
+    background: var(--bg-main);
+    position: relative;
+    overflow-y: auto;
+}
 
 @media (min-width: 992px) {
     .benz-sidebar {
@@ -819,9 +830,7 @@ a:hover {
         top: 0;
         height: 100vh;
         width: var(--sidebar-width) !important;
-        min-width: var(--sidebar-width);
-        flex-shrink: 0;
-        background: var(--color-black) !important;
+        background: var(--color-pure-black) !important;
         border-right: 1px solid var(--sidebar-border) !important;
         display: flex !important;
         flex-direction: column;
@@ -835,7 +844,7 @@ a:hover {
 
 @media (max-width: 991.98px) {
     .benz-sidebar {
-        background: var(--color-black) !important;
+        background: var(--color-pure-black) !important;
         width: var(--sidebar-width) !important;
     }
 }
@@ -1134,7 +1143,7 @@ a:hover {
 .benz-topbar-divider {
     width: 1px;
     height: 24px;
-    background: #e8e8e8;
+    background: var(--border-subtle);
 }
 
 .benz-topbar-user {
@@ -1147,7 +1156,7 @@ a:hover {
 }
 
 .benz-topbar-user:hover {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .benz-topbar-userinfo {
@@ -1160,7 +1169,7 @@ a:hover {
     font-family: var(--font-body);
     font-size: 0.82rem;
     font-weight: 600;
-    color: #111;
+    color: var(--color-white);
     line-height: 1.2;
 }
 
@@ -1169,7 +1178,8 @@ a:hover {
     font-size: 0.56rem;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #bbb;
+    color: var(--color-chrome);
+    opacity: 0.6;
 }
 
 .benz-topbar-avatar {

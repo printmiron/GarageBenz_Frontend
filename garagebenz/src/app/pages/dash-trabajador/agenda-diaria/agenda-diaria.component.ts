@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AgendaService } from '../../../service/agenda.service';
 import { OrdenReparacionService } from '../../../service/orden-reparacion.service';
 
 @Component({
   selector: 'app-agenda-diaria',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './agenda-diaria.component.html',
   styleUrl: './agenda-diaria.component.css',
 })

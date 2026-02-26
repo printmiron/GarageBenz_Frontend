@@ -1,52 +1,58 @@
-<div class="container-fluid p-4">
-  <header class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
+<div class="page-benz animate-in">
+  <header class="section-header-benz mb-5 d-flex justify-content-between align-items-end">
     <div>
-      <h1 class="benz-title">MI PERFIL</h1>
-      <p class="benz-subtitle">ID DIGITAL Y CONFIGURACIÓN DE CUENTA</p>
+      <h1 class="benz-gradient-text fs-1 mb-0">MI PERFIL</h1>
+      <p class="stat-benz-label">ID DIGITAL Y CONFIGURACIÓN DE CUENTA</p>
     </div>
     @if (user()) {
-    <div class="text-end">
-      <span class="status-badge-online">
-        <span class="dot-online"></span> CONECTADO
+    <div class="anim-fade-up">
+      <span class="badge-benz-service text-success border-success">
+        <i class="bi bi-circle-fill small me-1"></i> CONECTADO
       </span>
     </div>
     }
   </header>
 
   @if (user()) {
-  <div class="row g-5 animate-in">
+  <div class="row g-4 animate-in">
+    <!-- Sidebar Card -->
     <div class="col-lg-4">
-      <div class="profile-sidebar-card text-center">
-        <div class="avatar-square mx-auto mb-4">
-          {{ initials() }}
+      <div class="card-benz text-center h-100">
+        <div class="d-flex justify-content-center mb-4">
+          <div class="benz-glass rounded-circle d-flex align-items-center justify-content-center"
+            style="width: 100px; height: 100px; border: 1px solid rgba(255,255,255,0.1);">
+            <span class="fs-1 fw-bold benz-gradient-text">{{ initials() }}</span>
+          </div>
         </div>
-        <h2 class="user-name">{{ user()?.nombre }} <br> <strong>{{ user()?.apellido1 }}</strong></h2>
-        <div class="role-pill">{{ user()?.rol | uppercase }}</div>
-
+        <h2 class="fs-3 fw-bold mb-1">{{ user()?.nombre }}</h2>
+        <h3 class="fs-5 text-white-50 mb-3">{{ user()?.apellido1 }}</h3>
+        <div class="badge-benz-service d-inline-block">{{ user()?.rol | uppercase }}</div>
       </div>
     </div>
 
+    <!-- Details Card -->
     <div class="col-lg-8">
-      <div class="details-container">
-        <h4 class="section-divider">INFORMACIÓN DE CUENTA</h4>
+      <div class="card-benz h-100">
+        <h4 class="fs-6 fw-bold mb-4 tracking-widest pb-3 border-bottom border-light border-opacity-10">INFORMACIÓN DE
+          CUENTA</h4>
 
-        <div class="row g-4 mt-2">
+        <div class="row g-4 mt-1">
           <div class="col-md-6">
-            <div class="benz-input-group">
-              <label>NOMBRE DE USUARIO</label>
-              <div class="info-value">{{ user()?.usuario }}</div>
+            <div class="form-group-benz">
+              <label class="stat-benz-label d-block mb-2">NOMBRE DE USUARIO</label>
+              <div class="p-3 benz-glass rounded-1 font-mono text-white-50">{{ user()?.usuario }}</div>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="benz-input-group">
-              <label>CORREO ELECTRÓNICO</label>
-              <div class="info-value">{{ user()?.correo }}</div>
+            <div class="form-group-benz">
+              <label class="stat-benz-label d-block mb-2">CORREO ELECTRÓNICO</label>
+              <div class="p-3 benz-glass rounded-1 text-white-50">{{ user()?.correo }}</div>
             </div>
           </div>
           <div class="col-md-12">
-            <div class="benz-input-group">
-              <label>NOMBRE COMPLETO DEL TITULAR</label>
-              <div class="info-value">
+            <div class="form-group-benz">
+              <label class="stat-benz-label d-block mb-2">NOMBRE COMPLETO DEL TITULAR</label>
+              <div class="p-3 benz-glass rounded-1 fw-bold">
                 {{ user()?.nombre }} {{ user()?.apellido1 }} {{ user()?.apellido2 || '' }}
               </div>
             </div>
@@ -57,9 +63,9 @@
     </div>
   </div>
   } @else {
-  <div class="loading-state">
-    <div class="benz-spinner"></div>
-    <p>SINCRONIZANDO CON CENTRAL BENZ...</p>
+  <div class="card-benz text-center py-5">
+    <div class="spinner-border text-white-50 mb-3" role="status"></div>
+    <p class="stat-benz-label animate-pulse">SINCRONIZANDO CON CENTRAL BENZ...</p>
   </div>
   }
 </div>
