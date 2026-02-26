@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CitaI } from '../interface/cita-i';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environment';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class AgendaService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/citas/hoy';
+  private apiUrl = `${environment.apiUrl}/citas/hoy`;
 
 
   citas = signal<CitaI[]>([]);

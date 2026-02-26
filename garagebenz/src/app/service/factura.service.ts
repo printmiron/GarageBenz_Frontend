@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { FacturaStatsI } from '../interface/factura-stats-i';
+import { environment } from 'src/environment';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { FacturaStatsI } from '../interface/factura-stats-i';
 })
 export class FacturaService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/facturas';
+  private apiUrl = `${environment.apiUrl}/facturas`;
 
 
   

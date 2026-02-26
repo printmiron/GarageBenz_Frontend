@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { CitaI } from '../interface/cita-i'; 
+import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CitaService {
-  private baseUrl: string = "http://localhost:3000/api/citas";
+  private baseUrl: string = `${environment.apiUrl}/citas`;
   httpClient = inject(HttpClient);
 
   constructor() { }

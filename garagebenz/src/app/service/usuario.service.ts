@@ -5,12 +5,13 @@ import { ClienteI } from '../interface/cliente-i';
 import { TrabajadorI } from '../interface/trabajador-i';
 import { ClienteFullI } from '../interface/clientefull-i';
 import { UsuarioI } from '../interface/usuario-i';
+import { environment } from 'src/environment';
 
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:3000/api/usuarios';
+  private baseUrl = `${environment.apiUrl}/usuarios`;
 
 
   clientes = signal<ClienteI[]>([]);
