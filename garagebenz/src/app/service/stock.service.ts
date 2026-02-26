@@ -2,6 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { SotckI } from '../interface/sotck-i';
+import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,12 @@ import { SotckI } from '../interface/sotck-i';
 export class StockService {
   private http = inject(HttpClient);
   
-  private readonly baseUrl = 'http://localhost:3000/api/stock';
+  private readonly baseUrl = `${environment.apiUrl}/stock`;
 
   
   stockDisponible = signal<SotckI[]>([]);
 
-  /**
-   * Carga la lista de Stock (Pieza + Cantidad)
-   */
+  
   async cargarStock(): Promise<SotckI[]> {
     const data$ = this.http.get<SotckI[]>(this.baseUrl);
     const res = await firstValueFrom(data$);
@@ -24,9 +23,6 @@ export class StockService {
     return res;
   }
 
-  /**
-   * Asigna piezas a una Orden de Trabajo (Resta del stock)
-   */
   async asignarPiezaAOrden(idOr: string, idPieza: string, cantidad: number) {
     const params = new HttpParams()
       .set('idOr', idOr)
@@ -38,9 +34,7 @@ export class StockService {
     );
   }
 
-  /**
-   * Reponer stock de una pieza existente (Para el Admin)
-   */
+  
   async reponerStock(idPieza: string, cantidad: number): Promise<any> {
     return await firstValueFrom(
       this.http.put(`${this.baseUrl}/reponer`, { idPieza, cantidad })

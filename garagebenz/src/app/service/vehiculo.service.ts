@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { VehicloI } from '../interface/vehiclo-i';
+import { environment } from 'src/environment';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class VehiculoService {
-  private baseUrl: string = "http://localhost:3000/api/vehiculos";
+  private baseUrl: string = `${environment.apiUrl}/vehiculos`;
   httpClient = inject(HttpClient);
 
   constructor() { }

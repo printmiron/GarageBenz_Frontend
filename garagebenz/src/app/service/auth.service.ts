@@ -12,12 +12,12 @@ export class AuthService {
   private readonly baseUrl = `${environment.apiUrl}/auth`;
 
   async login(credentials: any): Promise<AuthResponse> {
-    // 1. Realizamos la petición y esperamos la respuesta
+
     const response = await firstValueFrom(
       this.http.post<AuthResponse>(`${this.baseUrl}/login`, credentials)
     );
 
-    // 2. TODO este código debe estar DENTRO de la función login
+  
     console.log('Respuesta completa del servidor:', response);
 
     if (response) {
@@ -35,7 +35,7 @@ export class AuthService {
     }
 
     return response; 
-  } // <-- Aquí se cierra la función login correctamente
+  } 
 
   getUserData() {
     const data = localStorage.getItem('userData');
@@ -60,7 +60,6 @@ export class AuthService {
 
   logout() {
     localStorage.clear();
-    // En Angular es mejor usar el Router, pero esto funciona:
     window.location.href = '/login';
   }
 }
