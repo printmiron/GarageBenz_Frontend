@@ -9,13 +9,10 @@ import { environment } from 'src/environment';
 })
 export class StockService {
   private http = inject(HttpClient);
-<<<<<<< HEAD
 
-  private readonly baseUrl = 'http://localhost:3000/api/stock';
-=======
   
   private readonly baseUrl = `${environment.apiUrl}/stock`;
->>>>>>> feature/despligue
+
 
 
   stockDisponible = signal<SotckI[]>([]);
