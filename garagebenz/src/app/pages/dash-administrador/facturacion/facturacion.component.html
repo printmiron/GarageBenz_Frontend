@@ -78,6 +78,46 @@
         </div>
     </div>
 
+    <div class="card-benz mb-5 anim-fade-up anim-delay-4">
+        <div class="p-4 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold underline-benz">TENDENCIA DE RENDIMIENTO SEMESTRAL</h5>
+            <div class="d-flex gap-4">
+                <div class="chart-legend">
+                    <span class="legend-dot income"></span> INGRESOS
+                </div>
+                <div class="chart-legend">
+                    <span class="legend-dot profit"></span> BENEFICIO
+                </div>
+            </div>
+        </div>
+        <div class="chart-container p-4">
+            <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet" class="benz-chart-svg">
+                <!-- Grid Lines -->
+                <line x1="50" y1="50" x2="950" y2="50" class="chart-grid-line" />
+                <line x1="50" y1="100" x2="950" y2="100" class="chart-grid-line" />
+                <line x1="50" y1="150" x2="950" y2="150" class="chart-grid-line" />
+                <line x1="50" y1="200" x2="950" y2="200" class="chart-grid-line" />
+                <line x1="50" y1="250" x2="950" y2="250" class="chart-grid-line" style="stroke-opacity: 0.2;" />
+
+                @for (d of chartData(); track $index) {
+                <!-- Side-by-side Bars -->
+                <rect [attr.x]="d.x - 30" [attr.y]="250 - d.hTotal" width="28" [attr.height]="d.hTotal"
+                    class="chart-bar income" rx="2">
+                    <title>{{ d.label }}: {{ d.total | currency:'EUR' }} (Ingresos)</title>
+                </rect>
+
+                <rect [attr.x]="d.x + 2" [attr.y]="250 - d.hProfit" width="28" [attr.height]="d.hProfit"
+                    class="chart-bar profit" rx="2">
+                    <title>{{ d.label }}: {{ d.profit | currency:'EUR' }} (Beneficio)</title>
+                </rect>
+
+                <!-- Month Labels -->
+                <text [attr.x]="d.x" y="285" class="chart-label">{{ d.label }}</text>
+                }
+            </svg>
+        </div>
+    </div>
+
     <div class="card-benz p-0 border-0 overflow-hidden anim-fade-up anim-delay-4">
         <div class="p-4 border-bottom border-light border-opacity-10 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-bold">TRANSACCIONES RECIENTES</h5>

@@ -14,14 +14,14 @@ import jsPDF from 'jspdf';
 })
 export class FacturacionComponent implements OnInit {
   private facturaService = inject(FacturaService);
-  
+
 
   stats = signal<FacturaStatsI | null>(null);
   facturas = signal<any[]>([]);
   loading = signal<boolean>(true);
 
-  
-  private readonly PRIMARY_COLOR = [0, 48, 135]; 
+
+  private readonly PRIMARY_COLOR = [0, 48, 135];
 
   ngOnInit() {
     this.cargarDatos();
@@ -45,14 +45,52 @@ export class FacturacionComponent implements OnInit {
     this.facturaService.getTodasLasFacturas().subscribe(data => this.facturas.set(data));
   }
 
-  margenColor = computed(() => {
-    const m = this.stats()?.margenBeneficio || 0;
-    if (m > 30) return 'text-success';
-    if (m > 15) return 'text-warning';
-    return 'text-danger';
+  // Procesamiento de datos para el gráfico
+  chartData = computed(() => {
+    const list = this.facturas();
+    if (list.length === 0) return [];
+
+    interface ChartMonth {
+      label: string;
+      month: number;
+      year: number;
+      total: number;
+      profit: number;
+    }
+
+    const now = new Date();
+    const months: ChartMonth[] = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push({
+        label: d.toLocaleString('es-ES', { month: 'short' }).toUpperCase(),
+        month: d.getMonth(),
+        year: d.getFullYear(),
+        total: 0,
+        profit: 0
+      });
+    }
+
+    list.forEach(f => {
+      const fDate = new Date(f.fechaEmision);
+      const mIdx = months.findIndex(m => m.month === fDate.getMonth() && m.year === fDate.getFullYear());
+      if (mIdx !== -1) {
+        months[mIdx].total += f.importeTotal || 0;
+        months[mIdx].profit += (f.importeTotal || 0) * (this.stats()?.margenBeneficio || 20) / 100;
+      }
+    });
+
+    const maxVal = Math.max(...months.map(m => m.total), 1);
+    return months.map((m, i) => ({
+      ...m,
+      hTotal: Math.max((m.total / maxVal) * 200, m.total > 0 ? 5 : 0),
+      hProfit: (m.profit / maxVal) * 200,
+      x: 100 + i * (800 / (months.length - 1))
+    }));
   });
 
-  
+
+
   descargarReporteMensual() {
     const s = this.stats();
     if (!s) return;
@@ -60,7 +98,7 @@ export class FacturacionComponent implements OnInit {
     const doc = new jsPDF();
     const margin = 14;
 
-    
+
     doc.setFillColor(this.PRIMARY_COLOR[0], this.PRIMARY_COLOR[1], this.PRIMARY_COLOR[2]);
     doc.rect(0, 0, 210, 40, 'F');
     doc.setTextColor(255, 255, 255);
@@ -70,7 +108,7 @@ export class FacturacionComponent implements OnInit {
     doc.text(`REPORTE ECONÓMICO MENSUAL - ${s.mes}/${s.anio}`, margin, 30);
     doc.text(`Generado: ${new Date().toLocaleDateString()}`, 140, 30);
 
-    
+
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
@@ -92,7 +130,7 @@ export class FacturacionComponent implements OnInit {
       styles: { fontSize: 10 }
     });
 
-    
+
     const finalY = (doc as any).lastAutoTable.finalY + 15;
     doc.text('MÉTRICAS DE ACTIVIDAD', margin, finalY);
 
@@ -109,7 +147,7 @@ export class FacturacionComponent implements OnInit {
       theme: 'striped'
     });
 
-    
+
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
     doc.text('Confidencial - Solo para uso administrativo de Garage Benz S.L.', 105, 285, { align: 'center' });
@@ -117,14 +155,14 @@ export class FacturacionComponent implements OnInit {
     doc.save(`Reporte_Mensual_${s.mes}_${s.anio}.pdf`);
   }
 
-  
+
   verFactura(f: any) {
     if (!f) return;
 
     const doc = new jsPDF();
     const margin = 14;
 
-    
+
     doc.setFillColor(this.PRIMARY_COLOR[0], this.PRIMARY_COLOR[1], this.PRIMARY_COLOR[2]);
     doc.rect(0, 0, 210, 40, 'F');
     doc.setTextColor(255, 255, 255);
@@ -134,7 +172,7 @@ export class FacturacionComponent implements OnInit {
     doc.text(`Factura Nº: ${f.numeroFactura}`, 140, 20);
     doc.text(`Fecha: ${new Date(f.fechaEmision).toLocaleDateString()}`, 140, 27);
 
-    
+
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
@@ -146,7 +184,7 @@ export class FacturacionComponent implements OnInit {
     doc.text(`Vehículo: ${f.ordenReparacion?.vehiculo?.modelo || 'N/A'}`, margin, 72);
     doc.text(`Matrícula: ${f.ordenReparacion?.vehiculo?.matricula || 'N/A'}`, margin, 79);
 
-    
+
     autoTable(doc, {
       startY: 90,
       head: [['Descripción del Servicio', 'Base Imponible']],
@@ -158,7 +196,7 @@ export class FacturacionComponent implements OnInit {
       theme: 'striped'
     });
 
-    
+
     const finalY = (doc as any).lastAutoTable.finalY + 10;
     const baseImponible = (f.totalManoObra || 0) + (f.totalPiezas || 0);
     const iva = f.importeTotal - baseImponible;
@@ -166,12 +204,12 @@ export class FacturacionComponent implements OnInit {
     doc.setFont('helvetica', 'bold');
     doc.text(`Base Imponible: ${baseImponible.toFixed(2)} €`, 130, finalY);
     doc.text(`IVA (21%): ${iva.toFixed(2)} €`, 130, finalY + 8);
-    
+
     doc.setFontSize(16);
     doc.setTextColor(200, 0, 0);
     doc.text(`TOTAL: ${(f.importeTotal || 0).toFixed(2)} €`, 130, finalY + 18);
 
-    
+
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
     doc.text('Este documento es una copia oficial de la factura original.', 105, 285, { align: 'center' });

@@ -1,29 +1,96 @@
-.card-accent-blue {
-    border-top: 4px solid #0d6efd !important;
+.card-benz {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 24px;
+    transition: var(--transition-standard);
 }
 
-.x-small {
-    font-size: 0.72rem;
+.card-benz:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
 }
 
-.card {
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+.chart-container {
+    height: 300px;
+    width: 100%;
 }
 
-.card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+.benz-chart-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
 
-.bg-dark {
-    background-color: #1a1d20 !important;
+.chart-grid-line {
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 0.2;
 }
 
-.table td {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+.chart-bar {
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
 }
 
-.spinner-grow {
-    width: 3rem;
-    height: 3rem;
+.chart-bar.income {
+    fill: var(--color-lochmara);
+    opacity: 0.8;
+}
+
+.chart-bar.profit {
+    fill: #fff;
+    opacity: 0.9;
+}
+
+.chart-bar:hover {
+    opacity: 1;
+    filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+}
+
+.chart-label {
+    fill: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+    text-anchor: middle;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.chart-legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.legend-dot.income {
+    background-color: var(--color-lochmara);
+}
+
+.legend-dot.profit {
+    background-color: #fff;
+}
+
+.underline-benz {
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.underline-benz::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--color-lochmara);
 }

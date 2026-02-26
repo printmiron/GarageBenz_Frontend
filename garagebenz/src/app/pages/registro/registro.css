@@ -1,14 +1,13 @@
 .registration-container {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #8b8b8b;
-    
     position: relative;
-    overflow: hidden;
-    font-family: var(--font-corporate-s);
+    padding: 2rem 1rem;
+    font-family: var(--font-body);
 }
 
 .overlay {
@@ -25,18 +24,15 @@
     position: relative;
     z-index: 2;
     background: rgba(255, 255, 255, 0.05);
-    
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     padding: 3rem;
-    width: 90%;
+    width: 100%;
     max-width: 550px;
-    
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
-    
 }
 
 .logo-container {
@@ -45,7 +41,7 @@
 }
 
 .brand-title {
-    color: var(--color-white);
+    color: #fff;
     font-size: 2rem;
     letter-spacing: 0.5rem;
     margin: 0;
@@ -57,7 +53,7 @@
 }
 
 .brand-subtitle {
-    color: var(--color-white);
+    color: #fff;
     font-size: 0.7rem;
     letter-spacing: 0.3rem;
     opacity: 0.6;
@@ -82,11 +78,10 @@
     gap: 0.5rem;
     flex: 1;
     min-width: 0;
-    
 }
 
 label {
-    color: var(--color-white);
+    color: #fff;
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
@@ -97,14 +92,12 @@ input {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 0.8rem 1rem;
-    color: var(--color-white);
+    color: #fff;
     font-size: 1rem;
     transition: all 0.3s ease;
     border-radius: 2px;
     width: 100%;
-    
     box-sizing: border-box;
-    
 }
 
 input:focus {
@@ -113,14 +106,10 @@ input:focus {
     background: rgba(255, 255, 255, 0.07);
 }
 
-input::placeholder {
-    color: rgba(255, 255, 255, 0.2);
-}
-
 .register-button {
     margin-top: 1rem;
-    background: var(--color-white);
-    color: var(--color-black);
+    background: #fff;
+    color: #000;
     border: none;
     padding: 1rem;
     font-weight: 700;
@@ -128,11 +117,18 @@ input::placeholder {
     cursor: pointer;
     transition: all 0.3s ease;
     border-radius: 2px;
+    width: 100%;
+    text-transform: uppercase;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .register-button:hover:not(:disabled) {
     background: var(--color-lochmara);
-    color: var(--color-white);
+    color: #fff;
     transform: translateY(-2px);
 }
 
@@ -149,74 +145,11 @@ input::placeholder {
 }
 
 .login-link a {
-    color: var(--color-white);
+    color: #fff;
     text-decoration: none;
     font-weight: 600;
     margin-left: 0.5rem;
 }
-
-
-@media (max-width: 600px) {
-    .form-row {
-        flex-direction: column;
-    }
-
-    .registration-card {
-        padding: 2rem;
-    }
-
-    
-.registration-container {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #8b8b8b;
-    position: relative;
-    overflow: hidden;
-    font-family: var(--font-corporate-s);
-}
-
-.overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%);
-    z-index: 1;
-}
-
-.registration-card {
-    position: relative;
-    z-index: 2;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    padding: 3rem;
-    width: 90%;
-    max-width: 550px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
-}
-
-
-
-
-
-.back-link {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: white;
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    opacity: 0.6;
-    transition: 0.3s;
-}
-.back-link:hover { opacity: 1; }
 
 .error-msg {
     color: #ff4d4d;
@@ -225,7 +158,6 @@ input::placeholder {
     letter-spacing: 1px;
     margin-top: 2px;
 }
-
 
 .benz-toast {
     position: fixed;
@@ -237,12 +169,17 @@ input::placeholder {
     border-left: 4px solid #fff;
     color: white;
     padding: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
     animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-.benz-toast.success { border-left-color: #00d1b2; }
-.benz-toast.error { border-left-color: #ff3860; }
+.benz-toast.success {
+    border-left-color: #00d1b2;
+}
+
+.benz-toast.error {
+    border-left-color: #ff3860;
+}
 
 .toast-content {
     display: flex;
@@ -256,23 +193,43 @@ input::placeholder {
     bottom: 0;
     left: 0;
     height: 3px;
-    background: rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.3);
     width: 100%;
     animation: progressLine 3s linear forwards;
 }
 
 @keyframes slideIn {
-    from { transform: translateX(120%); }
-    to { transform: translateX(0); }
+    from {
+        transform: translateX(120%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
 
 @keyframes progressLine {
-    from { width: 100%; }
-    to { width: 0%; }
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
 }
 
 @media (max-width: 600px) {
-    .form-row { flex-direction: column; }
-    .registration-card { padding: 2rem; }
-}
+    .registration-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .brand-title {
+        font-size: 1.5rem;
+        letter-spacing: 0.3rem;
+    }
 }

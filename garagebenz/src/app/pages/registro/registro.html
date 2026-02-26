@@ -1,27 +1,28 @@
 <div class="registration-container">
-  
+
   @if (statusMessage) {
-    <div class="benz-toast" [class.success]="statusMessage.type === 'success'" [class.error]="statusMessage.type === 'error'">
-      <div class="toast-content">
-        <i class="bi" [class]="statusMessage.type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'"></i>
-        <span>{{ statusMessage.text }}</span>
-      </div>
-      <div class="progress-bar"></div>
+  <div class="benz-toast" [class.success]="statusMessage.type === 'success'"
+    [class.error]="statusMessage.type === 'error'">
+    <div class="toast-content">
+      <i class="bi"
+        [class]="statusMessage.type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'"></i>
+      <span>{{ statusMessage.text }}</span>
     </div>
+    <div class="progress-bar"></div>
+  </div>
   }
 
   <div class="overlay"></div>
 
   <div class="registration-card">
-    <a routerLink="/landingPage" class="back-link"><i class="bi bi-arrow-left"></i> VOLVER</a>
-    
+
     <div class="logo-container">
       <h1 class="brand-title">GARAGE<span>BENZ</span></h1>
       <p class="brand-subtitle">EXCELENCIA EN CADA DETALLE</p>
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="registration-form">
-      
+
       <div class="form-group">
         <label>Nombre</label>
         <input type="text" formControlName="nombre" placeholder="Nombre">
@@ -61,6 +62,10 @@
 
       <button type="submit" class="register-button" [disabled]="registerForm.invalid">
         CREAR CUENTA
+      </button>
+
+      <button type="button" class="register-button volver-btn" routerLink="/landingPage">
+        <i class="bi bi-arrow-left me-2"></i> VOLVER
       </button>
 
       <div class="login-link">
