@@ -91,12 +91,17 @@ export class StockComponent implements OnInit {
     if (cantidad > item.cantidad) return alert('No hay stock suficiente en almacén.');
 
     try {
-
       await this.stockService.asignarPiezaAOrden(this.idFinal, item.pieza.idPieza, cantidad);
 
-
-      this.piezasAgregadas.update(prev => [...prev, { item, cantidad }]);
-
+      this.piezasAgregadas.update(prev => {
+        const index = prev.findIndex(p => p.item.pieza.idPieza === item.pieza.idPieza);
+        if (index !== -1) {
+          const updated = [...prev];
+          updated[index] = { ...updated[index], cantidad: updated[index].cantidad + cantidad };
+          return updated;
+        }
+        return [...prev, { item, cantidad }];
+      });
 
       item.cantidad -= cantidad;
     } catch (e) {

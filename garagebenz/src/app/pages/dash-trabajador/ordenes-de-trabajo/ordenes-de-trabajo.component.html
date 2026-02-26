@@ -35,7 +35,7 @@
               Asignados:</label>
             <div class="benz-glass p-3 rounded-0" style="min-height: 60px;">
               @if (or.piezas && or.piezas.length > 0) {
-              @for (item of or.piezas; track $index) {
+              @for (item of getAgruparPiezas(or.piezas); track $index) {
               <div
                 class="d-flex justify-content-between small text-white-50 border-bottom border-white border-opacity-10 py-1">
                 <span>{{ item.pieza.nombre }}</span>
