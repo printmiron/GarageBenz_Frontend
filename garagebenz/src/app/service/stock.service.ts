@@ -8,10 +8,10 @@ import { SotckI } from '../interface/sotck-i';
 })
 export class StockService {
   private http = inject(HttpClient);
-  
+
   private readonly baseUrl = 'http://localhost:3000/api/stock';
 
-  
+
   stockDisponible = signal<SotckI[]>([]);
 
   /**
@@ -20,7 +20,7 @@ export class StockService {
   async cargarStock(): Promise<SotckI[]> {
     const data$ = this.http.get<SotckI[]>(this.baseUrl);
     const res = await firstValueFrom(data$);
-    this.stockDisponible.set(res); 
+    this.stockDisponible.set(res);
     return res;
   }
 

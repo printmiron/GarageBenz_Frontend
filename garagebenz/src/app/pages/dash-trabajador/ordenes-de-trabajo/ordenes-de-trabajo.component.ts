@@ -83,28 +83,12 @@ export class OrdenesDeTrabajoComponent implements OnInit {
   }
 
 
-  getAgruparPiezas(piezas: any[]): any[] {
-    if (!piezas) return [];
-
-    const agrupadas: { [id: string]: any } = {};
-
-    piezas.forEach(p => {
-      // Usar idPieza si existe, si no el nombre como clave de agrupación
-      const key = p.pieza?.idPieza || p.pieza?.nombre || 'unknown';
-      if (!agrupadas[key]) {
-        // Clonar para evitar mutaciones accidentales
-        agrupadas[key] = JSON.parse(JSON.stringify(p));
-        agrupadas[key].cantidadUsada = Number(agrupadas[key].cantidadUsada || 0);
-      } else {
-        agrupadas[key].cantidadUsada += Number(p.cantidadUsada || 0);
-      }
-    });
-
-    return Object.values(agrupadas);
-  }
-
   calcularTotalTemporal(orden: OrdenesReparacionI): number {
-    const totalPiezas = orden.piezas?.reduce((acc, p) => acc + ((p.pieza?.precio || 0) * (p.cantidadUsada || 0)), 0) || 0;
+    const totalPiezas = orden.piezas?.reduce((acc, p) => {
+      const precio = Number(p.pieza?.precio) || 0;
+      const cantidad = Number(p.cantidadUsada) || 0;
+      return acc + (precio * cantidad);
+    }, 0) || 0;
     const totalMano = (orden.horas || 0) * 40;
     return (totalPiezas + totalMano) * 1.21;
   }
@@ -145,8 +129,7 @@ export class OrdenesDeTrabajoComponent implements OnInit {
 
     const rows: any[] = [];
     if (orden.piezas) {
-      const piezasAgrupadas = this.getAgruparPiezas(orden.piezas);
-      piezasAgrupadas.forEach(p => {
+      orden.piezas.forEach(p => {
         rows.push([
           p.pieza?.nombre || 'Repuesto',
           p.cantidadUsada,

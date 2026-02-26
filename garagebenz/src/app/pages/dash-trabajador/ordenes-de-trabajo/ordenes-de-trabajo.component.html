@@ -35,15 +35,16 @@
               Asignados:</label>
             <div class="benz-glass p-3 rounded-0" style="min-height: 60px;">
               @if (or.piezas && or.piezas.length > 0) {
-              @for (item of getAgruparPiezas(or.piezas); track $index) {
-              <div
-                class="d-flex justify-content-between small text-white-50 border-bottom border-white border-opacity-10 py-1">
-                <span>{{ item.pieza.nombre }}</span>
-                <span>× {{ item.cantidadUsada }}</span>
+              @for (p of or.piezas; track $index) {
+              <div class="small d-flex justify-content-between border-bottom pb-1 mb-1">
+                <span>{{ p.pieza.nombre }} (x{{ p.cantidadUsada }})</span>
+                <span class="text-muted">
+                  {{ ((p.pieza.precio || 0) * (p.cantidadUsada || 0)) | currency:'EUR' }}
+                </span>
               </div>
               }
               } @else {
-              <p class="small text-white-50 mb-0 opacity-50 italic">No hay repuestos asignados aún.</p>
+              <p class="text-muted small mb-0">No hay repuestos aún.</p>
               }
             </div>
           </div>
