@@ -9,7 +9,7 @@ import { environment } from 'src/environment';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiUrl}/api/auth`;
+  private readonly baseUrl = `${environment.apiUrl}/auth`;
 
   async login(credentials: any): Promise<AuthResponse> {
     // 1. Realizamos la petición y esperamos la respuesta
