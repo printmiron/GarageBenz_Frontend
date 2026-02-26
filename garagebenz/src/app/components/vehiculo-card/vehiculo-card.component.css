@@ -1,120 +1,53 @@
-
-.benz-card {
-  background: linear-gradient(145deg, #1a1a1a 0%, #000000 100%);
-  border-radius: 4px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-  position: relative;
+:host {
+  display: block;
 }
 
-
-
-.benz-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+.card-benz {
+  /* Inherit from global, but can add specifics if needed */
+  border-radius: 0 !important;
 }
 
-
-.benz-label {
-
-  color: #888;
-  font-weight: 700;
-  font-size: 0.65rem;
-  letter-spacing: 2px;
+.card-benz:hover {
+  border-color: var(--color-lochmara) !important;
+  box-shadow: var(--shadow-blue);
 }
-
-.benz-model-name {
-  letter-spacing: 1px;
-  color: #ffffff;
-}
-
-.text-primary-benz {
-  color: var(--color-lochmara);
-}
-
-.tracking-wider {
-  letter-spacing: 1.5px;
-}
-
 
 .plate-display {
   background: white;
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1px solid #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   display: inline-flex;
   align-items: center;
-  border: 2px solid #333;
-  border-radius: 4px;
-  padding: 0;
-  height: 50px;
-  min-width: 180px;
-  overflow: hidden;
+  gap: 8px;
 }
 
-.plate-euro-band {
-  background-color: #003399; 
-  width: 30px;
-  height: 100%;
+.plate-display::before {
+  content: 'E';
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding-bottom: 5px;
   align-items: center;
-}
-
-.euro-e {
+  justify-content: center;
+  background: #003087;
   color: white;
-  font-size: 14px;
-  font-weight: bold;
-  font-family: Arial, sans-serif;
+  font-size: 0.5rem;
+  font-weight: 900;
+  width: 14px;
+  height: 20px;
+  border-radius: 2px;
+  line-height: 1;
 }
 
 .plate-number {
-  color: #1a1a1a;
-  font-family: 'Courier New', Courier, monospace; 
-  font-weight: 800;
-  font-size: 1.5rem;
-  padding: 0 15px;
-  letter-spacing: 2px;
-  flex: 1;
-  text-align: center;
-}
-
-
-.btn-benz-primary {
-  background: #ffffff;
-  color: #000000;
-  border: none;
-  border-radius: 0;
+  font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
-  font-size: 0.75rem;
+  color: #000;
   letter-spacing: 1px;
-  padding: 12px;
-  transition: all 0.3s ease;
+  font-size: 1.1rem;
 }
 
-.btn-benz-primary:hover {
-  background: var(--color-lochmara);
-  color: white;
-}
-
-.btn-benz-danger {
-  background: transparent;
-  color: #dc3545;
-  border: 1px solid rgba(220, 53, 69, 0.3);
-  border-radius: 0;
-  width: 45px;
-  transition: all 0.3s ease;
-}
-
-.btn-benz-danger:hover {
-  background: #dc3545;
-  color: white;
-  border-color: #dc3545;
-}
-
-
-.tech-info {
-  background: rgba(161, 161, 161, 0.02);
-  margin: 0 -1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+.btn-benz-outline.text-danger:hover {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border-color: #dc3545 !important;
 }

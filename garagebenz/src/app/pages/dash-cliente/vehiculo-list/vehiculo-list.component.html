@@ -2,11 +2,11 @@
   <header class="section-header-benz">
     <div>
       <h1 class="benz-gradient-text fs-1 mb-0">MIS VEHÍCULOS</h1>
-      <p class="stat-benz-label">CATÁLOGO PERSONAL · {{ arrVehiculos.length }} UNIDADES REGISTRADAS</p>
+      <p class="stat-benz-label">CATÁLOGO PERSONAL · {{ arrVehiculos.length }} UNIDADES</p>
     </div>
     <div class="ms-auto anim-fade-up">
       <button class="btn-benz btn-benz-primary" routerLink="nuevo">
-        <i class="bi bi-plus-lg me-2"></i> REGISTRAR NUEVO VEHÍCULO
+        <i class="bi bi-plus-lg me-2"></i> REGISTRAR VEHÍCULO
       </button>
     </div>
   </header>
@@ -14,21 +14,19 @@
   <div class="row g-4 mb-5">
     @for (vehiculo of vehiculosAMostrar; track vehiculo.id_vehiculo) {
     <div class="col-12 col-md-6 col-xl-4">
-      <div class="card-wrapper animate-in">
-        <app-card-vehiculo [miVehiculo]="vehiculo"></app-card-vehiculo>
-      </div>
+      <app-card-vehiculo [miVehiculo]="vehiculo"></app-card-vehiculo>
     </div>
     } @empty {
-    <div class="col-12 text-center py-5">
-      <div class="empty-garage-box">
-        <div class="icon-circle mb-4">
-          <i class="bi bi-car-front"></i>
+    <div class="col-12">
+      <div class="card-benz py-5 text-center">
+        <div class="empty-state">
+          <i class="bi bi-car-front fs-1 mb-4 opacity-25"></i>
+          <h4 class="fw-bold tracking-tight mb-2">GARAJE VACÍO</h4>
+          <p class="text-white-50 small mb-4">NO SE HAN DETECTADO UNIDADES VINCULADAS A SU CUENTA</p>
+          <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn-benz btn-benz-outline">
+            AÑADIR MI PRIMER VEHÍCULO
+          </button>
         </div>
-        <h4 class="fw-bold tracking-tight">GARAJE VACÍO</h4>
-        <p class="text-muted small letter-spacing-2">NO SE HAN DETECTADO UNIDADES VINCULADAS A SU CUENTA</p>
-        <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn-benz-outline mt-4">
-          AÑADIR VEHÍCULO
-        </button>
       </div>
     </div>
     }

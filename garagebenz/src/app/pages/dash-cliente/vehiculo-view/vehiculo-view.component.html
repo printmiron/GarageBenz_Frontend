@@ -2,19 +2,19 @@
 
   <header class="section-header-benz mb-5 d-flex justify-content-between align-items-end">
     <div>
-      <h1 class="benz-gradient-text fs-1 mb-0">MI GARAJE</h1>
-      <p class="stat-benz-label">DETALLES DE LA UNIDAD</p>
+      <h1 class="benz-gradient-text fs-1 mb-0">EXPEDIENTE TÉCNICO</h1>
+      <p class="stat-benz-label">CATÁLOGO PERSONAL · DETALLES DE LA UNIDAD</p>
     </div>
 
     <button [routerLink]="['/dashboard-cliente/vehiculos/nuevo']" class="btn-benz btn-benz-primary">
-      <i class="bi bi-plus-lg me-2"></i> REGISTRAR VEHÍCULO
+      <i class="bi bi-plus-lg me-2"></i> REGISTRAR OTRO VEHÍCULO
     </button>
   </header>
 
   <div class="row g-4">
     @for (v of vehiculos(); track v.idVehiculo) {
     <div class="col-12 col-md-6 col-lg-4">
-      <div class="card-benz h-100 anim-fade-up d-flex flex-column group relative">
+      <div class="card-benz h-100 anim-fade-up d-flex flex-column">
 
         <div class="d-flex justify-content-between align-items-start mb-4">
           <div>
@@ -32,7 +32,7 @@
         <div class="benz-glass p-3 mb-4 rounded-1">
           <div class="row g-3">
             <div class="col-6">
-              <span class="stat-benz-label d-block mb-1">AÑO DE PRODUCCIÓN</span>
+              <span class="stat-benz-label d-block mb-1">AÑO PRODUCCIÓN</span>
               <div class="fw-bold">{{v.anio}}</div>
             </div>
             <div class="col-6">
@@ -42,9 +42,9 @@
           </div>
         </div>
 
-        <div class="mt-auto pt-3 border-top border-light border-opacity-10">
+        <div class="mt-auto pt-4 border-top border-light border-opacity-10">
           <button (click)="eliminar(v.idVehiculo)"
-            class="btn btn-outline-danger w-100 rounded-0 border-opacity-50 tracking-wider small fw-bold py-2">
+            class="btn-benz btn-benz-outline border-danger border-opacity-50 text-danger w-100">
             <i class="bi bi-trash me-2"></i> DAR DE BAJA
           </button>
         </div>
@@ -53,9 +53,9 @@
     } @empty {
     <div class="col-12">
       <div class="card-benz text-center py-5">
-        <div class="empty-state opacity-50">
-          <i class="bi bi-car-front fs-1 d-block mb-3"></i>
-          <p class="text-white-50">No se han detectado vehículos registrados en el sistema.</p>
+        <div class="empty-state">
+          <i class="bi bi-car-front fs-1 d-block mb-3 opacity-25"></i>
+          <p class="text-white-50 small">No se han detectado vehículos registrados en el sistema bajo este perfil.</p>
         </div>
       </div>
     </div>

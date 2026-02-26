@@ -33,6 +33,24 @@
   width: 100%;
 }
 
+.benz-sidebar-logo,
+.benz-mobile-logo {
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: opacity 0.2s ease;
+}
+
+.benz-sidebar-logo:hover,
+.benz-mobile-logo:hover {
+  opacity: 0.8;
+}
+
+.benz-logo-text {
+  color: #fff;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
 .benz-logo-img {
   width: 100px;
   height: 100px;

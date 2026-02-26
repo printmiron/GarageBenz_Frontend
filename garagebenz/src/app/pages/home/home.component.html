@@ -5,24 +5,22 @@
       <span></span><span></span><span></span>
     </button>
 
-    <div class="benz-mobile-logo">
-
+    <a [routerLink]="['/landingPage']" class="benz-mobile-logo text-decoration-none">
       GARAGE<strong>BENZ</strong>
-    </div>
+    </a>
 
-    
+
   </nav>
 
   <div class="offcanvas-lg offcanvas-start benz-sidebar" tabindex="-1" id="sidebarMenu">
 
     <div class="benz-sidebar-header">
-      <div class="benz-sidebar-logo">
+      <a [routerLink]="['/landingPage']" class="benz-sidebar-logo text-decoration-none">
         <div class="benz-logo-mark">
           <img src="logo.png" alt="GarageBenz" class="benz-logo-img">
           <div class="benz-logo-text">GARAGE<strong>BENZ</strong></div>
         </div>
-      </div>
-     
+      </a>
     </div>
 
     <div class="offcanvas-body d-flex flex-column p-0">
@@ -94,7 +92,7 @@
 
       <div class="benz-sidebar-footer">
         <div class="benz-sidebar-user">
-          
+
           <div class="benz-sidebar-userinfo">
             <span class="benz-sidebar-username">{{ userName() }}</span>
             <span class="benz-sidebar-role text-uppercase">{{ role() }}</span>
@@ -108,7 +106,7 @@
   </div>
 
   <main class="benz-main">
-   
+
 
     <div class="benz-content-wrapper">
       <div class="benz-content">
