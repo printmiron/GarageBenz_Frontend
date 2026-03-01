@@ -17,7 +17,6 @@
           <th>VEHÍCULO</th>
           <th>TRABAJOS REALIZADOS</th>
           <th>COSTE FINAL</th>
-          <th class="text-end pe-4">DOCUMENTACIÓN</th>
         </tr>
       </thead>
       <tbody>
@@ -28,9 +27,9 @@
             <div class="text-white-50 small tracking-wider">#{{ rep.idOr }}</div>
           </td>
           <td>
-            <div class="fw-bold text-uppercase">{{ rep.vehiculo?.modelo }}</div>
+            <div class="fw-bold text-uppercase">{{ rep.vehiculo.modelo }}</div>
             <div class="plate-display mt-2" style="transform: scale(0.65); transform-origin: left;">
-              <span class="plate-number">{{ rep.vehiculo?.matricula }}</span>
+              <span class="plate-number">{{ rep.vehiculo.matricula }}</span>
             </div>
           </td>
           <td>
@@ -43,11 +42,6 @@
             <div class="stat-benz-value fs-4">
               {{ rep.horas }}h · {{ rep.piezas?.length || 0 }} piezas
             </div>
-          </td>
-          <td class="text-end pe-4">
-            <button class="btn btn-outline-light border-0 rounded-0" title="Ver Factura">
-              <i class="bi bi-file-earmark-pdf fs-5"></i>
-            </button>
           </td>
         </tr>
         } @empty {

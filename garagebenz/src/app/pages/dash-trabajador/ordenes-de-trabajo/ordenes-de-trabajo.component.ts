@@ -15,8 +15,6 @@ import jsPDF from 'jspdf';
   templateUrl: './ordenes-de-trabajo.component.html',
   styleUrl: './ordenes-de-trabajo.component.css',
 })
-
-
 export class OrdenesDeTrabajoComponent implements OnInit {
   private ordenService = inject(OrdenReparacionService);
   private facturaService = inject(FacturaService);
@@ -28,11 +26,43 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     this.cargarOrdenesActivas();
   }
 
+
+  private agruparPiezas(piezas: any[]): any[] {
+    if (!piezas || piezas.length === 0) return [];
+
+    const mapa = new Map<string, any>();
+
+    piezas.forEach(p => {
+      const id = String(p.pieza?.idPieza);
+      const cantidad = Number(p.cantidadUsada) || 0;
+
+      if (mapa.has(id)) {
+        const existente = mapa.get(id)!;
+        mapa.set(id, {
+          ...existente,
+          cantidadUsada: existente.cantidadUsada + cantidad
+        });
+      } else {
+        mapa.set(id, {
+          ...p,
+          pieza: { ...p.pieza },
+          cantidadUsada: cantidad
+        });
+      }
+    });
+
+    return Array.from(mapa.values());
+  }
+
   cargarOrdenesActivas(): void {
     this.loading.set(true);
     this.ordenService.getOrdenesActivas().subscribe({
       next: (data) => {
-        this.ordenes.set(data);
+        const procesadas = data.map(orden => ({
+          ...orden,
+          piezas: this.agruparPiezas(orden.piezas || [])
+        }));
+        this.ordenes.set(procesadas);
         this.loading.set(false);
       },
       error: (err) => {
@@ -42,37 +72,22 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     });
   }
 
-
   finalizarOrdenTotal(orden: OrdenesReparacionI): void {
     if (!orden.idOr) {
       alert('Error: La orden no tiene un ID válido.');
       return;
     }
 
-
     this.ordenService.actualizarOrden(orden).subscribe({
       next: async () => {
         try {
-
           const factura = await this.facturaService.generarFacturaDesdeOrden(orden.idOr!);
-
-
-
-          try {
-            this.generarPDFProfesional(orden, factura);
-          } catch (pdfError) {
-            console.error('Error generando el PDF:', pdfError);
-            alert('La factura se generó en el sistema, pero no se pudo descargar el PDF.');
-          }
-
+          this.generarPDFProfesional(orden, factura);
           alert(`¡Orden Cerrada! Factura generada: ${factura.numeroFactura}`);
-
-
           this.ordenes.update(prev => prev.filter(o => o.idOr !== orden.idOr));
-
         } catch (err) {
           console.error('Error en el proceso de facturación:', err);
-          alert('Se guardó el diagnóstico, pero hubo un error al generar la factura final.');
+          alert('Error al generar la factura final.');
         }
       },
       error: (err) => {
@@ -82,21 +97,19 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     });
   }
 
-
   calcularTotalTemporal(orden: OrdenesReparacionI): number {
     const totalPiezas = orden.piezas?.reduce((acc, p) => {
       const precio = Number(p.pieza?.precio) || 0;
       const cantidad = Number(p.cantidadUsada) || 0;
       return acc + (precio * cantidad);
     }, 0) || 0;
-    const totalMano = (orden.horas || 0) * 40;
+    const totalMano = (Number(orden.horas) || 0) * 40;
     return (totalPiezas + totalMano) * 1.21;
   }
 
   generarPDFProfesional(orden: OrdenesReparacionI, factura: any) {
     const doc = new jsPDF();
     const margin = 14;
-
 
     doc.setFillColor(0, 48, 135);
     doc.rect(0, 0, 210, 40, 'F');
@@ -106,7 +119,6 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     doc.setFontSize(10);
     doc.text('Servicio Técnico Especializado', margin, 28);
     doc.text(`Factura Nº: ${factura.numeroFactura}`, 140, 25);
-
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(12);
@@ -119,13 +131,11 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     doc.text(`Modelo: ${orden.vehiculo?.modelo || 'N/A'}`, margin, 67);
     doc.text(`Fecha Cierre: ${new Date().toLocaleDateString()}`, margin, 74);
 
-
     doc.setFont('helvetica', 'bold');
     doc.text('DIAGNÓSTICO TÉCNICO', margin, 85);
     doc.setFont('helvetica', 'normal');
     const splitDiag = doc.splitTextToSize(orden.diagnostico || 'Sin diagnóstico.', 180);
     doc.text(splitDiag, margin, 92);
-
 
     const rows: any[] = [];
     if (orden.piezas) {
@@ -133,8 +143,8 @@ export class OrdenesDeTrabajoComponent implements OnInit {
         rows.push([
           p.pieza?.nombre || 'Repuesto',
           p.cantidadUsada,
-          `${(p.pieza?.precio || 0).toFixed(2)} €`,
-          `${((p.pieza?.precio || 0) * p.cantidadUsada).toFixed(2)} €`
+          `${Number(p.pieza?.precio || 0).toFixed(2)} €`,
+          `${(Number(p.pieza?.precio || 0) * p.cantidadUsada).toFixed(2)} €`
         ]);
       });
     }
@@ -148,7 +158,6 @@ export class OrdenesDeTrabajoComponent implements OnInit {
       theme: 'striped'
     });
 
-
     const finalY = (doc as any).lastAutoTable.finalY + 10;
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
@@ -158,7 +167,6 @@ export class OrdenesDeTrabajoComponent implements OnInit {
     doc.setFontSize(14);
     doc.setTextColor(200, 0, 0);
     doc.text(`TOTAL FACTURA: ${(factura.importeTotal || 0).toFixed(2)} €`, 130, finalY + 16);
-
 
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);

@@ -6,7 +6,6 @@ import { PiezaService } from '../../service/pieza.service';
 import { SotckI } from '../../interface/sotck-i';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
-import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { FacturaService } from 'src/app/service/factura.service';
 
@@ -25,11 +24,15 @@ export class StockComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-
   idRecuperadoDeUrl = signal<string>('');
   piezasAgregadas = signal<{ item: SotckI, cantidad: number }[]>([]);
   esAdmin = signal<boolean>(false);
 
+  // FIX: mapa de cantidades por idPieza para evitar el problema de #cantInput en @for
+  cantidadesInput: { [idPieza: string]: number } = {};
+
+  // FIX: guard para evitar doble click / llamadas duplicadas
+  cargando = signal<boolean>(false);
 
   nuevaPieza = signal({
     nombre: '',
@@ -40,18 +43,13 @@ export class StockComponent implements OnInit {
   });
 
   async ngOnInit() {
-
     const idUrl = this.route.snapshot.paramMap.get('id');
     if (idUrl) this.idRecuperadoDeUrl.set(idUrl);
-
 
     const usuario = this.authService.getUserData();
     const rolLocalStorage = localStorage.getItem('userRole');
     const rolObjeto = usuario?.id_rol || usuario?.rol;
-
     const rolFinal = (rolObjeto || rolLocalStorage || '').toUpperCase();
-
-
     this.esAdmin.set(rolFinal === 'ADMINISTRADOR');
 
     await this.cargarDatos();
@@ -59,14 +57,19 @@ export class StockComponent implements OnInit {
 
   async cargarDatos() {
     try {
-      await this.stockService.cargarStock();
+      const stock = await this.stockService.cargarStock();
+      // Inicializamos el mapa de cantidades con 1 para cada pieza
+      stock.forEach(item => {
+        if (this.cantidadesInput[item.pieza.idPieza] === undefined) {
+          this.cantidadesInput[item.pieza.idPieza] = 1;
+        }
+      });
     } catch (e) {
       console.error('Error al cargar stock:', e);
     }
   }
 
   get idFinal() { return this.idRecuperadoDeUrl(); }
-
 
   stockPorCategoria = computed(() => {
     const stock = this.stockService.stockDisponible();
@@ -85,11 +88,17 @@ export class StockComponent implements OnInit {
     return this.piezasAgregadas().reduce((acc, p) => acc + ((p.item.pieza.precio || 0) * p.cantidad), 0);
   });
 
-
-  async agregarPieza(item: SotckI, cantidad: number) {
+  // FIX: se usa cantidadesInput[id] en lugar de #cantInput
+  // y se bloquea con cargando() para evitar llamadas duplicadas
+  async agregarPieza(item: SotckI) {
+    if (this.cargando()) return; // bloquea doble click
     if (!this.idFinal) return alert('No hay una Orden de Trabajo activa.');
+
+    const cantidad = Number(this.cantidadesInput[item.pieza.idPieza]) || 1;
+    if (cantidad <= 0) return alert('La cantidad debe ser mayor que 0.');
     if (cantidad > item.cantidad) return alert('No hay stock suficiente en almacén.');
 
+    this.cargando.set(true);
     try {
       await this.stockService.asignarPiezaAOrden(this.idFinal, item.pieza.idPieza, cantidad);
 
@@ -100,40 +109,32 @@ export class StockComponent implements OnInit {
           updated[index] = { ...updated[index], cantidad: updated[index].cantidad + cantidad };
           return updated;
         }
-        return [...prev, { item, cantidad }];
+        return [...prev, { item: { ...item }, cantidad }];
       });
 
       item.cantidad -= cantidad;
+      // Reseteamos la cantidad del input a 1 tras agregar
+      this.cantidadesInput[item.pieza.idPieza] = 1;
     } catch (e) {
       alert('Error al asignar pieza a la orden');
+    } finally {
+      this.cargando.set(false);
     }
   }
-
-
 
   confirmarYVolver() {
     if (this.piezasAgregadas().length === 0) {
       if (!confirm('No has añadido piezas nuevas. ¿Deseas volver a la orden de todos modos?')) return;
     }
-
-
-
     alert('Repuestos asignados correctamente.');
     this.router.navigate(['/dashboard-trabajador/ordenes']);
   }
 
-
   async crearNuevaPieza() {
     try {
-
       await this.piezaService.crearPiezaConStock(this.nuevaPieza());
-
       alert('Pieza y Stock creados con éxito');
-
-
       this.nuevaPieza.set({ nombre: '', descripcion: '', precio: 0, categoria: 'General', cantidadInicial: 0 });
-
-
       await this.cargarDatos();
     } catch (e) {
       console.error('Error en crearNuevaPieza:', e);
@@ -141,10 +142,8 @@ export class StockComponent implements OnInit {
     }
   }
 
-
   async reponerStock(item: SotckI, cantidad: number) {
     try {
-
       await this.stockService.reponerStock(item.pieza.idPieza, cantidad);
       alert(`Stock actualizado: +${cantidad} unidades para ${item.pieza.nombre}`);
       await this.cargarDatos();
@@ -154,19 +153,15 @@ export class StockComponent implements OnInit {
     }
   }
 
-
-
   generarInformePDF(facturaData?: any) {
     const doc = new jsPDF();
     doc.setFontSize(20);
     doc.text('GARAGE BENZ - INFORME TÉCNICO', 14, 22);
-
     if (facturaData) {
       doc.setFontSize(12);
       doc.text(`Factura Nº: ${facturaData.numeroFactura}`, 14, 32);
       doc.text(`Total: ${facturaData.importeTotal} EUR`, 14, 40);
     }
-
     doc.save(`Informe_Benz_OT_${this.idFinal}.pdf`);
   }
 }

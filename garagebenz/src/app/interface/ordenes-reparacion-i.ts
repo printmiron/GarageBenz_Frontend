@@ -14,6 +14,7 @@ export interface OrdenesReparacionI {
   piezas?: Array<{
     cantidadUsada: number;
     pieza: {
+      idPieza: string;
       nombre: string;
       precio: number;
     }
